@@ -1,0 +1,179 @@
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="styles/style.css">
+    <script src="script/script.js"></script>
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.15/jquery.mask.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+    <title>Cadastro</title>
+</head>
+
+<body>
+    <header class="header-login">
+
+        <nav class="navbar">
+            <span class="logo">Latech</span>
+            <ul>
+                <li>
+                    <a href="index.html" class="voltar">
+                        <img src="img/icons/arrow.svg" alt="">
+                        Voltar
+                    </a>
+                </li>
+            </ul>
+        </nav>
+        
+        <div class="container-login">
+            <h1 class="titulo">cadastro</h1>
+            <p>
+                Por favor, insira seus dados para poder ser cadastrado no nosso sistema.
+            </p>
+            
+            <div class="alerta_erro">
+                <div class="card_erro" id="cardErro">
+                    <span id="mensagem_erro"></span>
+                </div>
+            </div>
+            <div class="form">
+
+                <label for="inp_empresa">
+                    Nome da Empresa:
+                    <input type="text" id="inp_empresa">
+                </label>
+                <div class="flex">
+                    <label for="inp_cnpj">
+                        CNPJ:
+                        <input type="text" id="inp_cnpj" onkeydown="return ( event.ctrlKey || event.altKey 
+                    || (47<event.keyCode && event.keyCode<58 && event.shiftKey==false) 
+                    || (95<event.keyCode && event.keyCode<106)
+                    || (event.keyCode==8) || (event.keyCode==9) 
+                    || (event.keyCode>34 && event.keyCode<40) 
+                    || (event.keyCode==46) )" onkeypress="$(this).mask('00.000.000/0000-00')"" placeholder="00.000.000/0000-00">
+
+                    </label>
+
+                    <label for="inp_telefone">
+                        Telefone:
+                        <input type="text" id="inp_telefone" onkeydown="return ( event.ctrlKey || event.altKey 
+                        || (47<event.keyCode && event.keyCode<58 && event.shiftKey==false) 
+                        || (95<event.keyCode && event.keyCode<106)
+                        || (event.keyCode==8) || (event.keyCode==9) 
+                        || (event.keyCode>34 && event.keyCode<40) 
+                        || (event.keyCode==46) )" onkeypress="$(this).mask('(00) 0000-00009')">
+                    </label>
+                </div>
+                <label for="inp_email">
+                    Email:
+                    <input type="text" id="inp_email">
+                </label>
+                <label for="inp_senha">
+                    Senha:
+                    <input type="password" id="inp_senha" placeholder="********">
+                </label>
+                <label for="inp_confiSenha">
+                    Confirme sua senha:
+                    <input type="password" id="inp_confiSenha" placeholder="********">
+                </label>
+                <button class="btn" onclick="cadastrar()"> Cadastrar</button>
+                <div id="div_aguardar" class="loading-div">
+                </div>
+
+                <div id="div_erros_login"></div>
+            </div>
+        </div>
+        <img src="img/background/milkwave.png" class="header-background" alt="">
+    </header>
+</body>
+
+</html>
+<script>
+    function cadastrar() {
+        //aguardar();
+        //Recupere o valor da nova input pelo nome do id
+        // Agora vá para o método fetch logo abaixo
+        var empresaVar = inp_empresa.value;
+        var cnpjVar = inp_cnpj.value.replace(/\D+/g, '');
+        var telVar = inp_telefone.value.replace(/\D+/g, '');
+        var emailVar = inp_email.value;
+        var senhaVar = inp_senha.value;
+        var confiSenha = inp_confiSenha.value;
+
+        if (confiSenha == senhaVar) {
+            if (empresaVar == "" && cnpjVar == "" && telVar == "" && emailVar == "" && senhaVar == "" && confiSenha == "") {
+                cardErro.style.display = "block"
+                mensagem_erro.innerHTML = "(Mensagem de erro para todos os campos em branco)";
+
+                finalizarAguardar();
+                return false;
+            } else if (empresaVar == "" || cnpjVar == "" || telVar == "" || emailVar == "" || senhaVar == "" || confiSenha == "") {
+                cardErro.style.display = "block"
+                mensagem_erro.innerHTML = "(Existe algum campo não preenchido)";
+
+                finalizarAguardar();
+            } else if (cnpjVar.length == 14) {
+                // Enviando o valor da nova input
+                fetch("empresa/cadastrar", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+                    body: JSON.stringify({
+                        // crie um atributo que recebe o valor recuperado aqui
+                        // Agora vá para o arquivo routes/empresa.js
+                        empresaServer: empresaVar,
+                        cnpjServer: cnpjVar,
+                        telServer: telVar,
+                        emailServer: emailVar,
+                        senhaServer: senhaVar
+                    })
+                }).then(function (resposta) {
+
+                    console.log("resposta: ", resposta);
+
+                    if (resposta.ok) {
+                        cardErro.style.display = "block";
+
+                        mensagem_erro.innerHTML = "Cadastro realizado com sucesso! Redirecionando para tela de Login...";
+
+                        setTimeout(() => {
+                            window.location = "login.html";
+                        }, "2500")
+
+                        limparFormulario();
+                        finalizarAguardar();
+                    } else {
+                        throw ("Houve um erro ao tentar realizar o cadastro!");
+                    }
+                }).catch(function (resposta) {
+                    console.log(`#ERRO: ${resposta}`);
+                    finalizarAguardar();
+                });
+
+                return false;
+            } else {
+                cardErro.style.display = "block"
+                mensagem_erro.innerHTML = "(O CNPJ está incorreto)";
+
+                finalizarAguardar();
+                return false;
+                setInterval(sumirMensagem, 5000)
+            }
+
+
+        } else {
+            cardErro.style.display = "block"
+            mensagem_erro.innerHTML = "(As senhas não correspondem)";
+
+            finalizarAguardar();
+            return false;
+        }
+    }
+    function sumirMensagem() {
+        cardErro.style.display = "none"
+    }
+
+</script>

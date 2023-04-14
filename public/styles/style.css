@@ -11,8 +11,8 @@ html {
 body {
     scroll-behavior: smooth;
     font-family: 'Inter';
-    background: linear-gradient(227.85deg, #58A1E4 0.29%, #2677B1 27.04%, #025183 61.07%);
-    background-size: cover;
+    background-repeat: repeat;
+    background: linear-gradient(227.85deg, #58A1E4 0.29%, #2677B1 27.04%, #025183 72.67%);
     justify-content: center;
     align-items: center;
     padding: 0;
@@ -109,6 +109,10 @@ body {
     margin: 5% 0 0 0;
 }
 
+.header-content .header-background{
+    top: 62.5%;
+}
+
 .titulo-header {
     width: auto;
     position: relative;
@@ -126,11 +130,14 @@ body {
 
 .header-content .texto-header {
     color: white;
-    margin-left: 5%;
+    width: 710px;
+    height: 102px;
     font-family: 'Inter';
     font-style: normal;
     font-weight: 500;
-    font-size: 1.5em;
+    font-size: 28px;
+    line-height: 34px;
+    padding: 0 0 0 5%;
 }
 
 .header-content button {
@@ -161,18 +168,18 @@ body {
     display: flex;
     bottom: 0%;
     position: absolute;
-    top: 52%;
+    z-index: -1;
     filter: brightness(1)
 }
 
 #sobre {
     background-color: #FFFFFF;
     width: 100%;
-    padding: 2% 0 2% 0;
+
     display: flex;
 }
 
-.sobre .sobre-titulo{
+.sobre .sobre-titulo {
     font-family: 'Momcake';
     font-style: normal;
     color: #58A1E4;
@@ -181,7 +188,7 @@ body {
     margin: 0 0 0 43%;
 }
 
-.logo-latech{
+.logo-latech {
     position: relative;
     margin: 0 15% 0 5%;
 }
@@ -217,12 +224,12 @@ body {
     background-color: white;
 }
 
-#objetivo .vaca{
+#objetivo .vaca {
     margin-left: 5%;
     width: 90%;
 }
 
-#objetivo img{
+#objetivo img {
     margin: 0 0 0 2%;
 }
 
@@ -288,6 +295,14 @@ body {
     width: 100%;
     position: relative;
     top: -20%;
+}
+
+.milk01 {
+    width: 100%;
+    position: absolute;
+    bottom: 0;
+    z-index: -1;
+    filter: brightness(1.5);
 }
 
 .titulo {
@@ -360,16 +375,16 @@ body {
     justify-content: center;
     align-items: center;
     border: 1px solid #7ab3e1;
-    padding: 5px 45px;
+    padding: 2% 5%;
     cursor: pointer;
     background: #7AB2E1;
     border-radius: 12px;
-    padding: 8px 12px;
     font-family: 'Inter';
     font-style: normal;
     font-weight: 500;
     color: #012E4A;
     font-weight: 600;
+    margin-top: 5%;
 }
 
 .container {
@@ -462,8 +477,8 @@ tbody {
 
 table {
     margin: 10% 0;
-    width: 160%;
-    display: table;
+    width: 155%;
+    display:table;
     border-collapse: separate;
     box-sizing: border-box;
     text-indent: initial;
@@ -471,7 +486,8 @@ table {
     border-color: #FFFFFF;
 }
 
-table .titulos, th {
+table .titulos,
+th {
     border: 3px #58A1E4;
     background-color: #58A1E4;
 }
@@ -487,13 +503,12 @@ table .titulos, th {
 }
 
 .container-login {
-    margin-top: 5%;
     border-radius: 16px;
     flex-direction: column;
     text-align: center;
     display: flex;
-    padding: 24px 24px;
-    background-color: white;
+    padding:2% 2%;
+    background-color: #ddd;
     width: 30%;
     justify-content: center;
 }
@@ -515,10 +530,16 @@ table .titulos, th {
     font-size: 20px;
 }
 
+
 .form {
     display: flex;
     flex-direction: column;
-    gap: 20px;
+    gap: 20%;
+}
+
+.flex {
+    gap: 2%;
+    display: flex;
 }
 
 .form input {

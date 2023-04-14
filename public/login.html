@@ -3,8 +3,9 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="assets/styles/style.css">
-    <title>Document</title>
+    <link rel="stylesheet" href="styles/style.css">
+    <script src="script/script.js"></script>
+    <title>Login</title>
 </head>
 <body>
     <header class="header-login">
@@ -14,7 +15,7 @@
             <ul>
                 <li>
                     <a href="index.html" class="voltar">
-                        <img src="assets/img/icons/arrow.svg" alt="">
+                        <img src="img/icons/arrow.svg" alt="">
                         Voltar
                     </a>
                 </li>
@@ -36,14 +37,14 @@
                     Senha:
                     <input type="password" id="inp_senha" placeholder="********">
                 </label>
-                <button class="btn">entrar</button>
+                <button class="btn" onclick="validarSessao()">entrar</button>
 
-                <p>Não possui uma conta? Faça seu <a href="index.html"><span>cadastro!</span></a> <br> </a> 
+                <p>Não possui uma conta? Faça seu <a href="cadastro.html"><span>cadastro!</span></a> <br> </a> 
                 <a href="login.html"><span>Esqueci a senha</span></a></p> 
             </div>
         </div>
         <img 
-        src="assets/img/background/milkwave.png" 
+        src="img/background/milkwave.png" 
         class="header-background"
         alt="">
     </header>
