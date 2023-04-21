@@ -1,4 +1,5 @@
 <html lang="pt-br">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -26,13 +27,15 @@
                 </li>
             </ul>
         </nav>
-        
+
         <div class="container-login">
-            <h1 class="titulo">cadastro</h1>
+            <div class="cadastro-login">
+                <h1 class="titulo"><a href="login.html">login</a> | <a href="cadastro.html">cadastro</a></h1>
+            </div>
             <p>
                 Por favor, insira seus dados para poder ser cadastrado no nosso sistema.
             </p>
-            
+
             <div class="alerta_erro">
                 <div class="card_erro" id="cardErro">
                     <span id="mensagem_erro"></span>
@@ -40,9 +43,9 @@
             </div>
             <div class="form">
 
-                <label for="inp_empresa">
+                <label for="inp_nome">
                     Nome da Empresa:
-                    <input type="text" id="inp_empresa">
+                    <input type="text" id="inp_nome">
                 </label>
                 <div class="flex">
                     <label for="inp_cnpj">
@@ -52,7 +55,8 @@
                     || (95<event.keyCode && event.keyCode<106)
                     || (event.keyCode==8) || (event.keyCode==9) 
                     || (event.keyCode>34 && event.keyCode<40) 
-                    || (event.keyCode==46) )" onkeypress="$(this).mask('00.000.000/0000-00')"" placeholder="00.000.000/0000-00">
+                    || (event.keyCode==46) )" onkeypress="$(this).mask('00.000.000/0000-00')"" placeholder="
+                            00.000.000/0000-00">
 
                     </label>
 
@@ -63,7 +67,8 @@
                         || (95<event.keyCode && event.keyCode<106)
                         || (event.keyCode==8) || (event.keyCode==9) 
                         || (event.keyCode>34 && event.keyCode<40) 
-                        || (event.keyCode==46) )" onkeypress="$(this).mask('(00) 0000-00009')">
+                        || (event.keyCode==46) )" onkeypress="$(this).mask('(00) 9 0000-0000')"
+                            placeholder="(00) 0 0000-0000">
                     </label>
                 </div>
                 <label for="inp_email">
@@ -95,7 +100,7 @@
         //aguardar();
         //Recupere o valor da nova input pelo nome do id
         // Agora vá para o método fetch logo abaixo
-        var empresaVar = inp_empresa.value;
+        var nomeVar = inp_nome.value;
         var cnpjVar = inp_cnpj.value.replace(/\D+/g, '');
         var telVar = inp_telefone.value.replace(/\D+/g, '');
         var emailVar = inp_email.value;
@@ -103,15 +108,35 @@
         var confiSenha = inp_confiSenha.value;
 
         if (confiSenha == senhaVar) {
-            if (empresaVar == "" && cnpjVar == "" && telVar == "" && emailVar == "" && senhaVar == "" && confiSenha == "") {
+            if (nomeVar == "" && cnpjVar == "" && telVar == "" && emailVar == "" && senhaVar == "" && confiSenha == "") {
                 cardErro.style.display = "block"
-                mensagem_erro.innerHTML = "(Mensagem de erro para todos os campos em branco)";
+                mensagem_erro.innerHTML = "(Preencha todos os campos)";
+                inp_senha.style.borderColor = "#d00";
+                inp_confiSenha.style.borderColor = "#d00";
+                inp_email.style.borderColor = "#d00";
+                inp_telefone.style.borderColor = "#d00";
+                inp_cnpj.style.borderColor = "#d00";
+                inp_nome.style.borderColor = "#d00";
 
                 finalizarAguardar();
                 return false;
-            } else if (empresaVar == "" || cnpjVar == "" || telVar == "" || emailVar == "" || senhaVar == "" || confiSenha == "") {
+            } else if (nomeVar == "" || cnpjVar == "" || telVar == "" || emailVar == "" || senhaVar == "" || confiSenha == "") {
                 cardErro.style.display = "block"
                 mensagem_erro.innerHTML = "(Existe algum campo não preenchido)";
+
+                if (nomeVar == "") {
+                    inp_nome.style.borderColor = "#d00";
+                } else if (cnpjVar == "") {
+                    inp_cnpj.style.borderColor = "#d00";
+                } else if (telVar == "") {
+                    inp_telefone.style.borderColor == "#d00"
+                } else if (emailVar == "") {
+                    inp_email.style.borderColor == "#d00"
+                } else if (senhaVar == "") {
+                    inp_senha.style.borderColor == "#d00"
+                } else if (confiSenha == "") {
+                    inp_senha.style == "#d00"
+                }
 
                 finalizarAguardar();
             } else if (cnpjVar.length == 14) {
@@ -124,7 +149,7 @@
                     body: JSON.stringify({
                         // crie um atributo que recebe o valor recuperado aqui
                         // Agora vá para o arquivo routes/empresa.js
-                        empresaServer: empresaVar,
+                        nomeServer: nomeVar,
                         cnpjServer: cnpjVar,
                         telServer: telVar,
                         emailServer: emailVar,
@@ -157,6 +182,7 @@
             } else {
                 cardErro.style.display = "block"
                 mensagem_erro.innerHTML = "(O CNPJ está incorreto)";
+                inp_cnpj.style.borderColor = "#dd0000"
 
                 finalizarAguardar();
                 return false;
@@ -167,6 +193,8 @@
         } else {
             cardErro.style.display = "block"
             mensagem_erro.innerHTML = "(As senhas não correspondem)";
+            inp_senha.style.borderColor = "#dd0000";
+            inp_confiSenha.style.borderColor = "#dd0000"
 
             finalizarAguardar();
             return false;

@@ -109,7 +109,7 @@ body {
     margin: 5% 0 0 0;
 }
 
-.header-content .header-background{
+.header-content .header-background {
     top: 62.5%;
 }
 
@@ -325,11 +325,11 @@ body {
 }
 
 .container .cards {
-    margin-top: 5%;
+    margin: 5% 0 5% 0;
     flex-direction: row;
     align-items: start;
     justify-content: space-between;
-    width: 90%;
+    width: 85%;
 }
 
 .card {
@@ -338,8 +338,8 @@ body {
     align-items: center;
     box-sizing: border-box;
     padding: 20px 50px;
-    width: 30%;
-    height: 80%;
+    width: 28.5%;
+    height: 10%;
     background-color: #efefef;
     border-radius: 24px;
 }
@@ -352,7 +352,7 @@ body {
 }
 
 .card img {
-    width: 100%;
+    width: 60%;
 }
 
 .card ol {
@@ -368,6 +368,48 @@ body {
     color: #000;
     text-align: justify !important;
     font-size: 100%;
+}
+
+.content-programas {
+    background-color: #003366;
+    padding-top: 50px;
+    padding-bottom: 50px;
+    color: #dcdcdc;
+}
+
+#cards_carousel {
+    padding: 2em 2em;
+    -webkit-transition: all 175ms ease-in;
+    -webkit-transform: scale(1);
+    -ms-transition: all 175ms ease-in;
+    -ms-transform: scale(1);
+    -moz-transition: all 175ms ease-in;
+    -moz-transform: scale(1);
+    transition: all 175ms ease-in;
+    transform: scale(1);
+}
+
+#cards_carousel a {
+    display: none;
+
+
+}
+
+#cards_carousel:hover {
+    box-shadow: 0px 0px 100px #ffffff;
+    z-index: 2;
+    -webkit-transition: all 175ms ease-in;
+    -webkit-transform: scale(1.1);
+    -ms-transition: all 175ms ease-in;
+    -ms-transform: scale(1.1);
+    -moz-transition: all 175ms ease-in;
+    -moz-transform: scale(1.1);
+    transition: all 175ms ease-in;
+    transform: scale(1.1);
+}
+
+#cards_carousel:hover a {
+    display: block;
 }
 
 .btn {
@@ -478,7 +520,7 @@ tbody {
 table {
     margin: 10% 0;
     width: 155%;
-    display:table;
+    display: table;
     border-collapse: separate;
     box-sizing: border-box;
     text-indent: initial;
@@ -507,7 +549,7 @@ th {
     flex-direction: column;
     text-align: center;
     display: flex;
-    padding:2% 2%;
+    padding:0 2% 2% 2%;
     background-color: #ddd;
     width: 30%;
     justify-content: center;
@@ -530,6 +572,31 @@ th {
     font-size: 20px;
 }
 
+.container-login .titulo a {
+    text-decoration: none;
+    color: #2677B1;
+}
+.cadastro-login{
+    display: flex;
+    justify-content: start;
+    align-items: start;
+    position: relative;
+    overflow: hidden;
+}
+
+.cadastro-login h1 {
+    font-weight: 900;
+    width: 100% ;
+    display: flex;
+    justify-content: space-between;
+
+}
+
+.cadastro-login :hover{
+    transition-delay: 15ms;
+    color: #025183;
+
+}
 
 .form {
     display: flex;
@@ -672,4 +739,9 @@ footer .cop {
 
 #solucao .texto {
     text-align: center;
+}
+
+#mensagem_erro {
+    color: #d00;
+    font-weight: 600;
 }
