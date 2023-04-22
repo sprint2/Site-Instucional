@@ -1,3 +1,28 @@
+window.onscroll = function() {
+    var nav = document.getElementById("navbar");
+    var navLink = document.getElementsByClassName("nav-link");
+    var logo = document.getElementById("logo");
+
+    if(window.scrollY != 0) {
+        nav.classList.add("navbar-ativo");
+        for (var i = 0; i < navLink.length; i++) {
+            navLink[i].classList.remove("link-animation")
+            navLink[i].classList.add("nav-link-ativo");
+            navLink[i].classList.add("link-animation-ativo");
+        };
+        logo.classList.add("logo-ativo");
+    } else {
+        nav.classList.remove("navbar-ativo");
+        for (var i = 0; i < navLink.length; i++) {
+            navLink[i].classList.remove("nav-link-ativo");
+            navLink[i].classList.remove("link-animation-ativo");
+            navLink[i].classList.add("link-animation")
+            
+        };
+        logo.classList.remove("logo-ativo");
+    };
+}
+
 // sessão
 function validarSessao() {
     // aguardar();
@@ -68,40 +93,25 @@ function simular() {
 
 
     resultado.innerHTML = `
-                    <div class="table-titulos">
-                        <table id="tb-resultado">
-                            <tr class="titulos">
-                                <td></td>
-                                <th class="novo">Mês</tsd>
-                                <th class="novo">Ano</td>
-                                <th class="novo">Perda anual</td>
-                            </tr>
-                            <tr>
-                                <td id="title-colunm">Sem nossa solução</td>
-                                <td id="info-colunm">R$ ${ganhoMes.toFixed(2)}</td>
-                                <td id="info-colunm">R$ ${ganhoAno.toFixed(2)}</td>
-                                <td style="color: red" id="info-table">R$ ${perda.toFixed(2)}</td>
-                            </tr>
-                            <tr>
-                                <td id="title-colunm">Com nossa solução</td>
-                                <td id="info-colunm">R$ ${ganhoMesSolucao.toFixed(2)}</td>
-                                <td id="info-colunm">R$ ${ganhoAnoSolucao.toFixed(2)}</td>
-                                <td style="color: green" id="info-table">R$ ${perdaSolucao.toFixed(2)}</td>
-                            </tr>
-                        </table>
-                    </div>
-                    <style>
-                    #resultado {
-                        display: flex;
-                        align-items: center;
-                        width: 60%;
-                        background-color: #FFFFFF;
-                        font-family: 'Inter';
-                        font-style: normal;
-                        border-radius: 15px;
-                        margin: 0 0 5% 0;
-                        padding: 0 0 0 1%;
-                    }
-                    </style>
+        <table id="tb-resultado">
+            <tr class="titulos-table">
+                <td></td>
+                <td>Mês</td>
+                <td>Ano</td>
+                <td>Perda anual</td>
+            </tr>
+            <tr>
+                <td class="title-colunm">Sem nossa solução</td>
+                <td class="info-colunm" style="color: #d93838">R$ ${ganhoMes.toFixed(2)}</td>
+                <td class="info-colunm" style="color: #d93838">R$ ${ganhoAno.toFixed(2)}</td>
+                <td class="info-column" style="color: #d93838">R$ ${perda.toFixed(2)}</td>
+            </tr>
+            <tr>
+                <td class="title-colunm">Com nossa solução</td>
+                <td class="info-colunm" style="color: #6eb844">R$ ${ganhoMesSolucao.toFixed(2)}</td>
+                <td class="info-colunm" style="color: #6eb844">R$ ${ganhoAnoSolucao.toFixed(2)}</td>
+                <td class="info-column" style="color: #6eb844">R$ ${perdaSolucao.toFixed(2)}</td>
+            </tr>
+        </table>
     `
 }

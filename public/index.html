@@ -10,18 +10,17 @@
 
 <body>
     <header>
-        <nav class="navbar">
-            <span class="logo">Latech</span>
+        <nav id="navbar">
+            <span id="logo">Latech</span>
             <ul>
-                <li><a href="#sobre" class="nav-link">Sobre</a></li>
-                <li><a href="#objetivo" class="nav-link">Objetivo</a></li>
-                <li><a href="#solucao" class="nav-link">Solução</a></li>
-                <li><a href="#simulador" class="nav-link">Simulação</a></li>
-                <li><a href="login.html" class="nav-link">Entrar</a></li>
+                <li><a href="#sobre" class="nav-link link-animation">Sobre</a></li>
+                <li><a href="#objetivo" class="nav-link link-animation">Objetivo</a></li>
+                <li><a href="#solucao" class="nav-link link-animation">Solução</a></li>
+                <li><a href="#simulador" class="nav-link link-animation">Simulação</a></li>
+                <li><a href="login.html" class="nav-link link-animation">Entrar</a></li>
             </ul>
         </nav>
         <div class="header-content">
-            <!-- (Mari) a header vai aqui dentro -->
             <div class="titulo-header">
                 <h1>DIMINUA A PERDA DE LEITE NO ARMAZENAMENTO!</h1>
 
@@ -34,13 +33,11 @@
             <div class="imagem-garrafa">
                 <img src="img/icons/milk-bottle.png">
             </div>
-            <!-- não consigo inserir as duas imagens!!!! scrr -->
             <img class="header-background" src="img/background/milkwave.png">
         </div>
     </header>
     <main>
         <section id="sobre">
-            <!-- (Mari) a parte de sobre nós vem aqui -->
             <div class="sobre">
                 <span class="sobre-titulo">Sobre</span>
 
@@ -66,7 +63,6 @@
         </section>
 
         <section id="objetivo">
-            <!-- (Gui e Brian) nosso objetivo vem aqui -->
             <div class="titulo-objetivo">
                 <h2 class="titulo">NOSSO OBJETIVO</h2>
             </div>
@@ -113,7 +109,6 @@
         </section>
         <img class="milk02" src="img/background/milkwave2.png">
         <section id="solucao">
-            <!-- (Yuri e Michael) -->
             <div class="container">
                 <text class="titulo">Solucao</text>
                 <br>
@@ -186,14 +181,17 @@
         <section id="simulador">
             <div class="container simulador">
                 <text class="titulo-simulador">Simulador</text><br><br><br>
-                <text class="texto">Com base em estudos realizados, acredita-se que cerca de 10% do leite é
+                <text class="texto">
+                    Com base em estudos realizados, acredita-se que cerca de 10% do leite é
                     perdido durante o armazenamento devido a problemas de
                     controle de temperatura e umidade. No entanto, com o uso de nossos sensores de alta precisão e nosso
                     software, é possível
                     reduzir significativamente essa perda para apenas 2%. Faça uma simulação do quanto de lucro você
                     poderá ter utilizando o nosso
-                    sistema:</text><br><br>
-                <div class="inputs">
+                    sistema:
+                </text>
+                <br><br>
+                <div class="form-simulador">
                     <label for="inp_litros">
                         <text>Quantidade de litros produzidos por mês:</text>
                         <input id="inp_litros" placeholder="Ex.: 24000">
@@ -207,18 +205,18 @@
                     <label for="inp_venda_litro">
                         <text>Preço de venda do litro</text>
                         <input id="inp_venda_litro" placeholder="Ex.: 4">
-                    </label>
+                    </label>    
 
                     <button onclick="simular()" class="btn">Calcular</button>
                 </div>
                 <div id="resultado">
                     <div class="table-titulos">
                         <table id="tb-resultado">
-                            <tr class="titulos">
+                            <tr class="titulos-table">
                                 <td></td>
-                                <th class="novo">Mês</tsd>
-                                <th class="novo">Ano</td>
-                                <th class="novo">Perda anual</td>
+                                <td>Mês</td>
+                                <td>Ano</td>
+                                <td>Perda anual</td>
                             </tr>
                             <tr>
                                 <td class="title-colunm">Sem nossa solução</td>
@@ -239,43 +237,48 @@
         </section>
     </main>
 
-    <footer>
-        <!-- (Gabi) tudo do footer vem aqui -->
-        <container class="final">
-            <div class="logo_footer">
-                <img src="img/icons/latech(azul).svg" alt="">
+    <footer id="footer">
+        <div class="final">
+            <hr>
+            <div class="flex">
+                <div class="logo_footer">
+                    <img src="img/icons/latech(azul).svg" alt="">
+                </div>
+                <div class="textos-rodape">
+                    <ul>
+                        <li>
+                            <img src="img/icons/icon_localizacao.png" alt=""> Rua Haddock Lobo, 595 - Cerqueira César, São Paulo - SP, 01414-001
+                        <br>
+                        <li id="dois">
+                            <img src="img/icons/icon_telefone.png" alt=""> 4002-8922 
+                            <img src="img/icons/icon_email.png" alt=""> contato@latech.com.br
+                        </li>
+                        <br><br>
+                        <li id="redes">Redes Sociais <img src="img/icons/icon_facebook.png" alt="">
+                            <img src="img/icons/icon_twitter.png" alt="">
+                            <img src="img/icons/icon_linkedin.png" alt="">
+                            <img src="img/icons/icon_youtube.png" alt="">
+                            <img src="img/icons/icon_instagram.png" alt="">
+                        </li>
+                    </ul>
+                </div>
             </div>
-
-            <div class="textos_rodape">
-                <ul>
-                    <li><img src="img/icons/icon_localizacao.png" alt=""> Rua Haddock Lobo, 595 - Cerqueira
-                        César, São Paulo - SP, 01414-001</li><br>
-                    <li id="dois"><img src="img/icons/icon_telefone.png" alt=""> 4002-8922 <img
-                            src="img/icons/icon_email.png" alt=""> contato@latech.com.br</li><br><br>
-                    <li id="redes">Redes Sociais <img src="img/icons/icon_facebook.png" alt=""> <img
-                            src="img/icons/icon_twitter.png" alt=""> <img
-                            src="img/icons/icon_linkedin.png" alt=""> <img
-                            src="img/icons/icon_youtube.png" alt=""> <img
-                            src="img/icons/icon_instagram.png" alt=""></li>
-                </ul>
-
-            </div>
-        </container>
-
-        <container class="final2">
+        </div>
+        <hr>
+        <div class="final2">
             <nav class="navbar_inf">
                 <ul>
-                    <li><a href="#sobre" class="">Sobre</a></li>
-                    <li><a href="#solucao" class="">Solução</a></li>
-                    <li><a href="#simulacao" class="">Simulação</a></li>
-                    <li><a href="#contato" class="">Contato</a></li>
-                    <li><a href="login.html" class="">Entrar</a></li>
+                    <li><a href="#sobre" class="footer-link">Sobre</a></li>
+                    <li><a href="#solucao" class="footer-link">Solução</a></li>
+                    <li><a href="#simulador" class="footer-link">Simulador</a></li>
+                    <li><a href="#contato" class="footer-link">Contato</a></li>
+                    <li><a href="login.html" class="footer-link">Entrar</a></li>
                 </ul>
             </nav>
 
 
             <text class="cop">Copyright © 2023 • Latech Inc.</text>
-        </container>
+        </div>
 
     </footer>
 </body>
