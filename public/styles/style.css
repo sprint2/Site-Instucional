@@ -168,7 +168,7 @@ body {
     display: flex;
     bottom: 0%;
     position: absolute;
-    z-index: -1;
+    z-index: -3;
     filter: brightness(1)
 }
 
@@ -427,6 +427,7 @@ body {
     color: #012E4A;
     font-weight: 600;
     margin-top: 5%;
+    text-transform: capitalize;
 }
 
 .container {
@@ -485,6 +486,7 @@ body {
     width: 85%;
     height: 20px;
     border: 1px solid #FFFFFF;
+    padding: 16px;
 }
 
 div .inputs text {
@@ -549,10 +551,10 @@ th {
     flex-direction: column;
     text-align: center;
     display: flex;
-    padding:0 2% 2% 2%;
     background-color: #ddd;
     width: 30%;
     justify-content: center;
+    z-index: 1;
 }
 
 .container-login .titulo {
@@ -564,7 +566,6 @@ th {
 .container-login p {
     font-family: 'Inter';
     padding: 0 10px 0 10px;
-
 }
 
 .container-login .btn {
@@ -578,35 +579,83 @@ th {
 }
 .cadastro-login{
     display: flex;
-    justify-content: start;
+    justify-content: space-around;
     align-items: start;
     position: relative;
     overflow: hidden;
 }
 
-.cadastro-login h1 {
+.cadastro-login a {
+    width: 50%;
+    height: 20px;
+    position: relative;
+    color: #58A1E4;
+    text-decoration: none;
+    text-transform: uppercase;
     font-weight: 900;
-    width: 100% ;
-    display: flex;
-    justify-content: space-between;
-
+    font-size: 20px;
+    margin: 0;
+    padding: 2%;
+    cursor: pointer;
+    z-index: 1;
 }
 
-.cadastro-login :hover{
-    transition-delay: 15ms;
-    color: #025183;
+.cad-selected {
+    color: #fff !important;
+}
 
+.cadastro-login .cad-selected::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: #58A1E4;
+    z-index: -1;
+    border-radius: 0px 16px 0px 16px;
+    transition: .4s;
+}
+
+.log-selected {
+    color: #fff !important;
+}
+
+.cadastro-login .log-selected::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: #58A1E4;
+    z-index: -1;
+    border-radius: 16px 0px 16px 0px;
+    transition: .4s;
+}
+
+.cadastro-login .cad-selected:hover::after,
+.cadastro-login .log-selected:hover::after {
+    background-color: #8dc4f8;
+}
+
+.main-container-login {
+    padding: 5% 5% 3% 5%;
 }
 
 .form {
     display: flex;
     flex-direction: column;
-    gap: 20%;
+    gap: 8px;
 }
 
 .flex {
     gap: 2%;
     display: flex;
+}
+
+.form .flex {
+    justify-content: space-between;
 }
 
 .form input {
