@@ -2,7 +2,7 @@
 @import url('https://fonts.googleapis.com/css?family=Inter');
 
 body {
-    overflow: hidden;
+ 
     background-color: #eee;
     font-family: 'Inter', sans-serif;
 }
@@ -85,8 +85,9 @@ nav ul li a img {
     display: flex;
     flex-direction: column;
     justify-content: space-between;
+    box-sizing: border-box;
     width: 45vw;
-    height: 100%;
+    height: 90vh;
 }
 
 .container {
@@ -94,22 +95,61 @@ nav ul li a img {
     justify-content: center;
     align-items: center;
     width: 100%;
-    height: 48%;
+    height: 49%;
     box-sizing: border-box;
     border-radius: 20px;
     background-color: #fff;
     padding: 2%;
 }
 
+.inner-content .container {
+    flex-direction: column;
+}
+
+.container h3 {
+    font-size: 14px;  
+    margin: 0;
+    padding: 0;  
+}
+
 .container.cards {
+    flex-direction: row;
     justify-content: space-between;
     background-color: unset;
     padding: 0;
+    background-color: transparent;
 }   
 
 .card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
     width: 30%;
     height: 100%;
+    border-radius: 20px;
+}
+
+.container.cards .card:last-child {
+    width: 68%;
+    padding: 2%;
+    box-sizing: border-box;
+    background-color: #fff;
+}
+
+.container.info {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    width: 30%;
+    height: 100%;
+    background-color: transparent;
+    padding: 0;
+}
+
+.info {
+    width: 100%;
+    height: 30%;
     background-color: #fff;
     border-radius: 20px;
 }
