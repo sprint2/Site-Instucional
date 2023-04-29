@@ -1,0 +1,115 @@
+@import url('https://fonts.cdnfonts.com/css/momcake?styles=70427,70426');
+@import url('https://fonts.googleapis.com/css?family=Inter');
+
+body {
+    overflow: hidden;
+    background-color: #eee;
+    font-family: 'Inter', sans-serif;
+}
+
+header {
+    display: flex;
+    width: 100%;
+    height: 100%;
+    padding: 1% 2%;
+    box-sizing: border-box;
+    gap: 15px;
+}
+
+nav {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    width: 50px;
+    height: 90vh;
+    padding: 1%;
+    background-color: #58A1E4;
+    border-radius: 16px;
+    box-sizing: border-box;
+}
+
+nav ul {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+nav ul li {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 0;
+    padding: 0;
+}
+
+nav ul li a img {
+    width: 25px;
+}
+
+.empresa-nome {
+    font-family: 'MOMCAKE', sans-serif;
+    color: #58A1E4;
+    margin: 0;
+    padding: 0;
+}
+
+.top-line {
+    box-sizing: border-box;
+    padding: 0 2%;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.top-line span {
+    font-weight: bold;
+}
+
+.temp {
+    width: 22px;
+}
+
+.content {
+    display: flex;
+    gap: 20px;
+}
+
+.inner-content {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    width: 45vw;
+    height: 100%;
+}
+
+.container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 48%;
+    box-sizing: border-box;
+    border-radius: 20px;
+    background-color: #fff;
+    padding: 2%;
+}
+
+.container.cards {
+    justify-content: space-between;
+    background-color: unset;
+    padding: 0;
+}   
+
+.card {
+    width: 30%;
+    height: 100%;
+    background-color: #fff;
+    border-radius: 20px;
+}
