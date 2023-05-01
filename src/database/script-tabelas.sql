@@ -11,12 +11,14 @@ CREATE DATABASE Latech;
 USE Latech;
 
 CREATE TABLE empresa (
-	id INT PRIMARY KEY AUTO_INCREMENT,
-	empresa VARCHAR(50),
-	cnpj char(14),
-	tel char(11),
-	email varchar(200),
-	senha varchar(45)
+idEmpresa INT PRIMARY KEY auto_increment,
+razaoSocial VARCHAR(45),
+cnpj CHAR(18),
+telefone VARCHAR(20),
+email VARCHAR(30),	
+fkEndEmpresa INT,
+	CONSTRAINT fkEndEmp foreign key (fkEndEmpresa)
+		REFERENCES endereco(idEndereco)
 );
 
 CREATE TABLE aviso (
