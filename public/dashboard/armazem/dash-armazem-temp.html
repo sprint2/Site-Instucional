@@ -53,6 +53,11 @@
                             <img src="/public/img/icons/ajuda.svg" alt="">
                         </a>
                     </li>
+                    <li>
+                        <a href="/public/index.html" onclick="limparSessao()">
+                            <img src="/public/img/icons/logout.svg" alt="">
+                        </a>
+                    </li>
                 </ul>
             </nav>
             <div class="content">
@@ -165,14 +170,7 @@
         data: {
             labels: ['Janeiro', 'Fevereiro', 'Março', 'Abril'],
             datasets: [{
-                label: 'Umidade',
-                backgroundColor: '#58A1E4',
-                borderColor: '#58A1E4',
-                data: [20, 15, 13, 8],
-                borderWidth: 1
-            },
-            {
-                label: 'Temperatura',
+                label: 'Quantidade de alertas',
                 backgroundColor: '#025183',
                 borderColor: '#025183',
                 data: [4, 2, 1, 7],
