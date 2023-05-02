@@ -1,4 +1,4 @@
-
+var nomeEmp = "Ola";
 // animação da navbar
 window.onscroll = function() {
     var nav = document.getElementById("navbar");
@@ -33,7 +33,7 @@ function validarSessao() {
     var nome = sessionStorage.NOME_EMPRESA;
 
     if (email != null && nome != null) {
-        
+        nomeEmp = nome
     } else {
         window.location = "../login.html";
     }
@@ -43,7 +43,7 @@ function limparSessao() {
     // aguardar();
     sessionStorage.clear();
     // finalizarAguardar();
-    window.location = "../login.html";
+    window.location = "../public/login.html";
 }
 
 // carregamento (loading)

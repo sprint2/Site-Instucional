@@ -32,7 +32,6 @@ create table medida (
 	dht11_temperatura DECIMAL(10,2),
 	luminosidade DECIMAL,
 	lm35_temperatura DECIMAL(10,2),
-	chave TINYINT,
 	momento DATETIME,
 	fk_aquario INT,
 	FOREIGN KEY (fk_aquario) REFERENCES aquario(id)
@@ -62,7 +61,6 @@ CREATE TABLE medida (
 	dht11_temperatura DECIMAL(10,2),
 	luminosidade DECIMAL,
 	lm35_temperatura DECIMAL(10,2),
-	chave TINYINT,
 	momento DATETIME,
 	fk_aquario INT FOREIGN KEY REFERENCES aquario(id)
 );

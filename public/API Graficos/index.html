@@ -18,31 +18,27 @@
 
 <body>
     <div>
-        <h1>Sensor DHT 11 - Umidade</h1>
+        <h1>Sensor 1 - Umidade</h1>
         <section style="width:100%">
-            <canvas id="dht11Umidade"></canvas>
+            <canvas id="sensor1Umidade"></canvas>
         </section>
-        <h1>Sensor DHT 11 - Temperatura</h1>
+        <h1>Sensor 1 - Temperatura</h1>
         <section style="width: 100%;">
-            <canvas id="dht11Temperatura"></canvas>
+            <canvas id="sensor1Temperatura"></canvas>
         </section>
-        <h1>Sensor Luminosidade</h1>
-        <section style="width: 100%;">
-            <canvas id="luminosidade"></canvas>
+        <h1>Sensor 2 - Umidade</h1>
+        <section style="width:100%">
+            <canvas id="sensor2Umidade"></canvas>
         </section>
-        <h1>Sensor LM 35 - Temperatura</h1>
+        <h1>Sensor 2 - Temperatura</h1>
         <section style="width: 100%;">
-            <canvas id="lm35Temperatura"></canvas>
-        </section>
-        <h1>Sensor Chave</h1>
-        <section style="width: 100%;">
-            <canvas id="chave"></canvas>
+            <canvas id="sensor2Temperatura"></canvas>
         </section>
     </div>
 
     <script>
-        /* -- dht11Umidade -- */
-        var contextoDht11Umidade = document.getElementById('dht11Umidade').getContext('2d');
+        /* -- Sensor 1  -- */
+        var contextoDht11Umidade = document.getElementById('sensor1Umidade').getContext('2d');
         contextoDht11Umidade.canvas.width = 1000;
         contextoDht11Umidade.canvas.height = 300;
         var dht11Umidade = new Chart(
@@ -81,8 +77,7 @@
                 }
             }
         );
-        /* -- dht11Temperatura -- */
-        var contextoDht11Temperatura = document.getElementById('dht11Temperatura').getContext('2d');
+        var contextoDht11Temperatura = document.getElementById('sensor1Temperatura').getContext('2d');
         contextoDht11Temperatura.canvas.width = 1000;
         contextoDht11Temperatura.canvas.height = 300;
         var dht11Temperatura = new Chart(
@@ -121,20 +116,60 @@
                 }
             }
         );
-        /* -- luminosidade -- */
-        var contextoLuminosidade = document.getElementById('luminosidade').getContext('2d');
-        contextoLuminosidade.canvas.width = 1000;
-        contextoLuminosidade.canvas.height = 300;
-        var luminosidade = new Chart(
-            contextoLuminosidade,
+
+        /* -- Sensor 2  -- */
+        var contextoDht11Umidade = document.getElementById('sensor2Umidade').getContext('2d');
+        contextoDht11Umidade.canvas.width = 1000;
+        contextoDht11Umidade.canvas.height = 300;
+        var dht11Umidade = new Chart(
+            contextoDht11Umidade,
             {
                 type: 'line',
                 data: {
                     datasets: [{
-                        label: 'Luminosidade',
+                        label: 'Umidade',
                         type: 'line',
-                        borderColor: ['#ffd902'],
-                        backgroundColor: ['#ffe135']
+                        borderColor: ['#45b3e7'],
+                        backgroundColor: ['#89cff0']
+                    }]
+                },
+                options: {
+                    scales: {
+                        xAxes: [{
+                            distribution: 'series',
+                            ticks: {
+                                beginAtZero: true
+                            }
+                        }],
+                        yAxes: [{
+                            scaleLabel: {
+                                display: true,
+                                labelString: 'Umidade'
+                            },
+                            ticks: {
+                                beginAtZero: true
+                            }
+                        }]
+                    },
+                    animation: {
+                        duration: 0
+                    }
+                }
+            }
+        );
+        var contextoDht11Temperatura = document.getElementById('sensor2Temperatura').getContext('2d');
+        contextoDht11Temperatura.canvas.width = 1000;
+        contextoDht11Temperatura.canvas.height = 300;
+        var dht11Temperatura = new Chart(
+            contextoDht11Temperatura,
+            {
+                type: 'line',
+                data: {
+                    datasets: [{
+                        label: "Temperatura",
+                        type: 'line',
+                        borderColor: ['#ff3232'],
+                        backgroundColor: ['#ff7f7f']
                     }]
                 },
                 options: {
@@ -161,87 +196,7 @@
                 }
             }
         );
-        /* -- lm35Temperatura */
-        var contextoLm35Temperatura = document.getElementById('lm35Temperatura').getContext('2d');
-        contextoLm35Temperatura.canvas.width = 1000;
-        contextoLm35Temperatura.canvas.height = 300;
-        var lm35Temperatura = new Chart(
-            contextoLm35Temperatura,
-            {
-                type: 'line',
-                data: {
-                    datasets: [{
-                        label: 'Temperatura',
-                        type: 'line',
-                        borderColor: ['#ffd902'],
-                        backgroundColor: ['#ffe135']
-                    }]
-                },
-                options: {
-                    scales: {
-                        xAxes: [{
-                            distribution: 'series',
-                            ticks: {
-                                beginAtZero: true
-                            }
-                        }],
-                        yAxes: [{
-                            scaleLabel: {
-                                display: true,
-                                labelString: 'Temperatura'
-                            },
-                            ticks: {
-                                beginAtZero: true
-                            }
-                        }]
-                    },
-                    animation: {
-                        duration: 0
-                    }
-                }
-            }
-        );
-        /* -- chave */
-        var contextoChave = document.getElementById('chave').getContext('2d');
-        contextoChave.canvas.width = 1000;
-        contextoChave.canvas.height = 300;
-        var chave = new Chart(
-            contextoChave,
-            {
-                type: 'line',
-                data: {
-                    datasets: [{
-                        label: 'Chave',
-                        type: 'line',
-                        borderColor: ['#ffd902'],
-                        backgroundColor: ['#ffe135']
-                    }]
-                },
-                options: {
-                    scales: {
-                        xAxes: [{
-                            distribution: 'series',
-                            ticks: {
-                                beginAtZero: true
-                            }
-                        }],
-                        yAxes: [{
-                            scaleLabel: {
-                                display: true,
-                                labelString: 'Chave'
-                            },
-                            ticks: {
-                                beginAtZero: true
-                            }
-                        }]
-                    },
-                    animation: {
-                        duration: 0
-                    }
-                }
-            }
-        );
-
+        
         var paginacao = {};
         var tempo = {};
         function obterDados(grafico, endpoint) {
@@ -273,11 +228,10 @@
         }
 
         setInterval(() => {
-            obterDados(dht11Umidade, 'dht11/umidade');
-            obterDados(dht11Temperatura, 'dht11/temperatura');
-            obterDados(luminosidade, 'luminosidade');
-            obterDados(lm35Temperatura, 'lm35/temperatura');
-            obterDados(chave, 'chave');
+            obterDados(sensor1Umidade, 'dht11/umidade');
+            obterDados(sensor1Temperatura, 'dht11/temperatura');
+            obterDados(sensor2Umidade, 'dht11/umidade');
+            obterDados(sensor2Temperatura, 'dht11/temperatura');
         }, 1000);
 
     </script>
