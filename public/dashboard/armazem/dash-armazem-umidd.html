@@ -92,7 +92,7 @@
                             </div>
                         </div>
                         <div class="card">
-                            <h3>Percentual de alertas de temperatura e umidade emitidos nas últimas 8 semanas</h3>
+                            <h3>Percentual de sensores com alertas</h3>
                             <canvas id="chart-porcent"></canvas>
                         </div>
                     </div>
@@ -166,18 +166,11 @@
             labels: ['Janeiro', 'Fevereiro', 'Março', 'Abril'],
             datasets: [{
                 label: 'Umidade',
-                backgroundColor: '#58A1E4',
-                borderColor: '#58A1E4',
+                backgroundColor: '#025183',
+                borderColor: '#025183',
                 data: [20, 15, 13, 8],
                 borderWidth: 1
             },
-            {
-                label: 'Temperatura',
-                backgroundColor: '#025183',
-                borderColor: '#025183',
-                data: [4, 2, 1, 7],
-                borderWidth: 1
-            }
             
         ]
         },
@@ -195,7 +188,7 @@
     new Chart(ctxPorcent, {
         type: 'pie',
         data: {
-            labels: ['Temperatura', 'Umidade'],
+            labels: ['Com alertas', 'Sem'],
             datasets: [{
                 label: '# of Votes',
                 data: [14, 56],

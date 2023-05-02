@@ -92,7 +92,7 @@
                             </div>
                         </div>
                         <div class="card">
-                            <h3>Percentual de alertas de temperatura e umidade emitidos nas últimas 8 semanas</h3>
+                            <h3>Percentual de sensores com alertas</h3>
                             <canvas id="chart-porcent"></canvas>
                         </div>
                     </div>
@@ -195,7 +195,7 @@
     new Chart(ctxPorcent, {
         type: 'pie',
         data: {
-            labels: ['Temperatura', 'Umidade'],
+            labels: ['Com alertas', 'Sem alertas'],
             datasets: [{
                 label: '# of Votes',
                 data: [14, 56],

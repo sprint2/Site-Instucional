@@ -133,7 +133,8 @@ select option:checked {
 }
 
 .container h3 {
-    font-size: 14px;   
+    font-size: 13px; 
+    text-align: center;  
 }
 
 .container.cards {
@@ -190,12 +191,16 @@ select option:checked {
     display: flex;
     align-items: center;
     gap: 8px;
-    font-size: 30px;
+    font-size: 20px;
     font-weight: 800;   
     color: #383838;
     margin-top: 10%;
 }
 
+.info h4 {
+    font-size: 13px;
+}
+
 .info img {
-    width: 40px;
+    width: 35px;
 }
