@@ -35,7 +35,11 @@
                     favor, faça o login abaixo com suas credenciais para acessar sua conta.
                 </p>
                 <div class="form">
-                    <div id="div_erros_login"></div>
+                    <div class="alerta-erro">
+                        <div class="card-erro" id="cardErro">
+                            <span id="mensagem_erro"></span>
+                        </div>
+                    </div>
                     <label for="inp_email">
                         Email ou usuário:
                         <input type="text" id="inp_email" placeholder="seu@email.com">
@@ -45,7 +49,6 @@
                         <input type="password" id="inp_senha" placeholder="********">
                     </label>
                     <button class="btn" onclick="entrar()">entrar</button>
-                    <a href="recpSenha()"><span>Esqueci a senha</span></a>
                     <div id="div_aguardar" class="loading-div">
                     </div>
                 </div>
@@ -56,77 +59,3 @@
 </body>
 
 </html>
-
-<script>
-
-
-    function entrar() {
-        aguardar();
-
-        var emailVar = inp_email.value;
-        var senhaVar = inp_senha.value;
-
-        if (emailVar == "" || senhaVar == "") {
-            cardErro.style.display = "block"
-            mensagem_erro.innerHTML = "(Mensagem de erro para todos os campos em branco)";
-            finalizarAguardar();
-            return false;
-        }
-        else {
-            setInterval(sumirMensagem, 5000)
-        }
-
-        console.log("FORM LOGIN: ", emailVar);
-        console.log("FORM SENHA: ", senhaVar);
-
-        fetch("/empresa/autenticar", {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json"
-            },
-            body: JSON.stringify({
-                emailServer: emailVar,
-                senhaServer: senhaVar
-            })
-        }).then(function (resposta) {
-            console.log("ESTOU NO THEN DO entrar()!")
-
-            if (resposta.ok) {
-                console.log(resposta);
-
-                resposta.json().then(json => {
-                    console.log(json);
-                    console.log(JSON.stringify(json));
-
-                    sessionStorage.EMAIL_EMPRESA = json.email;
-                    sessionStorage.NOME_EMPRESA = json.nome;
-                    sessionStorage.ID_EMPRESA = json.id;
-
-                    setTimeout(function () {
-                        window.location = "./dashboard/cards.html";
-                    }, 1000); // apenas para exibir o loading
-
-                });
-
-            } else {
-
-                console.log("Houve um erro ao tentar realizar o login!");
-
-                resposta.text().then(texto => {
-                    console.error(texto);
-                    finalizarAguardar(texto);
-                });
-            }
-
-        }).catch(function (erro) {
-            console.log(erro);
-        })
-
-        return false;
-    }
-
-    function sumirMensagem() {
-        cardErro.style.display = "none"
-    }
-
-</script>

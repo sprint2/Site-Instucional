@@ -14,6 +14,12 @@
 </head>
 
 <body>
+    <div id="modal">
+        <span id="msg_modal">
+            <img src="../public/img/icons/check-circle.svg" alt="">
+            Cadastro realizado com sucesso!
+        </span>
+    </div>
     <header class="header-login">
 
         <nav id="navbar">
@@ -37,8 +43,8 @@
                 <p>
                     Por favor, insira seus dados para poder ser cadastrado no nosso sistema.
                 </p>
-                <div class="alerta_erro">
-                    <div class="card_erro" id="cardErro">
+                <div class="alerta-erro">
+                    <div class="card-erro" id="cardErro">
                         <span id="mensagem_erro"></span>
                     </div>
                 </div>
@@ -93,113 +99,3 @@
 </body>
 
 </html>
-<script>
-    function cadastrar() {
-        //aguardar();
-        //Recupere o valor da nova input pelo nome do id
-        // Agora vá para o método fetch logo abaixo
-        var nomeVar = inp_nome.value;
-        var cnpjVar = inp_cnpj.value.replace(/\D+/g, '');
-        var telVar = inp_telefone.value.replace(/\D+/g, '');
-        var emailVar = inp_email.value;
-        var senhaVar = inp_senha.value;
-        var confiSenha = inp_confiSenha.value;
-
-        if (confiSenha == senhaVar) {
-            if (nomeVar == "" && cnpjVar == "" && telVar == "" && emailVar == "" && senhaVar == "" && confiSenha == "") {
-                cardErro.style.display = "block"
-                mensagem_erro.innerHTML = "(Preencha todos os campos)";
-                inp_senha.style.borderColor = "#d00";
-                inp_confiSenha.style.borderColor = "#d00";
-                inp_email.style.borderColor = "#d00";
-                inp_telefone.style.borderColor = "#d00";
-                inp_cnpj.style.borderColor = "#d00";
-                inp_nome.style.borderColor = "#d00";
-
-                finalizarAguardar();
-                return false;
-            } else if (nomeVar == "" || cnpjVar == "" || telVar == "" || emailVar == "" || senhaVar == "" || confiSenha == "") {
-                cardErro.style.display = "block"
-                mensagem_erro.innerHTML = "(Existe algum campo não preenchido)";
-
-                if (nomeVar == "") {
-                    inp_nome.style.borderColor = "#d00";
-                } else if (cnpjVar == "") {
-                    inp_cnpj.style.borderColor = "#d00";
-                } else if (telVar == "") {
-                    inp_telefone.style.borderColor == "#d00"
-                } else if (emailVar == "") {
-                    inp_email.style.borderColor == "#d00"
-                } else if (senhaVar == "") {
-                    inp_senha.style.borderColor == "#d00"
-                } else if (confiSenha == "") {
-                    inp_senha.style == "#d00"
-                }
-
-                finalizarAguardar();
-            } else if (cnpjVar.length == 14) {
-                // Enviando o valor da nova input
-                fetch("empresa/cadastrar", {
-                    method: "POST",
-                    headers: {
-                        "Content-Type": "application/json"
-                    },
-                    body: JSON.stringify({
-                        // crie um atributo que recebe o valor recuperado aqui
-                        // Agora vá para o arquivo routes/empresa.js
-                        nomeServer: nomeVar,
-                        cnpjServer: cnpjVar,
-                        telServer: telVar,
-                        emailServer: emailVar,
-                        senhaServer: senhaVar
-                    })
-                }).then(function (resposta) {
-
-                    console.log("resposta: ", resposta);
-
-                    if (resposta.ok) {
-                        cardErro.style.display = "block";
-
-                        mensagem_erro.innerHTML = "Cadastro realizado com sucesso! Redirecionando para tela de Login...";
-
-                        setTimeout(() => {
-                            window.location = "login.html";
-                        }, "2500")
-
-                        limparFormulario();
-                        finalizarAguardar();
-                    } else {
-                        throw ("Houve um erro ao tentar realizar o cadastro!");
-                    }
-                }).catch(function (resposta) {
-                    console.log(`#ERRO: ${resposta}`);
-                    finalizarAguardar();
-                });
-
-                return false;
-            } else {
-                cardErro.style.display = "block"
-                mensagem_erro.innerHTML = "(O CNPJ está incorreto)";
-                inp_cnpj.style.borderColor = "#dd0000"
-
-                finalizarAguardar();
-                return false;
-                setInterval(sumirMensagem, 5000)
-            }
-
-
-        } else {
-            cardErro.style.display = "block"
-            mensagem_erro.innerHTML = "(As senhas não correspondem)";
-            inp_senha.style.borderColor = "#dd0000";
-            inp_confiSenha.style.borderColor = "#dd0000"
-
-            finalizarAguardar();
-            return false;
-        }
-    }
-    function sumirMensagem() {
-        cardErro.style.display = "none"
-    }
-
-</script>

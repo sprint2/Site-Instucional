@@ -19,6 +19,36 @@ body {
     margin: 0;
 }
 
+input {
+    user-select: none;
+}
+
+#modal {
+    position: absolute;
+    left: 50%;
+    top: -100%;
+    transform: translateX(-50%);
+    padding: 8px 16px;
+    background-color: white;
+    border-radius: 0 0 16px 16px;
+    z-index: 1;
+    transition: .5s;
+    user-select: none;
+    pointer-events: none;
+}
+
+#msg_modal {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    color: #5a9644;
+}
+
+#msg_modal img {
+    width: 25px;
+}
+
 #logo {
     position: relative;
     font-family: 'CocoSharp Trial';
@@ -729,6 +759,7 @@ th, td {
     width: 100%;
     height: 40px;
     border: 1px solid #FFFFFF;
+    transition: .5s;
 }
 
 .form label {
@@ -849,7 +880,12 @@ footer .cop {
     text-align: center;
 }
 
+#cardErro {
+    height: 20px;
+    transition: .5s;
+}
+
 #mensagem_erro {
-    color: #d00;
+    color: #b03838;
     font-weight: 600;
 }
