@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/public/styles/style-dashboard.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="/public/script/script.js"></script>
+
+    <title>Dashboard - Geral</title>
+</head>
+<body>
+    <div class="top-line">
+        <div class="empresa">
+            <h1 class="empresa-nome">Nome da empresa - Geral</h1>
+            <select name="slct_armazem" id="slct_armazem" onchange="trocarPaginaDash()">
+                <option value="armazem1">Armazém 1</option>
+                <option value="geral">Geral</option>
+            </select>
+        </div>
+        <span id="span_data"></span>
+    </div>
+    <header>
+            <nav>
+                <ul>
+                    <li>
+                        <a href="/public/dashboard/armazem/dash-armazem.html">
+                            <img src="/public/img/icons/home.svg" alt="">
+                        </a>
+                    </li>
+                    <li>
+                        <a href="/public/dashboard/armazem/dash-armazem-temp.html">
+                            <img src="/public/img/icons/temperatura.svg" alt="" class="temp">
+                        </a>
+                    </li>
+                    <li>
+                        <a href="/public/dashboard/armazem/dash-armazem-umidd.html">
+                            <img src="/public/img/icons/umidade.svg" alt="">
+                        </a>
+                    </li>
+                </ul>
+                <!-- divisão da nav -->
+                <ul>
+                    <li>
+                        <a href="">
+                            <img src="/public/img/icons/configurações.svg" alt="">
+                        </a>
+                    </li>
+                    <li>
+                        <a href="">
+                            <img src="/public/img/icons/ajuda.svg" alt="">
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+            <div class="content">
+                <div class="inner-content">
+                    <div class="container">
+                        <h3>Temperaturas registradas no armazém nas últimas 6 horas</h3>
+                        <canvas id="chart-temp"></canvas>
+                    </div>
+                    <div class="container">
+                        <h3>Níveis de umidade registrados no armazém nas últimas 6 horas</h3>
+                        <canvas id="chart-umdd"></canvas>
+                    </div>
+                </div>
+                <div class="inner-content">
+                    <div class="container cards">
+                        <div class="container info">
+                            <div class="info">
+                                <h4>Sensores instalados</h4>
+                                <span class="valor">
+                                    <img src="../../img/icons/sensor.png" alt="">
+                                    25
+                                </span>
+                            </div>
+                            <div class="info">
+                                <h4>Último alerta emitido há</h4>
+                                <span class="valor">
+                                    <img src="../../img/icons/aviso.png" alt="">
+                                    2 dias
+                                </span>
+                            </div>
+                            <div class="info">
+                                <h4>Alertas emitidos no mês</h4>
+                                <span class="valor">
+                                    <img src="../../img/icons/calendario.png" alt="">
+                                    12
+                                </span>
+                            </div>
+                        </div>
+                        <div class="card">
+                            <h3>Percentual de alertas de temperatura e umidade emitidos nas últimas 8 semanas</h3>
+                            <canvas id="chart-porcent"></canvas>
+                        </div>
+                    </div>
+                    <div class="container">
+                        <h3>Quantidade de alertas emitidos no últimos 4 meses</h3>
+                        <canvas id="chart-alert"></canvas>
+                    </div>
+                </div>
+            </div>
+        
+    </header>
+</body>
+</html>
+
+<script>
+    const ctxTemp = document.getElementById('chart-temp');
+
+    new Chart(ctxTemp, {
+        type: 'line',
+        data: {
+            labels: ['13h00', '13h30', '14h00', '14h30', '15h00', '15h30', '16h00', '16h30', '17h00', '17h30', '18h00'],
+            datasets: [{
+            label: 'Temperatura',
+            backgroundColor: '#025183',
+            borderColor: '#025183',
+            data: [1, 1.5, 1.25, 1.5, 1.625, 1.75, 1.6, 1.45, 1.35, 1.55, 1.7, 1.8, 1.2, 1.3, 1.4, 1.68, 1.59, 1.43],
+            borderWidth: 1,
+        },
+        ]
+        },
+        options: {
+            layout: {
+                padding: {
+                    bottom: 20
+                }
+            }
+        }   
+    });
+
+
+    const ctxUmdd = document.getElementById('chart-umdd');
+
+    new Chart(ctxUmdd, {
+        type: 'line',
+        data: {
+            labels: ['13h00', '13h30', '14h00', '14h30', '15h00', '15h30', '16h00', '16h30', '17h00', '17h30', '18h00'],
+            datasets: [{
+                label: 'Níveis de umidade',
+                backgroundColor: '#58A1E4',
+                borderColor: '#58A1E4',
+                data: [60.0, 65.0, 55.0, 60.0, 70.0, 65.0, 58.0, 68.0, 67.0, 52.0, 63.0, 58.0, 61.0, 56.0],
+                borderWidth: 1
+            },
+            ]
+        },
+        options: {
+            layout: {
+                padding: {
+                    bottom: 20
+                }
+            },
+
+        }  
+    });
+
+    ctxAlert = document.getElementById('chart-alert');
+
+    new Chart(ctxAlert, {
+        type: 'bar',
+        data: {
+            labels: ['Janeiro', 'Fevereiro', 'Março', 'Abril'],
+            datasets: [{
+                label: 'Umidade',
+                backgroundColor: '#58A1E4',
+                borderColor: '#58A1E4',
+                data: [20, 15, 13, 8],
+                borderWidth: 1
+            },
+            {
+                label: 'Temperatura',
+                backgroundColor: '#025183',
+                borderColor: '#025183',
+                data: [4, 2, 1, 7],
+                borderWidth: 1
+            }
+            
+        ]
+        },
+        options: {
+            layout: {
+                padding: {
+                    bottom: 20
+                }
+            }
+        }
+    });
+
+    ctxPorcent = document.getElementById('chart-porcent');
+
+    new Chart(ctxPorcent, {
+        type: 'pie',
+        data: {
+            labels: ['Temperatura', 'Umidade'],
+            datasets: [{
+                label: '# of Votes',
+                data: [14, 56],
+                backgroundColor: [
+                    '#025183',
+                    '#58A1E4',
+                ],
+                borderColor: [
+                    '#025183',
+                    '#58A1E4',
+                ],
+                borderWidth: 1
+            }]
+        },
+        options: {
+             plugins:  {
+                legend: {
+                    position: 'right'
+                }
+             },
+             layout:  {
+                padding: 0,
+                margin: 0
+             }
+        }
+    });
+</script>
