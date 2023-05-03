@@ -12,10 +12,11 @@ cep CHAR(9)
 
 CREATE TABLE empresa (
 idEmpresa INT PRIMARY KEY auto_increment,
-razaoSocial VARCHAR(45),
+nome VARCHAR(45),
 cnpj CHAR(18),
-telefone VARCHAR(20),
-email VARCHAR(30),	
+tel VARCHAR(20),
+email VARCHAR(30),
+senha VARCHAR(30),
 fkEndEmpresa INT,
 	CONSTRAINT fkEndEmp foreign key (fkEndEmpresa)
 		REFERENCES endereco(idEndereco)
@@ -23,7 +24,7 @@ fkEndEmpresa INT,
 
 CREATE TABLE usuario (
 idUsuario INT auto_increment,
-login VARCHAR(15),
+login VARCHAR(20),
 senha CHAR(13),
 fkEmpUsuario INT,
 	CONSTRAINT fkEmpUsu FOREIGN KEY (fkEmpUsuario)

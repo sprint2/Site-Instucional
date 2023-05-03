@@ -3,7 +3,7 @@ var mysql = require("mysql2");
 // CONEXÃO DO MYSQL WORKBENCH (LOCAL)
 var mySqlConfig = {
     host: "localhost",
-    database: "Latech",
+    database: "latech",
     user: "root",
     password: "Jynsoul158Fellas//",
 };

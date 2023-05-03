@@ -5,12 +5,13 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="/public/styles/style-dashboard.css">
+    <link rel="stylesheet" href="../style/style-dashboard.css">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <script src="/public/script/script.js"></script>
+    <script src="/../../script/script.js"></script>
 
     <title>Dashboard - Umidadade</title>
 </head>
+
 <body>
     <div class="top-line">
         <div class="empresa">
@@ -23,93 +24,94 @@
         <span id="span_data"></span>
     </div>
     <header>
-            <nav>
-                <ul>
-                    <li>
-                        <a href="/public/dashboard/armazem/dash-armazem.html">
-                            <img src="/public/img/icons/home.svg" alt="">
-                        </a>
-                    </li>
-                    <li>
-                        <a href="/public/dashboard/armazem/dash-armazem-temp.html">
-                            <img src="/public/img/icons/temperatura.svg" alt="" class="temp">
-                        </a>
-                    </li>
-                    <li>
-                        <a href="/public/dashboard/armazem/dash-armazem-umidd.html">
-                            <img src="/public/img/icons/umidade.svg" alt="">
-                        </a>
-                    </li>
-                </ul>
-                <!-- divisão da nav -->
-                <ul>
-                    <li>
-                        <a href="">
-                            <img src="/public/img/icons/configurações.svg" alt="">
-                        </a>
-                    </li>
-                    <li>
-                        <a href="">
-                            <img src="/public/img/icons/ajuda.svg" alt="">
-                        </a>
-                    </li>
-                    <li>
-                        <a href="/public/index.html" onclick="limparSessao()">
-                            <img src="/public/img/icons/logout.svg" alt="">
-                        </a>
-                    </li>
-                </ul>
-            </nav>
-            <div class="content">
-                <div class="inner-content">
-                    <div class="container">
-                        <h3>Temperaturas registradas no armazém nas últimas 6 horas</h3>
-                        <canvas id="chart-temp"></canvas>
-                    </div>
-                    <div class="container">
-                        <h3>Níveis de umidade registrados no armazém nas últimas 6 horas</h3>
-                        <canvas id="chart-umdd"></canvas>
-                    </div>
+        <nav>
+            <ul>
+                <li>
+                    <a href="/../dashboard/armazem/dash-armazem.html">
+                        <img src="/../../img/icons/home.svg" alt="">
+                    </a>
+                </li>
+                <li>
+                    <a href="/../dashboard/armazem/dash-armazem-temp.html">
+                        <img src="/../../img/icons/temperatura.svg" alt="" class="temp">
+                    </a>
+                </li>
+                <li>
+                    <a href="/../dashboard/armazem/dash-armazem-umidd.html">
+                        <img src="/../../img/icons/umidade.svg" alt="">
+                    </a>
+                </li>
+            </ul>
+            <!-- divisão da nav -->
+            <ul>
+                <li>
+                    <a href="">
+                        <img src="/../img/icons/configurações.svg" alt="">
+                    </a>
+                </li>
+                <li>
+                    <a href="">
+                        <img src="/../img/icons/ajuda.svg" alt="">
+                    </a>
+                </li>
+                <li>
+                    <a href="/../../index.html" onclick="limparSessao()">
+                        <img src="/../img/icons/logout.svg" alt="">
+                    </a>
+                </li>
+            </ul>
+        </nav>
+        <div class="content">
+            <div class="inner-content">
+                <div class="container">
+                    <h3>Temperaturas registradas no armazém nas últimas 6 horas</h3>
+                    <canvas id="chart-temp"></canvas>
                 </div>
-                <div class="inner-content">
-                    <div class="container cards">
-                        <div class="container info">
-                            <div class="info">
-                                <h4>Sensores instalados</h4>
-                                <span class="valor">
-                                    <img src="../../img/icons/sensor.png" alt="">
-                                    13
-                                </span>
-                            </div>
-                            <div class="info">
-                                <h4>Último alerta emitido há</h4>
-                                <span class="valor">
-                                    <img src="../../img/icons/aviso.png" alt="">
-                                    2 dias
-                                </span>
-                            </div>
-                            <div class="info">
-                                <h4>Alertas emitidos no mês</h4>
-                                <span class="valor">
-                                    <img src="../../img/icons/calendario.png" alt="">
-                                    12
-                                </span>
-                            </div>
-                        </div>
-                        <div class="card">
-                            <h3>Percentual de sensores com alertas</h3>
-                            <canvas id="chart-porcent"></canvas>
-                        </div>
-                    </div>
-                    <div class="container">
-                        <h3>Quantidade de alertas emitidos no últimos 4 meses</h3>
-                        <canvas id="chart-alert"></canvas>
-                    </div>
+                <div class="container">
+                    <h3>Níveis de umidade registrados no armazém nas últimas 6 horas</h3>
+                    <canvas id="chart-umdd"></canvas>
                 </div>
             </div>
-        
+            <div class="inner-content">
+                <div class="container cards">
+                    <div class="container info">
+                        <div class="info">
+                            <h4>Sensores instalados</h4>
+                            <span class="valor">
+                                <img src="../../img/icons/sensor.png" alt="">
+                                13
+                            </span>
+                        </div>
+                        <div class="info">
+                            <h4>Último alerta emitido há</h4>
+                            <span class="valor">
+                                <img src="../../img/icons/aviso.png" alt="">
+                                2 dias
+                            </span>
+                        </div>
+                        <div class="info">
+                            <h4>Alertas emitidos no mês</h4>
+                            <span class="valor">
+                                <img src="../../img/icons/calendario.png" alt="">
+                                12
+                            </span>
+                        </div>
+                    </div>
+                    <div class="card">
+                        <h3>Percentual de sensores com alertas</h3>
+                        <canvas id="chart-porcent"></canvas>
+                    </div>
+                </div>
+                <div class="container">
+                    <h3>Quantidade de alertas emitidos no últimos 4 meses</h3>
+                    <canvas id="chart-alert"></canvas>
+                </div>
+            </div>
+        </div>
+
     </header>
 </body>
+
 </html>
 
 <script>
@@ -120,13 +122,13 @@
         data: {
             labels: ['13h00', '13h30', '14h00', '14h30', '15h00', '15h30', '16h00', '16h30', '17h00', '17h30', '18h00'],
             datasets: [{
-            label: 'Temperatura',
-            backgroundColor: '#025183',
-            borderColor: '#025183',
-            data: [1, 1.5, 1.25, 1.5, 1.625, 1.75, 1.6, 1.45, 1.35, 1.55, 1.7, 1.8, 1.2, 1.3, 1.4, 1.68, 1.59, 1.43],
-            borderWidth: 1,
-        },
-        ]
+                label: 'Temperatura',
+                backgroundColor: '#025183',
+                borderColor: '#025183',
+                data: [1, 1.5, 1.25, 1.5, 1.625, 1.75, 1.6, 1.45, 1.35, 1.55, 1.7, 1.8, 1.2, 1.3, 1.4, 1.68, 1.59, 1.43],
+                borderWidth: 1,
+            },
+            ]
         },
         options: {
             layout: {
@@ -134,7 +136,7 @@
                     bottom: 20
                 }
             }
-        }   
+        }
     });
 
 
@@ -160,7 +162,7 @@
                 }
             },
 
-        }  
+        }
     });
 
     ctxAlert = document.getElementById('chart-alert');
@@ -176,8 +178,8 @@
                 data: [20, 15, 13, 8],
                 borderWidth: 1
             },
-            
-        ]
+
+            ]
         },
         options: {
             layout: {
@@ -209,15 +211,15 @@
             }]
         },
         options: {
-             plugins:  {
+            plugins: {
                 legend: {
                     position: 'right'
                 }
-             },
-             layout:  {
+            },
+            layout: {
                 padding: 0,
                 margin: 0
-             }
+            }
         }
     });
 </script>
