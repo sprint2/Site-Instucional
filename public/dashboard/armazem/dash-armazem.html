@@ -114,6 +114,11 @@
 </html>
 
 <script>
+    window.onload = () =>  {
+        nomeEmpresa = document.getElementById("nomeEmp");
+        nomeEmpresa.innerText = sessionStorage.NOME_EMPRESA;
+    }
+
     const ctxTemp = document.getElementById('chart-temp');
 
     new Chart(ctxTemp, {

@@ -16,7 +16,7 @@
     <div class="top-line">
         <div class="empresa">
             <h1 class="empresa-nome">
-                <span id="nomeEmp">Latech</span>
+                <span id="nomeEmp"></span>
             </h1>
             <select name="slct_armazem" id="slct_armazem" onchange="trocarPaginaDash()">
                 <option value="geral">Geral</option>
@@ -117,7 +117,10 @@
 </html>
 
 <script>
-    var nome = sessionStorage.NOME_EMPRESA;
+    window.onload = () =>  {
+        nomeEmpresa = document.getElementById("nomeEmp");
+        nomeEmpresa.innerText = sessionStorage.NOME_EMPRESA;
+    }
 
     const ctxArm = document.getElementById('chart-arm');
 
