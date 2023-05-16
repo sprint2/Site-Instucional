@@ -29,9 +29,9 @@ const serial = async (
             {
                 // altere!
                 // CREDENCIAIS DO BANCO LOCAL - MYSQL WORKBENCH
-                host: 'localhost',
-                user: 'root',
-                password: 'Jynsoul158Fellas//',
+                host: '10.18.32.165',
+                user: 'teste',
+                password: '123',
                 database: 'latech'
             }
         ).promise();
@@ -61,6 +61,7 @@ const serial = async (
         const valores = data.split(';');
         const sensor1Umidade = parseFloat(valores[0]);
         const sensor1Temperatura = parseFloat(valores[1]);
+        const fkSensor = 1
 
         valoressensor1Umidade.push(sensor1Umidade);
         valoressensor1Temperatura.push(sensor1Temperatura);
@@ -72,12 +73,12 @@ const serial = async (
                 // -> altere nome da tabela e colunas se necessário
                 // Este insert irá inserir dados de fk_aquario id=1 (fixo no comando do insert abaixo)
                 // >> Importante! você deve ter o aquario de id 1 cadastrado.
-                sqlquery = `INSERT INTO medida (sensor1Umidade, sensor1Temperatura) VALUES (${sensor1Umidade}, ${sensor1Temperatura}, CURRENT_TIMESTAMP, 1)`;
+                sqlquery = `INSERT INTO metricaHitorico VALUES (null, CURRENT_TIMESTAMP, ${sensor1Umidade}, ${sensor1Temperatura}, 1, ${fkSensor})`;
 
                 // CREDENCIAIS DO BANCO REMOTO - SQL SERVER
                 // Importante! você deve ter criado o usuário abaixo com os comandos presentes no arquivo
                 // "script-criacao-usuario-sqlserver.sql", presente neste diretório.
-                const connStr = "Server=servidor-acquatec.database.windows.net;Database=bd-acquatec;User Id=usuarioParaAPIArduino_datawriter;Password=#Gf_senhaParaAPI;";
+                const connStr = "Server=servidor-10.18.35.205:3306;Database=bd-latech;User Id=remoto;Password=sptech;";
 
                 function inserirComando(conn, sqlquery) {
                     conn.query(sqlquery);
@@ -96,8 +97,7 @@ const serial = async (
                 // Este insert irá inserir dados de fk_aquario id=1 (fixo no comando do insert abaixo)
                 // >> você deve ter o aquario de id 1 cadastrado.
                 await poolBancoDados.execute(
-                    'INSERT INTO medida (sensor1Umidade, sensor1Temperatura) VALUES (?, ?)',
-                    [sensor1Umidade, sensor1Temperatura]
+                    `INSERT INTO metricaHistorico VALUES (null, CURRENT_TIMESTAMP, ${sensor1Umidade}, ${sensor1Temperatura}, 1, ${fkSensor});`
                 );
                 console.log("valores inseridos no banco: ", sensor1Umidade + ", " + sensor1Temperatura)
 
