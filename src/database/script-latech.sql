@@ -42,6 +42,17 @@ subtipo VARCHAR(15),
 validade DATE
 );
 
+CREATE TABLE associativa (
+idAssoc int,
+fkTipoProduto int,
+fkArmazem int,
+	constraint fkTipoAssoc foreign key (fkTipoProduto)
+		references tipoProduto(idTipoProduto),
+	constraint fkArmazenAssoc foreign key (fkArmazem)
+		references armazem(idArmazem),
+    constraint pkTripla primary key (idAssoc, fkTipoProduto, fkArmazem)
+);
+
 
 CREATE TABLE armazem (
 idArmazem INT PRIMARY KEY auto_increment,
@@ -50,10 +61,7 @@ fkEndArmazem INT,
 		REFERENCES endereco(idEndereco),
 fkEmpresa INT,
 	CONSTRAINT fkEmp foreign key (fkEmpresa)
-		REFERENCES empresa(idEmpresa),
-fkTipoProduto INT,
-	CONSTRAINT fkProduto FOREIGN KEY (fkTipoProduto)
-		REFERENCES tipoProduto(idTipoProduto)
+		REFERENCES empresa(idEmpresa)
 );
 
 CREATE TABLE sensor (
@@ -155,16 +163,16 @@ INSERT INTO tipoProduto VALUES
 desc armazem;
 
 INSERT INTO armazem VALUES
-  (NULL, 6, 1, 1),
-  (NULL, 7, 2, 1),
-  (NULL, 8, 3, 1),
-  (NULL, 9, 4, 1),
-  (NULL, 10, 5, 1);
+  (NULL, 6, 1),
+  (NULL, 7, 2),
+  (NULL, 8, 3),
+  (NULL, 9, 4),
+  (NULL, 10, 5);
   
 select * from armazem;
 
 INSERT INTO armazem VALUES
-	(NULL, 11, 1, 1);
+	(NULL, 11, 1);
     
 desc sensor;
 
@@ -186,12 +194,12 @@ INSERT INTO sensor VALUES
 select * from sensor;
 -- Inserido as métricas ideais de cada sensor/armazem
 INSERT INTO metricas VALUES
-(NULL, '4', '45', '7', '65', 1),
-(NULL, '4', '45', '7', '65', 2);
+(NULL, '4.0', '45.0', '7', '65', 1),
+(NULL, '4', '45.0', '7', '65', 2);
+desc metricas;
 
 
-
-
+desc metricaHistorico;
 INSERT INTO metricaHistorico VALUES
 (NULL, '2023-05-02 09:59:59' , 50, 5, 1, 1),
 (NULL, '2023-05-02 10:30:59' , 49, 4, 1, 2),
