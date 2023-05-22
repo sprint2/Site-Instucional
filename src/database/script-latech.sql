@@ -34,26 +34,6 @@ fkResponsavel INT,
 	CONSTRAINT pkComposta PRIMARY KEY (idUsuario, fkEmpUsuario)
 );
 
-
-CREATE TABLE tipoProduto (
-idTipoProduto INT PRIMARY KEY auto_increment,
-tipo VARCHAR(20),
-subtipo VARCHAR(15),
-validade DATE
-);
-
-CREATE TABLE associativa (
-idAssoc int,
-fkTipoProduto int,
-fkArmazem int,
-	constraint fkTipoAssoc foreign key (fkTipoProduto)
-		references tipoProduto(idTipoProduto),
-	constraint fkArmazenAssoc foreign key (fkArmazem)
-		references armazem(idArmazem),
-    constraint pkTripla primary key (idAssoc, fkTipoProduto, fkArmazem)
-);
-
-
 CREATE TABLE armazem (
 idArmazem INT PRIMARY KEY auto_increment,
 fkEndArmazem INT,
@@ -63,6 +43,27 @@ fkEmpresa INT,
 	CONSTRAINT fkEmp foreign key (fkEmpresa)
 		REFERENCES empresa(idEmpresa)
 );
+
+CREATE TABLE tipoProduto (
+idTipoProduto INT PRIMARY KEY auto_increment,
+tipo VARCHAR(20),
+subtipo VARCHAR(15),
+validade DATE
+);
+
+
+CREATE TABLE produtoArmazem (
+idProdArm int,
+fkTipoProduto int,
+fkArmazem int,
+	constraint fkTipoAssoc foreign key (fkTipoProduto)
+		references tipoProduto(idTipoProduto),
+	constraint fkArmazenAssoc foreign key (fkArmazem)
+		references armazem(idArmazem),
+    constraint pkTripla primary key (idProdArm, fkTipoProduto, fkArmazem)
+);
+
+
 
 CREATE TABLE sensor (
 idSensor INT PRIMARY KEY auto_increment,
@@ -115,12 +116,11 @@ INSERT INTO endereco VALUES
 (NULL, 'Rua Antônio Miranda', 'Jardim Ana Lúcia', '1211', '11Andar', '04812-050'),
 (NULL, 'Rua Lauro de Freitas', 'Vila Sílvia', '7789', NULL, '03820-270');
 
-desc endereco;
 
 INSERT INTO endereco VALUES
 (NULL, 'Rua Das Esperanças', 'Sapopemba', '989', NULL, '09060-030');
     
-select * from endereco;
+
 
 INSERT INTO empresa VALUES
 (NULL, 'Italac', '01.257.995/0032-30', '2546-9877', 'interno@italac.com', 1),
@@ -129,38 +129,29 @@ INSERT INTO empresa VALUES
 (NULL, 'Dália', '87.121.254/0001-91', '2546-9877', 'interno@dalia.com', 4),
 (NULL, 'Santa Claa', '56.001.145/0001-13', '2546-9877', 'respinterno@coopsantaclara.com', 5);
 
-desc empresa;
-
 
 -- Inserindo o usuário lider, que é o responsável pela equipe
 INSERT INTO usuario VALUES
-(NULL, 'resp.italac', '!1234567', 1, NULL),
-(NULL, 'prim.lvida', '!1234567', 2, NULL),
-(NULL, 'prim.paulista', '!1234567', 3, NULL),
-(NULL, 'prim.dalia', '!1234567', 4, NULL),
-(NULL, 'sc.primar', '!1234567', 5, NULL);
+(NULL, 'resp.italac', '!111111111111', 1, NULL),
+(NULL, 'prim.lvida', '!222222222222', 2, NULL),
+(NULL, 'prim.paulista', '!333333333333', 3, NULL),
+(NULL, 'prim.dalia', '!444444444444', 4, NULL),
+(NULL, 'sc.primar', '!555555555555', 5, NULL);
 
 
 -- Inserindo os usuarios secundários, os que possuem líderes
 
 INSERT INTO usuario VALUES
-(NULL, 'sec.italac', '1234567!', 1, 1),
-(NULL, 'terc.italac', '$1234567', 1, 1),
-(NULL, 'sec.lvida', '1234567!', 2, 2),
-(NULL, 'terc.lvida', '$1234567', 2, 2),
-(NULL, 'sec.paulista', '1234567!', 3, 3),
-(NULL, 'terc.paulista', '$1234567', 3, 3),
-(NULL, 'sec.dalia', '1234567!', 4, 4),
-(NULL, 'terc.dalia', '$1234567', 4, 4),
-(NULL, 'sc.sec', '1234567!', 5, 5),
-(NULL, 'sc.terc', '$1234567', 5, 5);
-
-INSERT INTO tipoProduto VALUES
-(NULL, 'vaca', 'Integral', '2023-05-23'),
-(NULL, 'vaca', 'Desnatado', '2023-05-23'),
-(NULL, 'vaca', 'semiDesnatado', '2023-05-23');
-
-desc armazem;
+(NULL, 'sec.italac', '5R7bF8N3t9W2E', 1, 1),
+(NULL, 'terc.italac', 'X2sG6H1k4P9Y3', 1, 1),
+(NULL, 'sec.lvida', 'J9mN1i6O4qT7L', 2, 2),
+(NULL, 'terc.lvida', 'A3cV7x8bK2o5P', 2, 2),
+(NULL, 'sec.paulista', 'H5tY9sR7wX1Z2', 3, 3),
+(NULL, 'terc.paulista', 'D8fG4h2J6vN5M', 3, 3),
+(NULL, 'sec.dalia', 'B6nY2j7K4lT8U', 4, 4),
+(NULL, 'terc.dalia', 'Q1wE4rT9yU3I7', 4, 4),
+(NULL, 'sc.sec', 'Z5xV7mB2nC3d4', 5, 5),
+(NULL, 'sc.terc', 'F2gH5jK8lP6O', 5, 5);
 
 INSERT INTO armazem VALUES
   (NULL, 6, 1),
@@ -168,8 +159,12 @@ INSERT INTO armazem VALUES
   (NULL, 8, 3),
   (NULL, 9, 4),
   (NULL, 10, 5);
-  
-select * from armazem;
+
+INSERT INTO tipoProduto VALUES
+(NULL, 'vaca', 'Integral', '2023-05-23'),
+(NULL, 'vaca', 'Desnatado', '2023-05-23'),
+(NULL, 'vaca', 'semiDesnatado', '2023-05-23');
+
 
 INSERT INTO armazem VALUES
 	(NULL, 11, 1);
@@ -191,12 +186,12 @@ INSERT INTO sensor VALUES
 (NULL, 'DHT11', 'Temp/Hum', 'I', NULL),
 (NULL, 'DHT11', 'Temp/Hum', 'I', NULL),
 (NULL, 'DHT11', 'Temp/Hum', 'I', NULL); 
-select * from sensor;
+
 -- Inserido as métricas ideais de cada sensor/armazem
 INSERT INTO metricas VALUES
 (NULL, '4.0', '45.0', '7', '65', 1),
 (NULL, '4', '45.0', '7', '65', 2);
-desc metricas;
+
 
 
 desc metricaHistorico;
