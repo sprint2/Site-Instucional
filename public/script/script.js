@@ -178,13 +178,11 @@ function entrar() {
                 console.log(json);
                 console.log(JSON.stringify(json));
 
-                sessionStorage.EMAIL_EMPRESA = json.email;
-                sessionStorage.NOME_EMPRESA = json.nome;
-                sessionStorage.ID_EMPRESA = json.id;
-
+                sessionStorage.NOME_EMPRESA = json.EmpresaNome;
+                
                 setTimeout(function () {
                     window.location = "./dashboard/geral/dash-geral.html";
-                }, 1000); // apenas para exibir o loading
+                }, 1500); // apenas para exibir o loading
 
             });
 
