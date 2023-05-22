@@ -76,6 +76,16 @@ fkArmazem INT,
 		REFERENCES armazem(idArmazem)
 );
 
+create table aviso (
+idAviso int primary key auto_increment,
+tipo varchar(45),
+	constraint tipochk check (tipo in('temperatura', 'umidade')),
+dataAviso datetime,
+fkSensorAviso int,
+	constraint fkAvisoSensor foreign key(fkSensorAviso) 
+		references sensor(idSensor)
+);
+
 CREATE TABLE metricas (
 idMetricas INT auto_increment,
 minimoTemp FLOAT,
@@ -206,6 +216,121 @@ INSERT INTO metricaHistorico VALUES
 (NULL, '2023-05-02 09:59:59' , 45, 7, 1, 8),
 (NULL, '2023-05-02 10:30:59' , 50, 5, 1, 9),
 (NULL, '2023-05-02 11:00:00' , 52, 5, 1, 10);
+
+insert into aviso values
+(null, 'temperatura','2023-01-01 00:00:00',1),
+(null, 'temperatura','2023-01-02 08:30:00',1),
+(null, 'temperatura','2023-01-05 14:15:00',1),
+(null, 'temperatura','2023-01-08 10:00:00',1),
+(null, 'temperatura','2023-01-12 18:45:00',1),
+(null, 'temperatura','2023-01-15 09:30:00',2),
+(null, 'temperatura','2023-01-18 12:00:00',2),
+(null, 'temperatura','2023-01-20 16:20:00',2),
+(null, 'temperatura','2023-01-24 11:30:00',2),
+(null, 'temperatura','2023-01-26 17:45:00',2),
+(null, 'umidade','2023-01-29 14:00:00',3),
+(null, 'umidade','2023-02-02 09:15:00',3),
+(null, 'umidade','2023-02-05 13:30:00',3),
+(null, 'umidade','2023-02-08 19:00:00',3),
+(null, 'umidade','2023-02-10 10:45:00',3),
+(null, 'umidade','2023-02-14 15:20:00',2),
+(null, 'umidade','2023-02-17 08:00:00',2),
+(null, 'umidade','2023-02-20 11:30:00',2),
+(null, 'umidade','2023-02-23 17:15:00',2),
+(null, 'umidade','2023-02-26 12:45:00',2),
+(null, 'umidade','2023-02-26 12:45:00',2),
+(null, 'temperatura','2023-05-01 00:00:00',1),
+(null, 'temperatura','2023-05-02 08:30:00',1),
+(null, 'temperatura','2023-05-05 14:15:00',1),
+(null, 'temperatura','2023-05-08 10:00:00',1),
+(null, 'temperatura','2023-05-12 18:45:00',1),
+(null, 'temperatura','2023-05-15 09:30:00',2),
+(null, 'temperatura','2023-05-18 12:00:00',2),
+(null, 'temperatura','2023-05-20 16:20:00',2),
+(null, 'temperatura','2023-04-24 11:30:00',2),
+(null, 'temperatura','2023-04-26 17:45:00',2),
+(null, 'umidade','2023-05-29 14:00:00',3),
+(null, 'umidade','2023-05-02 09:15:00',3),
+(null, 'umidade','2023-05-05 13:30:00',3),
+(null, 'umidade','2023-05-08 19:00:00',3),
+(null, 'umidade','2023-05-10 10:45:00',3),
+(null, 'umidade','2023-05-14 15:20:00',2),
+(null, 'umidade','2023-05-17 08:00:00',2),
+(null, 'umidade','2023-05-20 11:30:00',2),
+(null, 'umidade','2023-05-23 17:15:00',2),
+(null, 'umidade','2023-05-26 12:45:00',2),
+(null, 'umidade','2023-05-26 12:45:00',2),
+(null, 'umidade','2023-05-22 14:45:00',2),
+(null, 'umidade','2023-05-22 15:45:00',2),
+(null, 'umidade','2023-05-22 16:45:00',2),
+(null, 'umidade','2023-05-22 17:45:00',2),
+(null, 'umidade','2023-05-22 18:45:00',2);
+
+    
+    
+-- SELECT GRÁFICO PIE --
+SELECT
+     sum(aviso.tipo = 'temperatura') as avisoTemp,
+     sum(aviso.tipo = 'umidade')  as avisoUmidade
+FROM
+    aviso
+    join sensor on aviso.fkSensorAviso = sensor.idSensor
+	join armazem on armazem.idArmazem = sensor.fkArmazem
+    join empresa on armazem.fkEmpresa = empresa.idEmpresa  
+		where armazem.idArmazem = 1 and
+    dataAviso >= DATE_SUB(now(), INTERVAL 8 WEEK);
+
+                
+-- ALERTAS EMITIDOS NO MÊS --
+SELECT
+    COUNT(idAviso) as registros
+FROM
+    aviso
+    join sensor on aviso.fkSensorAviso = sensor.idSensor
+    join armazem on armazem.idArmazem = sensor.fkArmazem
+		where armazem.idArmazem = 1 and
+    dataAviso >= DATE_SUB(now(), INTERVAL 1 MONTH);
+
+
+-- ÚLTIMOS 4 MESES --
+SELECT
+    DATE_FORMAT(dataAviso, "%Y-%m") AS Ano_Mês,
+    COUNT(idAviso) as registros
+FROM
+    aviso
+    join sensor on aviso.fkSensorAviso = sensor.idSensor
+	join armazem on armazem.idArmazem = sensor.fkArmazem
+		where armazem.idArmazem = 1 and
+    dataAviso >= DATE_SUB(now(), INTERVAL 4 MONTH)
+    GROUP BY
+    DATE_FORMAT(aviso.dataAviso, "%Y-%m");
+    
+-- NÍVEIS DE UMIDADE NO ARMAZEM REGISTRADO NAS ULTIMAS 6 HORAS --
+SELECT
+    DATE_FORMAT(dataAviso, "%H:%i") AS Horas,
+     sum(aviso.tipo = 'umidade') as Registros
+FROM
+    aviso
+    join sensor on aviso.fkSensorAviso = sensor.idSensor
+	join armazem on armazem.idArmazem = sensor.fkArmazem
+		where armazem.idArmazem = 1 and
+    dataAviso >= DATE_SUB(now(), INTERVAL 6 hour)
+    GROUP BY
+    DATE_FORMAT(aviso.dataAviso, "%H:%i");
+    
+-- NÍVEIS DE TEMPERATURA NO ARMAZEM REGISTRADO NAS ULTIMAS 6 HORAS --
+SELECT
+    DATE_FORMAT(dataAviso, "%H:%i") AS Horas,
+    sum(aviso.tipo = 'temperatura') as Registros
+FROM
+    aviso
+    join sensor on aviso.fkSensorAviso = sensor.idSensor
+	join armazem on armazem.idArmazem = sensor.fkArmazem
+		where armazem.idArmazem = 1 and
+    dataAviso >= DATE_SUB(now(), INTERVAL 6 hour)
+    GROUP BY
+    DATE_FORMAT(aviso.dataAviso, "%H:%i");
+
 
 -- Select para ver todos os usuarios de uma empresa em especifico
 select * from empresa join usuario
