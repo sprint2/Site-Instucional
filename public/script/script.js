@@ -259,7 +259,7 @@ function cadastrar() {
 
                     setTimeout(() => {
                         window.location = "login.html";
-                    }, "2500")
+                    }, "5000")
 
                     limparFormulario();
                     finalizarAguardar();
