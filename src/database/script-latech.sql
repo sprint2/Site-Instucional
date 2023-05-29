@@ -23,7 +23,7 @@ fkEndEmpresa INT,
 
 CREATE TABLE usuario (
 idUsuario INT auto_increment,
-user VARCHAR(50),
+username VARCHAR(50),
 senha CHAR(13),
 fkEmpUsuario INT,
 	CONSTRAINT fkEmpUsu FOREIGN KEY (fkEmpUsuario)

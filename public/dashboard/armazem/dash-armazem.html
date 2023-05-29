@@ -12,7 +12,7 @@
     <title>Dashboard - Geral</title>
 </head>
 
-<body>
+<body onload="carregarDados()">
     <div class="top-line">
         <div class="empresa">
             <h1 class="empresa-nome"><span id="nomeEmp"></span> - Geral</h1>
@@ -88,7 +88,7 @@
                         </div>
                       
                     </div>
-                    <div onload="graficoPie()" class="card">
+                    <div class="card">
                         <h3>Percentual de alertas de temperatura e umidade emitidos nas últimas 8 semanas</h3>
                         <canvas id="chart-porcent"></canvas>
                     </div>
@@ -106,11 +106,6 @@
 </html>
 
 <script>
-    window.onload = () =>  {
-        nomeEmpresa = document.getElementById("nomeEmp");
-        nomeEmpresa.innerText = sessionStorage.NOME_EMPRESA;
-    }
-
     const ctxTemp = document.getElementById('chart-temp');
 
     new Chart(ctxTemp, {
@@ -193,40 +188,5 @@
         }
     });
 
-    ctxPorcent = document.getElementById('chart-porcent');
-
-    new Chart(ctxPorcent, {
-        type: 'pie',
-        data: {
-            labels: ['Temperatura', 'Umidade'],
-            datasets: [{
-                label: '# of Votes',
-                data: [14, 56],
-                backgroundColor: [
-                    '#025183',
-                    '#58A1E4',
-                ],
-                borderColor: [
-                    '#025183',
-                    '#58A1E4',
-                ],
-                borderWidth: 1
-            }]
-        },
-        options: {
-            plugins: {
-                legend: {
-                    position: 'right'
-                }
-            },
-            layout: {
-                padding: 0,
-                margin: 0
-            }
-        }
-    });
-
-    function graficoPie() {
-        console.log("teste");
-    }
+    
 </script>

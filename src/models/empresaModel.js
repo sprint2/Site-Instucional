@@ -24,9 +24,13 @@ function entrar(email, senha) {
     empresa.idEmpresa,
     empresa.nome as EmpresaNome,
     empresa.cnpj,
-    empresa.tel
-    from usuario join empresa on fkEmpUsuario = idEmpresa WHERE username = '${email}' AND senha = '${senha}';
+    empresa.tel,
+    armazem.idArmazem 
+    from usuario join empresa on fkEmpUsuario = idEmpresa JOIN armazem on fkEmpresa = idEmpresa WHERE username = '${email}' AND senha = '${senha}' ;
     `;
+    // var instrucao2 = `
+    // (SELECT * FROM armazem JOIN empresa ON fkEmpresa = idEmpresa WHERE idEmpresa = (select idEmpresa from empresa where email = '${email}')));
+    // `
   console.log("Executando a instrução SQL: \n" + instrucao);
   return database.executar(instrucao);
 }
