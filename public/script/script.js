@@ -1,4 +1,3 @@
-var nomeEmp = "Ola";
 // animação da navbar
 window.onscroll = function() {
     var nav = document.getElementById("navbar");
@@ -128,7 +127,7 @@ function trocarPaginaDash() {
     };
 };
 
-window.onload = function() {
+function dataHora() {
     const data = new Date();
 
     var dia = String(data.getDate()).padStart(2, '0');

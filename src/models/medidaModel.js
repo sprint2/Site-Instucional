@@ -78,10 +78,44 @@ function buscarMedidasEmTempoReal(idArmazem, idEmpresa) {
     return database.executar(instrucaoSql);
 }
 
+function graficoPie() {
+    instrucaoSql = ""
+
+   if(process.env.AMBIENTE_PROCESSO == "producao") {
+    instrucaoSql = `
+    SELECT
+     sum(aviso.tipo = 'temperatura') as avisoTemp,
+     sum(aviso.tipo = 'umidade')  as avisoUmidade
+    FROM
+    aviso
+    join sensor on aviso.fkSensorAviso = sensor.idSensor
+	join armazem on armazem.idArmazem = sensor.fkArmazem
+    join empresa on armazem.fkEmpresa = empresa.idEmpresa  
+		where armazem.idArmazem = 1 and
+    dataAviso >= DATE_SUB(now(), INTERVAL 8 WEEK);`
+   } else if (process.env.AMBIENTE_PROCESSO == "desenvolvimento") {
+    instrucaoSql = `
+    SELECT
+     sum(aviso.tipo = 'temperatura') as avisoTemp,
+     sum(aviso.tipo = 'umidade')  as avisoUmidade
+    FROM
+    aviso
+    join sensor on aviso.fkSensorAviso = sensor.idSensor
+	join armazem on armazem.idArmazem = sensor.fkArmazem
+    join empresa on armazem.fkEmpresa = empresa.idEmpresa  
+		where armazem.idArmazem = 1 and
+    dataAviso >= DATE_SUB(now(), INTERVAL 8 WEEK);`
+   } else {
+    console.log("\nO AMBIENTE (produção OU desenvolvimento) NÃO FOI DEFINIDO EM app.js\n");
+        return
+    }
+}
+
 
 module.exports = {
     buscarUltimasMedidas,
-    buscarMedidasEmTempoReal
+    buscarMedidasEmTempoReal,
+    graficoPie
 }
 
 

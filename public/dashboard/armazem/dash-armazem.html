@@ -96,7 +96,7 @@
                             </span>
                         </div>
                     </div>
-                    <div class="card">
+                    <div onload="graficoPie()" class="card">
                         <h3>Percentual de alertas de temperatura e umidade emitidos nas últimas 8 semanas</h3>
                         <canvas id="chart-porcent"></canvas>
                     </div>
@@ -233,4 +233,8 @@
             }
         }
     });
+
+    function graficoPie() {
+        console.log("teste");
+    }
 </script>
