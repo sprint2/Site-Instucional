@@ -15,10 +15,7 @@
     <div class="top-line">
         <div class="empresa">
             <h1 class="empresa-nome"><span id="nomeEmp"></span> - Temperatura</h1>
-            <select name="slct_armazem" id="slct_armazem" onchange="trocarPaginaDash()">
-                <option value="armazem1">Armazém 1</option>
-                <option value="geral">Geral</option>
-            </select>
+            
         </div>
         <span id="span_data"></span>
     </div>
@@ -74,20 +71,23 @@
                 <div class="inner-content">
                     <div class="container cards">
                         <div class="container info">
-                            <div class="info">
-                                <h4>Sensores instalados</h4>
+                            <div class="lista-armazens">
+                                <h4>Lista de armazens</h4>
                                 <span class="valor">
-                                    <img src="../../img/icons/sensor.png" alt="">
-                                    12
+                                   
                                 </span>
                             </div>
-                            <div class="info">
-                                <h4>Último alerta emitido há</h4>
+                            <div class="info" onclick="trocarPaginaDash()">
+                                <h4>Armazém com mais alertas & Alertas emitidos no mês</h4>
                                 <span class="valor">
                                     <img src="../../img/icons/aviso.png" alt="">
-                                    2 dias
+                                    Armazem 4
+                                    <img src="../../img/icons/calendario.png" alt="">
+                                    7
                                 </span>
                             </div>
+                          
+                        </div>
                             <div class="info">
                                 <h4>Alertas emitidos no mês</h4>
                                 <span class="valor">
