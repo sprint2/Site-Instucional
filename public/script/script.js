@@ -100,26 +100,26 @@ function simular() {
             <tr>
                 <td class="title-colunm">Sem nossa solução</td>
                 <td class="info-colunm" style="color: #d93838">R$ ${ganhoMes.toFixed(
-                  2
-                )}</td>
+    2
+  )}</td>
                 <td class="info-colunm" style="color: #d93838">R$ ${ganhoAno.toFixed(
-                  2
-                )}</td>
+    2
+  )}</td>
                 <td class="info-column" style="color: #d93838">R$ ${perda.toFixed(
-                  2
-                )}</td>
+    2
+  )}</td>
             </tr>
             <tr>
                 <td class="title-colunm">Com nossa solução</td>
                 <td class="info-colunm" style="color: #6eb844">R$ ${ganhoMesSolucao.toFixed(
-                  2
-                )}</td>
+    2
+  )}</td>
                 <td class="info-colunm" style="color: #6eb844">R$ ${ganhoAnoSolucao.toFixed(
-                  2
-                )}</td>
+    2
+  )}</td>
                 <td class="info-column" style="color: #6eb844">R$ ${perdaSolucao.toFixed(
-                  2
-                )}</td>
+    2
+  )}</td>
             </tr>
         </table>
     `;
@@ -182,15 +182,15 @@ function entrar() {
         console.log(resposta);
 
         resposta.json().then((json) => {
-            console.log(json);
-            console.log(JSON.stringify(json));
-           
-            sessionStorage.ID_ARMAZEM = json.idArmazem;
+          console.log(json);
+          console.log(JSON.stringify(json));
+
+          sessionStorage.ID_ARMAZEM = json.idArmazem;
 
           sessionStorage.NOME_EMPRESA = json.EmpresaNome;
           sessionStorage.ID_EMPRESA = json.idEmpresa;
           sessionStorage.ID_USUARIO = json.idUsuario;
-          
+
 
           setTimeout(function () {
             window.location = "./dashboard/geral/dash-geral.html";
@@ -316,8 +316,8 @@ function carregarDados() {
   var idEmpresa = sessionStorage.ID_EMPRESA;
   var idUsuario = sessionStorage.ID_USUARIO;
   var idArmazem = sessionStorage.ID_ARMAZEM;
-  
-  fetch("../../../dashboard/listar", {
+
+  fetch("dashboard/listar", {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
@@ -329,27 +329,27 @@ function carregarDados() {
 
     }),
   })
-    .then(function (resposta) {
-      console.log("ESTOU NO THEN DO entrar()!");
+    .then(function (resultado) {
 
-      if (resposta.ok) {
-        console.log(resposta);
 
-        resposta.json().then((json) => {
+      if (resultado.ok) {
+        console.log(resultado);
+
+        resultado.json().then((json) => {
           console.log(json);
           console.log(JSON.stringify(json));
         });
       } else {
-        console.log("Houve um erro ao tentar realizar o login!");
 
-        
+
+
       }
     })
     .catch(function (erro) {
       console.log(erro);
     });
 
-    ctxPorcent = document.getElementById("chart-porcent");
+  ctxPorcent = document.getElementById("chart-porcent");
 
   new Chart(ctxPorcent, {
     type: "pie",
