@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../style/cadastroUser.css">
+    <title>Cadastro</title>
+</head> 
+<body>
+    <div class="tudao">
+        <div class="top-line">
+            <div class="empresa">
+                <h1 class="empresa-nome">
+                    <span id="nomeEmp"></span>
+                </h1>
+        
+            </div>
+            <span id="span_data"></span>
+        </div>
+        <header>
+            <nav>
+                <ul>
+                    <li>
+                        <a href="/../dashboard/geral/dash-geral.html">
+                            <img src="../../img/icons/home.svg" alt="">
+                        </a>
+                    </li>
+                </ul>
+                <!-- divisão da nav -->
+                <ul>
+                    <li>
+                        <a href="">
+                            <img src="../../img/icons/configurações.svg" alt="">
+                        </a>
+                    </li>
+                    <li>
+                        <a href="">
+                            <img src="../../img/icons/ajuda.svg" alt="">
+                        </a>
+                    </li>
+                    <li>
+                        <a href="../../login.html" onclick="limparSessao()">
+                            <img src="../../img/icons/logout.svg" alt="">
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+        </HEADER>
+        
+        <div class="caixa-grande">
+
+            <div class="container-cadastro">
+                <div class="caixa-cadastro">
+                    <h2>Cadastro de Usuários</h2>
+                    <label for="input_email">Email</label>
+                    <input id="input_email">
+                    <label for="input_senha">Senha</label>
+                    <input id="input_senha">
+                    <button onclick="usuario()">Cadastrar</button>
+                </div>
+            </div>
+
+            <div class="container-cadastro">
+                <div class="caixa-cadastro">
+                    <h2>Cadastro de Armazéns</h2>
+                    <label for="">Cadastre os armazéns da sua Empresa</label>
+                    <button onclick="armazem()">Cadastrar novo Armazém</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</body>
+</html>
