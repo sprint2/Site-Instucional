@@ -7,8 +7,8 @@ router.get("/", function(req, res) {
    graficosController.testar(req, res);
 })
 
-router.get("/listarPie", function(req, res) {
-   graficosController.listarPenultimoMes(req, res);
+router.get("/listarPie/:idEmpresa", function(req, res) {
+   graficosController.listarPie(req, res);
 })
 
 router.get("/listarMes", function(req, res) {

@@ -1,4 +1,6 @@
 // animação da navbar
+var dataMonth = [];
+
 window.onscroll = function () {
   var nav = document.getElementById("navbar");
   var navLink = document.getElementsByClassName("nav-link");
@@ -315,7 +317,15 @@ function puxarUltimoMes(idEmpresa) {
     if (response.ok) {
         response.json().then(function (resposta) {
             console.log(`Dados recebidos: ${JSON.stringify(resposta)}`);
-            return JSON.stringify(resposta)
+            var respostaDada = {};
+            resposta.forEach(element => {
+              if(element.tipo == 'temperatura') {
+                respostaData.temp = element.registros
+              } else if(element.tipo == 'umidade') {
+                respostaData.umidd = element.registros
+              } 
+              dataMonth.push(respostaData);
+            });
         });
     } else {
         console.error('Nenhum dado encontrado ou erro na API');
@@ -362,9 +372,12 @@ function puxarAntepenultimoMes(idEmpresa) {
 }
 
 function puxarPie(idEmpresa) {
-  fetch(`/graficos/listarPie/${idEmpresa}`, { cache: 'no-store' }).then(function (response) {
+  fetch(`/graficos/listarPie/${idEmpresa}`, {cache: 'no-store' }).then(function (response) {
     if (response.ok) {
         response.json().then(function (resposta) {
+          resposta.forEach(element => {
+            
+          });
             console.log(`Dados recebidos: ${JSON.stringify(resposta)}`);
             return JSON.stringify(resposta)
         });

@@ -94,6 +94,7 @@ function listarQuartoMes(req, res) {
 }
 
 function listarPie(req, res) {
+  var idEmpresa = req.params.idEmpresaServer
   dashboardModel.listarPie(idEmpresa).then(function (resposta) {
     console.log("entramos" + resposta.length)
     
