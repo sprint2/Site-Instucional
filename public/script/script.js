@@ -443,11 +443,6 @@ function puxarDados() {
     var dataAlertaTemp = [dataMonth[0].temp, dataMonth[1].temp, dataMonth[2].temp, dataMonth[3].temp];
     var dataAlertaUmidd = [dataMonth[0].umidd, dataMonth[1].umidd, dataMonth[2].umidd, dataMonth[3].umidd];
 
-    // dataMonth.forEach(element => {
-    //   dataAlertaTemp.push(element.temp);
-    //   dataAlertaUmidd.push(element.umidd);
-    // });
-
     console.log(dataAlertaTemp);
     console.log(dataAlertaUmidd);
 
@@ -584,7 +579,10 @@ function puxarDados() {
         },
       },
     });
+
+    puxarDados();
 }
+
   /*ctxPorcent = document.getElementById("chart-porcent");
 
   new Chart(ctxPorcent, {
@@ -689,7 +687,3 @@ function usuario() {
     return false;
   }
 }
-
-document.addEventListener("DOMContentLoaded", function () {
-  puxarDados();
-})
