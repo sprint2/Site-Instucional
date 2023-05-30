@@ -129,6 +129,20 @@
 </html>
 
 <script>
+    function puxarDados() {
+        fetch("/graficos/listarMes")
+        .then(function (resposta) {
+            if(resposta.ok) {
+                console.log(resposta)
+            } else {
+                throw ('Houve um erro no API');
+            }
+        }).catch(function (resposta) {
+            console.error(resposta);
+        })
+
+    }
+
     window.onload = () =>  {
         nomeEmpresa = document.getElementById("nomeEmp");
         nomeEmpresa.innerText = sessionStorage.NOME_EMPRESA;

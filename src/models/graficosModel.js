@@ -22,9 +22,30 @@ function listar(idEmpresa, idUsuario, idArmazem) {
       `;
     console.log("Executando a instrução SQL: \n" + instrucao);
     return database.executar(instrucao);
-  }
-  
-  module.exports = {
-    listar
-  };
+}
+
+function listarMes() {
+  var instrucao = `
+  SELECT
+    tipo AS tipoAlerta,
+    COUNT(idAlerta) AS quantidade
+  FROM
+    alerta
+  JOIN sensor ON fkSensor = idSensor
+  JOIN armazem ON fkArmazem = idArmazem
+  JOIN empresa ON fkEmpresa = idEmpresa
+  WHERE
+    MONTH(dataAlerta) = MONTH(NOW()) AND idEmpresa = 1
+  GROUP BY
+    tipoAlerta;
+  `;
+
+  console.log("Executando a instrução SQL: \n" + instrucao);
+  return database.executar(instrucao);
+}
+
+module.exports = {
+  listar,
+  listarMes,
+};
   

@@ -1,6 +1,11 @@
-var dashboardModel = require("../models/dashboardModel");
+var dashboardModel = require("../models/graficosModel");
 
 var sessoes = [];
+
+function testar(req, res) {
+  console.log("ENTRAMOS NA empresaController");
+  res.json("ESTAMOS FUNCIONANDO!");
+}
 
 
 function listar(req, res) {
@@ -39,6 +44,19 @@ function listar(req, res) {
     }
   }
   
-  module.exports = {
-    listar
-  };
+function listarMes(req, res) {
+  dashboardModel.listarMes()
+  .then(function(resposta) {
+    console.log("Resultados encontrados: "+resposta.length);
+    console.log("Resultados: "+ JSON.stringify(resultado));
+  })
+  .catch(function (resposta) {
+    console.log("\nHouve um erro ao buscar resultados")
+  });
+}
+
+module.exports = {
+  testar,
+  listar,
+  listarMes,
+};
