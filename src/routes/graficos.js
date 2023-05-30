@@ -12,7 +12,19 @@ router.get("/listarMes", function(req, res) {
 })
 
 router.get("/listarUltimoMes/:idEmpresa", function(req, res) {
-   graficosController.listarUltimoMes(req, res)
+   graficosController.listarUltimoMes(req, res);
+})
+
+router.get("/listarPenultimoMes/:idEmpresa", function(req, res) {
+   graficosController.listarPenultimoMes(req, res);
+})
+
+router.get("/listarAntepenultimoMes/:idEmpresa", function(req, res) {
+   graficosController.listarAntepenultimoMes(req, res);
+})
+
+router.get("/listarQuartoMes/:idEmpresa", function (req, res) {
+   graficosController.listarQuartoMes(req, res);
 })
 
 module.exports = router;

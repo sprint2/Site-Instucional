@@ -75,9 +75,68 @@ function listarUltimoMes(req, res) {
   })
 }
 
+function listarPenultimoMes(req, res) {
+  var idEmpresa = req.params.idEmpresa;
+  
+  dashboardModel.listarPenultimoMes(idEmpresa)
+  .then(
+    function (resultado) {
+    if (resultado.length > 0) {
+      console.log("e aqui")
+      res.status(200).json(resultado);
+    } else {
+        res.status(204).send("Nenhum resultado encontrado!")
+    }
+  })
+  .catch(function (resultado) {
+    console.log("\nHouve um erro ao buscar resultados");
+  })
+}
+
+function listarAntepenultimoMes(req, res) {
+  var idEmpresa = req.params.idEmpresa;
+  
+  dashboardModel.listarAntepenultimoMes(idEmpresa)
+  .then(
+    function (resultado) {
+    if (resultado.length > 0) {
+      console.log("e aqui")
+      res.status(200).json(resultado);
+    } else {
+        res.status(204).send("Nenhum resultado encontrado!")
+    }
+  })
+  .catch(function (resultado) {
+    console.log("\nHouve um erro ao buscar resultados");
+  })
+}
+
+
+function listarQuartoMes(req, res) {
+  var idEmpresa = req.params.idEmpresa;
+  
+  dashboardModel.listarQuartoMes(idEmpresa)
+  .then(
+    function (resultado) {
+    if (resultado.length > 0) {
+      console.log("e aqui")
+      res.status(200).json(resultado);
+    } else {
+        res.status(204).send("Nenhum resultado encontrado!")
+    }
+  })
+  .catch(function (resultado) {
+    console.log("\nHouve um erro ao buscar resultados");
+  })
+}
+
+
 module.exports = {
   testar,
   listar,
   listarMes,
-  listarUltimoMes
+  listarUltimoMes,
+  listarPenultimoMes,
+  listarAntepenultimoMes,
+  listarQuartoMes
 };

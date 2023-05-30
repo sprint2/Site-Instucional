@@ -154,7 +154,7 @@ function entrar() {
   if (emailVar == "" || senhaVar == "") {
     cardErro.style.display = "block";
     mensagem_erro.innerHTML = "Preencha todos os campos";
-    input_email.style.borderColor = "#b03838";
+    inp_email.style.borderColor = "#b03838";
     inp_senha.style.borderColor = "#b03838";
     finalizarAguardar();
     return false;
@@ -223,7 +223,7 @@ function cadastrar() {
   var nomeVar = inp_nome.value;
   var cnpjVar = inp_cnpj.value.replace(/\D+/g, "");
   var telVar = inp_telefone.value.replace(/\D+/g, "");
-  var emailVar = input_email.value;
+  var emailVar = inp_email.value;
   var senhaVar = inp_senha.value;
   var confiSenha = inp_confiSenha.value;
 
@@ -240,7 +240,7 @@ function cadastrar() {
       mensagem_erro.innerHTML = "Preencha todos os campos";
       inp_senha.style.borderColor = "#b03838";
       inp_confiSenha.style.borderColor = "#b03838";
-      input_email.style.borderColor = "#b03838";
+      inp_email.style.borderColor = "#b03838";
       inp_telefone.style.borderColor = "#b03838";
       inp_cnpj.style.borderColor = "#b03838";
       inp_nome.style.borderColor = "#b03838";
@@ -327,8 +327,69 @@ function puxarUltimoMes(idEmpresa) {
 
 }
 
+function puxarPenultimoMes(idEmpresa) {
+  fetch(`/graficos/listarPenultimoMes/${idEmpresa}`, { cache: 'no-store' }).then(function (response) {
+    if (response.ok) {
+        response.json().then(function (resposta) {
+            console.log(`Dados recebidos: ${JSON.stringify(resposta)}`);
+            return JSON.stringify(resposta)
+        });
+    } else {
+        console.error('Nenhum dado encontrado ou erro na API');
+    }
+})
+    .catch(function (error) {
+        console.error(`Erro na obtenção dos dados p/ gráfico: ${error.message}`);
+    });
+
+}
+
+function puxarAntepenultimoMes(idEmpresa) {
+  fetch(`/graficos/listarAntepenultimoMes/${idEmpresa}`, { cache: 'no-store' }).then(function (response) {
+    if (response.ok) {
+        response.json().then(function (resposta) {
+            console.log(`Dados recebidos: ${JSON.stringify(resposta)}`);
+            return JSON.stringify(resposta)
+        });
+    } else {
+        console.error('Nenhum dado encontrado ou erro na API');
+    }
+})
+    .catch(function (error) {
+        console.error(`Erro na obtenção dos dados p/ gráfico: ${error.message}`);
+    });
+
+}
+
+
+function puxarQuartoMes(idEmpresa) {
+  fetch(`/graficos/listarQuartoMes/${idEmpresa}`, { cache: 'no-store' }).then(function (response) {
+    if (response.ok) {
+        response.json().then(function (resposta) {
+            console.log(`Dados recebidos: ${JSON.stringify(resposta)}`);
+            return JSON.stringify(resposta)
+        });
+    } else {
+        console.error('Nenhum dado encontrado ou erro na API');
+    }
+})
+    .catch(function (error) {
+        console.error(`Erro na obtenção dos dados p/ gráfico: ${error.message}`);
+    });
+
+}
+
 function puxarDados() {
     var idEmpresa = sessionStorage.ID_EMPRESA;
+    var dadosUltimoMes = puxarUltimoMes(idEmpresa);
+    var dadosPenultimoMes = puxarPenultimoMes(idEmpresa);
+    var dadosAntepenultimoMes = puxarAntepenultimoMes(idEmpresa);
+    var dadosQuartoMes = puxarQuartoMes(idEmpresa)
+
+    console.log("ultimo"+dadosUltimoMes);
+    console.log("antepenultimo"+dadosAntepenultimoMes);
+    console.log("penultimo"+dadosPenultimoMes);
+    console.log("quarto"+dadosQuartoMes);
     nomeEmpresa = document.getElementById("nomeEmp");
     nomeEmpresa.innerText = sessionStorage.NOME_EMPRESA;
     
@@ -366,75 +427,3 @@ function puxarDados() {
 
   return false;
 }*/
-
-/*  Cadastro do usuario */
-function usuario() {
-  //aguardar();
-  //Recupere o valor da nova input pelo nome do id
-  // Agora vá para o método fetch logo abaixo
-  var emailUser = input_email.value;
-  var senhaUser = input_senha.value;
-  var confiSenha = input_confiSenha.value;
-
-  if (confiSenha == senhaUser) {
-    if (
-      emailUser == "" ||
-      senhaUser == "" ||
-      confiSenha == ""
-    ) {
-      cardErro.style.opacity = "1";
-      mensagem_erro.innerHTML = "Preencha todos os campos";
-      input_senha.style.borderColor = "#b03838";
-      input_confiSenha.style.borderColor = "#b03838";
-      input_email.style.borderColor = "#b03838";
-      finalizarAguardar();
-      return false;
-    } else {
-      // Enviando o valor da nova input
-      fetch("empresa/cadastrarUsuario", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          // crie um atributo que recebe o valor recuperado aqui
-          // Agora vá para o arquivo routes/empresa.js
-          emailServer: emailUser,
-          senhaServer: senhaUser,
-        }),
-      })
-        .then(function (resposta) {
-          console.log("resposta: ", resposta);
-
-          if (resposta.ok) {
-            cardErro.style.opacity = "1";
-
-            modal.style.top = "0";
-
-            setTimeout(() => {
-              window.location = "login.html";
-            }, "5000");
-
-            limparFormulario();
-            finalizarAguardar();
-          } else {
-            throw "Houve um erro ao tentar realizar o cadastro!";
-          }
-        })
-        .catch(function (resposta) {
-          console.log(`#ERRO: ${resposta}`);
-          finalizarAguardar();
-        });
-
-      return false;
-    }
-  } else {
-    cardErro.style.opacity = "1";
-    mensagem_erro.innerHTML = "As senhas não correspondem";
-    input_senha.style.borderColor = "#dd0000";
-    input_confiSenha.style.borderColor = "#dd0000";
-
-    finalizarAguardar();
-    return false;
-  }
-}
