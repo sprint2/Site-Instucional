@@ -310,29 +310,28 @@ function sumirMensagem() {
   cardErro.style.opacity = "0";
 }
 
-function puxarDados() {
-    
-      var idEmpresa = sessionStorage.ID_EMPRESA;
-      var idUsuario = sessionStorage.ID_USUARIO;
-      var idArmazem = sessionStorage.ID_ARMAZEM;
+function puxarUltimoMes(idEmpresa) {
+  fetch(`/graficos/listarUltimoMes/${idEmpresa}`, { cache: 'no-store' }).then(function (response) {
+    if (response.ok) {
+        response.json().then(function (resposta) {
+            console.log(`Dados recebidos: ${JSON.stringify(resposta)}`);
+            return JSON.stringify(resposta)
+        });
+    } else {
+        console.error('Nenhum dado encontrado ou erro na API');
+    }
+})
+    .catch(function (error) {
+        console.error(`Erro na obtenção dos dados p/ gráfico: ${error.message}`);
+    });
 
+}
+
+function puxarDados() {
+    var idEmpresa = sessionStorage.ID_EMPRESA;
     nomeEmpresa = document.getElementById("nomeEmp");
     nomeEmpresa.innerText = sessionStorage.NOME_EMPRESA;
-
     
-
-    fetch(`/graficos/listarMes`)
-    .then(function (resposta) {
-        if(resposta.ok) {
-            
-            console.log(resposta)
-        } else {
-            throw ('Houve um erro no API');
-        }
-    }).catch(function (resposta) {
-        console.error(resposta);
-    })
-
 }
 
   /*ctxPorcent = document.getElementById("chart-porcent");

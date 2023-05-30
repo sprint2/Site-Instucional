@@ -57,8 +57,27 @@ function listarMes(req, res) {
   });
 }
 
+function listarUltimoMes(req, res) {
+  var idEmpresa = req.params.idEmpresa;
+  
+  dashboardModel.listarUltimoMes(idEmpresa)
+  .then(
+    function (resultado) {
+    if (resultado.length > 0) {
+      console.log("e aqui")
+      res.status(200).json(resultado);
+    } else {
+        res.status(204).send("Nenhum resultado encontrado!")
+    }
+  })
+  .catch(function (resultado) {
+    console.log("\nHouve um erro ao buscar resultados");
+  })
+}
+
 module.exports = {
   testar,
   listar,
   listarMes,
+  listarUltimoMes
 };

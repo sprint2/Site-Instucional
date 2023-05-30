@@ -44,8 +44,29 @@ function listarMes(idEmpresa) {
   return database.executar(instrucao);
 }
 
+function listarUltimoMes(idEmpresa) {
+  var instrucao = `
+  SELECT
+	  tipo, 
+	  COUNT(idAlerta) as registros
+  FROM 
+	  alerta
+  JOIN sensor ON fkSensorAlerta = idSensor
+  JOIN armazem ON fkArmazem = idArmazem
+  JOIN empresa ON fkEmpresa = idEmpresa
+  WHERE
+	MONTH(dataAlerta) >= MONTH(DATE_SUB(NOW(), INTERVAL 1 MONTH)) AND
+    idEmpresa = ${idEmpresa}
+  GROUP BY tipo;
+  `;
+
+  console.log("Executando a instrução SQL: \n" + instrucao)
+  return database.executar(instrucao);
+}
+
 module.exports = {
   listar,
   listarMes,
+  listarUltimoMes
 };
   
