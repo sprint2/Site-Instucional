@@ -1,36 +1,35 @@
 <!DOCTYPE html>
 <html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="../style/style-dashboard.css">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="../style/style-dashboard.css" />
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="/../../script/script.js"></script>
+    <script src="https://unpkg.com/@phosphor-icons/web"></script>
 
     <title>Dashboard</title>
-</head>
+  </head>
 
-<body onload="puxarDados()">
+  <body onload="puxarDados()">
     <div class="top-line">
-        <div class="empresa">
-            <h1 class="empresa-nome">
-                <span id="nomeEmp"></span>
-            </h1>
-           
-        </div>
-        <span id="span_data"></span>
+      <div class="empresa">
+        <h1 class="empresa-nome">
+          <span id="nomeEmp"></span>
+        </h1>
+      </div>
+      <span id="span_data"></span>
     </div>
     <header>
-        <nav>
-            <ul>
-                <li>
-                    <a href="/../dashboard/geral/dash-geral.html">
-                        <img src="../../img/icons/home.svg" alt="">
-                    </a>
-                </li>
-                <!-- <li>
+      <nav>
+        <ul>
+          <li>
+            <a href="/../dashboard/geral/dash-geral.html">
+              <img src="../../img/icons/home.svg" alt="" />
+            </a>
+          </li>
+          <!-- <li>
                         <a href="/public/dashboard/geral/dash-geral-temp.html">
                             <img src="/public/img/icons/temperatura.svg" alt="" class="temp">
                         </a>
@@ -40,208 +39,297 @@
                             <img src="/public/img/icons/umidade.svg" alt="">
                         </a>
                     </li> -->
-            </ul>
-            <!-- divisão da nav -->
-            <ul>
-                <li>
-                    <a href="">
-                        <img src="/../../img/icons/configurações.svg" alt="">
-                    </a>
-                </li>
-                <li>
-                    <a href="">
-                        <img src="/../../img/icons/ajuda.svg" alt="">
-                    </a>
-                </li>
-                <li>
-                    <a href="/../../login.html" onclick="limparSessao()">
-                        <img src="/../../img/icons/logout.svg" alt="">
-                    </a>
-                </li>
-            </ul>
-        </nav>
-        <div class="content">
-            <div class="inner-content">
-                <div class="container">
-                    <h3>Quantidade de armazéns com alertas acima do limite aceitável nas últimas 8 semanas</h3>
-                    <canvas id="chart-arm"></canvas>
-                </div>
-                <div class="container">
-                    <h3>Quantidade de alertas emitidos no últimos 4 meses</h3>
-                    <canvas id="chart-alert"></canvas>
-                </div>
-            </div>
-            <div class="inner-content">
-                <div class="container cards">
-                    <div class="container info">
-                        <div class="lista-armazens">
-                            <h4>Lista de armazens</h4>
-                            <span class="valor">
-                               <ul>
-                                <li> <img src="../../img/icons/aviso.png" alt=""> <a href=""> Armazem 1 </a></li>
-                                <li>  <img src="../../img/icons/aviso.png" alt=""><a href="">Armazem 2</a></li>
-                                <li> <img src="../../img/icons/aviso.png" alt=""><a href="">Armazem 3</a></li>
-                                <li> <img src="../../img/icons/aviso.png" alt=""><a href="">Armazem 4</a></li>
-                                <li> <img src="../../img/icons/aviso.png" alt=""><a href="">Armazem 5</a></li>
-                                <li> <img src="../../img/icons/aviso.png" alt=""><a href="">Armazem 6</a></li>
-                                <li> <img src="../../img/icons/aviso.png" alt=""><a href="">Armazem 7</a></li>
-                                <li> <img src="../../img/icons/aviso.png" alt=""><a href="">Armazem 8</a></li>
-                                <li> <img src="../../img/icons/aviso.png" alt=""><a href="">Armazem 9</a></li>
-                                <li> <img src="../../img/icons/aviso.png" alt=""><a href="">Armazem 10</a></li>
-                                <li> <img src="../../img/icons/aviso.png" alt=""><a href="">Armazem 11</a></li>
-                                <li> <img src="../../img/icons/aviso.png" alt=""><a href="">Armazem 12</a></li>
-                                <li> <img src="../../img/icons/aviso.png" alt=""><a href="">Armazem 13</a></li>
-                                <li> <img src="../../img/icons/aviso.png" alt=""><a href="">Armazem 14</a></li>
-                                <li> <img src="../../img/icons/aviso.png" alt=""><a href="">Armazem 15</a></li>
-                                <li> <img src="../../img/icons/aviso.png" alt=""><a href="">Armazem 16</a></li>
-                                <li> <img src="../../img/icons/aviso.png" alt=""><a href="">Armazem 17</a></li>
-
-                            
-                               </ul>
-                            </span>
-                        </div>
-                        <div class="info" onclick="trocarPaginaDash()">
-                            <h4>Armazém com mais alertas & Alertas emitidos no mês</h4>
-                            <span class="valor">
-                                <img src="../../img/icons/aviso.png" alt="">
-                                Armazem 1
-                                <img src="../../img/icons/calendario.png" alt="">
-                                32
-                            </span>
-                        </div>
-                      
-                    </div>
-                    <div class="card">
-                        <h3>Percentual de alertas de temperatura e umidade emitidos nos últimos 6 meses</h3>
-                        <canvas id="chart-porcent"></canvas>
-                    </div>
-                </div>
-                <div class="container">
-                    <h3>Níveis de umidade registrados no armazém nas últimas 6 horas</h3>
-                    <canvas id="chart-umdd"></canvas>
-                </div>
-            </div>
+        </ul>
+        <!-- divisão da nav -->
+        <ul>
+          <li>
+            <a href="">
+              <i class="ph ph-gear-six"></i>
+            </a>
+          </li>
+          <li>
+            <a href="https://latech-help.atlassian.net/">
+              <i class="ph ph-question"></i>
+            </a>
+          </li>
+          <li>
+            <a href="/../../login.html" onclick="limparSessao()">
+              <i class="ph ph-sign-out"></i>
+            </a>
+          </li>
+        </ul>
+      </nav>
+      <div class="content">
+        <div class="inner-content">
+          <div class="container">
+            <h3>
+              Quantidade de armazéns com alertas acima do limite aceitável nas
+              últimas 8 semanas
+            </h3>
+            <canvas id="chart-arm"></canvas>
+          </div>
+          <div class="container">
+            <h3>Quantidade de alertas emitidos no últimos 4 meses</h3>
+            <canvas id="chart-alert"></canvas>
+          </div>
         </div>
-
+        <div class="inner-content">
+          <div class="container cards">
+            <div class="container info">
+              <div class="lista-armazens">
+                <h4>Lista de armazens</h4>
+                <span class="valor">
+                  <ul>
+                    <li>
+                      <img src="../../img/icons/aviso.png" alt="" />
+                      <a href=""> Armazem 1 </a>
+                    </li>
+                    <li>
+                      <img src="../../img/icons/aviso.png" alt="" /><a href=""
+                        >Armazem 2</a
+                      >
+                    </li>
+                    <li>
+                      <img src="../../img/icons/aviso.png" alt="" /><a href=""
+                        >Armazem 3</a
+                      >
+                    </li>
+                    <li>
+                      <img src="../../img/icons/aviso.png" alt="" /><a href=""
+                        >Armazem 4</a
+                      >
+                    </li>
+                    <li>
+                      <img src="../../img/icons/aviso.png" alt="" /><a href=""
+                        >Armazem 5</a
+                      >
+                    </li>
+                    <li>
+                      <img src="../../img/icons/aviso.png" alt="" /><a href=""
+                        >Armazem 6</a
+                      >
+                    </li>
+                    <li>
+                      <img src="../../img/icons/aviso.png" alt="" /><a href=""
+                        >Armazem 7</a
+                      >
+                    </li>
+                    <li>
+                      <img src="../../img/icons/aviso.png" alt="" /><a href=""
+                        >Armazem 8</a
+                      >
+                    </li>
+                    <li>
+                      <img src="../../img/icons/aviso.png" alt="" /><a href=""
+                        >Armazem 9</a
+                      >
+                    </li>
+                    <li>
+                      <img src="../../img/icons/aviso.png" alt="" /><a href=""
+                        >Armazem 10</a
+                      >
+                    </li>
+                    <li>
+                      <img src="../../img/icons/aviso.png" alt="" /><a href=""
+                        >Armazem 11</a
+                      >
+                    </li>
+                    <li>
+                      <img src="../../img/icons/aviso.png" alt="" /><a href=""
+                        >Armazem 12</a
+                      >
+                    </li>
+                    <li>
+                      <img src="../../img/icons/aviso.png" alt="" /><a href=""
+                        >Armazem 13</a
+                      >
+                    </li>
+                    <li>
+                      <img src="../../img/icons/aviso.png" alt="" /><a href=""
+                        >Armazem 14</a
+                      >
+                    </li>
+                    <li>
+                      <img src="../../img/icons/aviso.png" alt="" /><a href=""
+                        >Armazem 15</a
+                      >
+                    </li>
+                    <li>
+                      <img src="../../img/icons/aviso.png" alt="" /><a href=""
+                        >Armazem 16</a
+                      >
+                    </li>
+                    <li>
+                      <img src="../../img/icons/aviso.png" alt="" /><a href=""
+                        >Armazem 17</a
+                      >
+                    </li>
+                  </ul>
+                </span>
+              </div>
+              <div class="info" onclick="trocarPaginaDash()">
+                <h4>Armazém com mais alertas & Alertas emitidos no mês</h4>
+                <span class="valor">
+                  <img src="../../img/icons/aviso.png" alt="" />
+                  Armazem 1
+                  <img src="../../img/icons/calendario.png" alt="" />
+                  32
+                </span>
+              </div>
+            </div>
+            <div class="card">
+              <h3>
+                Percentual de alertas de temperatura e umidade emitidos nos
+                últimos 6 meses
+              </h3>
+              <canvas id="chart-porcent"></canvas>
+            </div>
+          </div>
+          <div class="container">
+            <h3>
+              Níveis de umidade registrados no armazém nas últimas 6 horas
+            </h3>
+            <canvas id="chart-umdd"></canvas>
+          </div>
+        </div>
+      </div>
     </header>
-</body>
-
+  </body>
 </html>
 
 <script>
-    
-    const ctxArm = document.getElementById('chart-arm');
+  const ctxArm = document.getElementById("chart-arm");
 
-    new Chart(ctxArm, {
-        type: 'line',
-        data: {
-            labels: ['01/01 - 07/01', '08/01 - 14/01', '15/01 - 21/01', '22/01 - 28/01', '29/01 - 04/02', '05/02 - 11/02', '12/02 - 18/02', '19/02 - 25/02'],
-            datasets: [{
-                label: 'Quantidade de armazens',
-                backgroundColor: '#025183',
-                borderColor: '#025183',
-                data: [18, 21, 17, 22, 26, 22, 20, 15],
-                borderWidth: 1,
-            },
-            ]
+  new Chart(ctxArm, {
+    type: "line",
+    data: {
+      labels: [
+        "01/01 - 07/01",
+        "08/01 - 14/01",
+        "15/01 - 21/01",
+        "22/01 - 28/01",
+        "29/01 - 04/02",
+        "05/02 - 11/02",
+        "12/02 - 18/02",
+        "19/02 - 25/02",
+      ],
+      datasets: [
+        {
+          label: "Quantidade de armazens",
+          backgroundColor: "#025183",
+          borderColor: "#025183",
+          data: [18, 21, 17, 22, 26, 22, 20, 15],
+          borderWidth: 1,
         },
-        options: {
-            layout: {
-                padding: {
-                    bottom: 20
-                }
-            }
-        }
-    });
-
-
-    const ctxUmdd = document.getElementById('chart-umdd');
-
-    new Chart(ctxUmdd, {
-        type: 'line',
-        data: {
-            labels: ['13h00', '13h30', '14h00', '14h30', '15h00', '15h30', '16h00', '16h30', '17h00', '17h30', '18h00'],
-            datasets: [{
-                label: 'Níveis de umidade',
-                backgroundColor: '#58A1E4',
-                borderColor: '#58A1E4',
-                data: [60.0, 65.0, 55.0, 60.0, 70.0, 65.0, 58.0, 68.0, 67.0, 52.0, 63.0, 58.0, 61.0, 56.0],
-                borderWidth: 1
-            },
-            ]
+      ],
+    },
+    options: {
+      layout: {
+        padding: {
+          bottom: 20,
         },
-        options: {
-            layout: {
-                padding: {
-                    bottom: 20
-                }
-            },
+      },
+    },
+  });
 
-        }
-    });
+  const ctxUmdd = document.getElementById("chart-umdd");
 
-    ctxAlert = document.getElementById('chart-alert')
-
-    new Chart(ctxAlert, {
-        type: 'bar',
-        data: {
-            labels: ['Janeiro', 'Fevereiro', 'Março', 'Abril'],
-            datasets: [{
-                label: 'Umidade',
-                backgroundColor: '#58A1E4',
-                borderColor: '#58A1E4',
-                data: [30, 24, 26, 28],
-                borderWidth: 1
-            },
-            {
-                label: 'Temperatura',
-                backgroundColor: '#025183',
-                borderColor: '#025183',
-                data: [25, 26, 28, 31],
-                borderWidth: 1
-            }
-
-            ]
+  new Chart(ctxUmdd, {
+    type: "line",
+    data: {
+      labels: [
+        "13h00",
+        "13h30",
+        "14h00",
+        "14h30",
+        "15h00",
+        "15h30",
+        "16h00",
+        "16h30",
+        "17h00",
+        "17h30",
+        "18h00",
+      ],
+      datasets: [
+        {
+          label: "Níveis de umidade",
+          backgroundColor: "#58A1E4",
+          borderColor: "#58A1E4",
+          data: [
+            60.0, 65.0, 55.0, 60.0, 70.0, 65.0, 58.0, 68.0, 67.0, 52.0, 63.0,
+            58.0, 61.0, 56.0,
+          ],
+          borderWidth: 1,
         },
-        options: {
-            layout: {
-                padding: {
-                    bottom: 20
-                }
-            }
-        }
-    })
-
-    ctxPorcent = document.getElementById('chart-porcent')
-
-    new Chart(ctxPorcent, {
-        type: 'pie',
-        data: {
-            labels: ['Temperatura', 'Umidade'],
-            datasets: [{
-                label: '# of Votes',
-                data: [110, 108],
-                backgroundColor: [
-                    '#025183',
-                    '#58A1E4',
-                ],
-                borderColor: [
-                    '#025183',
-                    '#58A1E4',
-                ],
-                borderWidth: 1
-            }]
+      ],
+    },
+    options: {
+      layout: {
+        padding: {
+          bottom: 20,
         },
-        options: {
-            plugins: {
-                legend: {
-                    position: 'right'
-                }
-            },
-            layout: {
-                padding: 0,
-                margin: 0
-            }
-        }
-    })
+      },
+    },
+  });
+
+  ctxAlert = document.getElementById("chart-alert");
+
+  new Chart(ctxAlert, {
+    type: "bar",
+    data: {
+      labels: ["Janeiro", "Fevereiro", "Março", "Abril"],
+      datasets: [
+        {
+          label: "Umidade",
+          backgroundColor: "#58A1E4",
+          borderColor: "#58A1E4",
+          data: [30, 24, 26, 28],
+          borderWidth: 1,
+        },
+        {
+          label: "Temperatura",
+          backgroundColor: "#025183",
+          borderColor: "#025183",
+          data: [25, 26, 28, 31],
+          borderWidth: 1,
+        },
+      ],
+    },
+    options: {
+      layout: {
+        padding: {
+          bottom: 20,
+        },
+      },
+    },
+  });
+
+  ctxPorcent = document.getElementById("chart-porcent");
+
+  new Chart(ctxPorcent, {
+    type: "pie",
+    data: {
+      labels: ["Temperatura", "Umidade"],
+      datasets: [
+        {
+          label: "# of Votes",
+          data: [110, 108],
+          backgroundColor: ["#025183", "#58A1E4"],
+          borderColor: ["#025183", "#58A1E4"],
+          borderWidth: 1,
+        },
+      ],
+    },
+    options: {
+      plugins: {
+        legend: {
+          position: "right",
+        },
+      },
+      layout: {
+        padding: 0,
+        margin: 0,
+      },
+    },
+  });
 </script>

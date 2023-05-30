@@ -10,6 +10,11 @@
     border-radius: 30px;
 }
 
+* {
+    text-decoration: none;
+
+}
+
 body {
     background-color: #eee;
     font-family: 'Inter', sans-serif;
@@ -27,6 +32,7 @@ header {
     padding: 1% 2%;
     box-sizing: border-box;
     gap: 15px;
+    
 }
 
 nav {
@@ -40,6 +46,7 @@ nav {
     background-color: #58A1E4;
     border-radius: 16px;
     box-sizing: border-box;
+    
 }
 
 nav ul {
@@ -48,17 +55,33 @@ nav ul {
     flex-direction: column;
     gap: 16px;
     list-style: none;
+    text-decoration: none;
+
 }
 
 nav ul li {
     width: 100%;
     display: flex;
     justify-content: center;
-    align-items: center;
 }
 
 nav ul li a img {
     width: 25px;
+}
+
+.ph-gear-six {
+    color: white;
+    font-size: 30px;
+}
+
+.ph-question {
+    color: white;
+    font-size: 30px;
+}
+
+.ph-sign-out {
+    color: white;
+    font-size: 30px;
 }
 
 select {
