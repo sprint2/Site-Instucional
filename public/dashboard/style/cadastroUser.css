@@ -9,6 +9,9 @@
     background-color: #ddd;
     border-radius: 30px;
 }
+*{
+    text-decoration: none;
+}
 
 body {
     background-color: #eee;
@@ -21,6 +24,7 @@ h1, h2, h3, h4, h5, h6, ul, li {
 }
 
 header {
+    flex-direction: start;
     display: flex;
     padding: 10px;
     width: 10%;
@@ -32,7 +36,9 @@ header {
 
 .tudao {
     display: flex;
-    flex-direction: row;
+    width: 100%;
+    justify-content: center;
+    align-items: center;
 
 }
 
@@ -41,16 +47,21 @@ nav {
     flex-direction: column;
     justify-content: space-between;
     align-items: center;
-    width: 50px;
+    width: 90px;
     height: 90vh;
     padding: 4%;
     background-color: #58A1E4;
     border-radius: 16px;
     box-sizing: border-box;
 }
+nav a {
+    display: flex;
+    flex-direction: row;
+    
+}
 
 nav ul {
-    width: 50%;
+    width: 60%;
     display: flex;
     flex-direction: column;
     gap: 16px;
@@ -58,7 +69,7 @@ nav ul {
 }
 
 nav ul li {
-    width: 50%;
+    width: 100%;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -72,11 +83,13 @@ nav ul li {
     width: 500px;
     height: 80%;
     background-color: #DCDCDC;
+    padding: 20px;
 }
 
 .caixa-grande {
+    width: 90%;
     display: flex;
-    justify-content: space-between;
+    justify-content: center;
     padding-top: 2%;
     gap: 5px;
 }
@@ -107,7 +120,7 @@ label {
 }
 
 .caixa-cadastro h2 {
-    padding-bottom: 80px;
+    padding-bottom: 40px;
     padding-top: 10px;
     font-family: 'Inter';
 }
@@ -139,4 +152,14 @@ button:hover {
 
 img {
     width: 25px;
+}
+
+#cardErro {
+    height: 20px;
+    transition: .5s;
+}
+
+#mensagem_erro {
+    color: #b03838;
+    font-weight: 600;
 }

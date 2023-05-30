@@ -47,12 +47,12 @@ fkEmpresa INT,
 CREATE TABLE tipoProduto (
 idTipoProduto INT PRIMARY KEY auto_increment,
 tipo VARCHAR(20),
-subtipo VARCHAR(15),
-validade DATE
+subtipo VARCHAR(15)
 );
 
 
 CREATE TABLE produtoArmazem (
+validade DATE,
 idProdArm int,
 fkTipoProduto int,
 fkArmazem int,
@@ -168,9 +168,9 @@ INSERT INTO armazem VALUES
   (NULL, 10, 5);
 
 INSERT INTO tipoProduto VALUES
-(NULL, 'vaca', 'Integral', '2023-05-23'),
-(NULL, 'vaca', 'Desnatado', '2023-05-23'),
-(NULL, 'vaca', 'semiDesnatado', '2023-05-23');
+(NULL, 'vaca', 'Integral'),
+(NULL, 'vaca', 'Desnatado'),
+(NULL, 'vaca', 'semidesnatado');
 
 
 INSERT INTO armazem VALUES
