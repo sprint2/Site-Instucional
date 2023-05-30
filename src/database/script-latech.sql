@@ -82,7 +82,7 @@ nivel varchar(45),
 	constraint nivelchk check (nivel in('baixa', 'alta', 'quente', 'frio')),
 dataAlerta datetime,
 fkSensorAlerta int,
-	constraint fkAvisoSensor foreign key(fkSensorAlerta) 
+	constraint fkalertaSensor foreign key(fkSensorAlerta) 
 		references sensor(idSensor)
 );
 
@@ -273,7 +273,7 @@ FROM
 	join armazem on armazem.idArmazem = sensor.fkArmazem
     join empresa on armazem.fkEmpresa = empresa.idEmpresa  
 		where armazem.idArmazem = 1 and
-    dataAviso >= DATE_SUB(now(), INTERVAL 8 WEEK);
+    dataAlerta >= DATE_SUB(now(), INTERVAL 8 WEEK);
 
                 
 -- ALERTAS EMITIDOS NO MÊS --
@@ -296,7 +296,7 @@ FROM
     join sensor on alerta.fkSensorAlerta = sensor.idSensor
 	join armazem on armazem.idArmazem = sensor.fkArmazem
 		where armazem.idArmazem = 1 and
-    dataAviso >= DATE_SUB(now(), INTERVAL 4 MONTH)
+    dataalerta >= DATE_SUB(now(), INTERVAL 4 MONTH)
     GROUP BY
     DATE_FORMAT(alerta.dataAlerta, "%Y-%m");
     
@@ -324,12 +324,12 @@ FROM
 		where armazem.idArmazem = 1 and
     dataAlerta >= DATE_SUB(now(), INTERVAL 6 hour)
     GROUP BY
-    DATE_FORMAT(aviso.dataAlerta, "%H:%i");
+    DATE_FORMAT(alerta.dataAlerta, "%H:%i");
 
 
 -- Select para ver todos os usuarios de uma empresa em especifico
 select * from empresa join usuario
-	on idEmpresa = fkEmpUsuario where empresa.razaoSocial = 'Italac';
+	on idEmpresa = fkEmpUsuario where empresa.nome = 'Italac';
     
     -- select para mostrar todos os dados de uma empresa em especifico e todos os seus respectivos armazens
 select * from empresa join armazem
@@ -338,7 +338,7 @@ select * from empresa join armazem
         
 -- select para verificar o status de um sensor de uma determinada empresa
 select
-empresa.razaoSocial as nomeEmpresa,
+empresa.nome as nomeEmpresa,
 armazem.idArmazem,
 sensor.idSensor,
 sensor.situacaoSensor
