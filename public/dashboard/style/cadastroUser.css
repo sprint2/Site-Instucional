@@ -163,3 +163,8 @@ img {
     color: #b03838;
     font-weight: 600;
 }
+
+.div-checkbox {
+    display: flex;
+    flex-direction: row;
+}

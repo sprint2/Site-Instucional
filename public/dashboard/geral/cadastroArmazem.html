@@ -74,13 +74,16 @@
                     <input id="input_complemento">
                     <label for="input_cep">CEP</label>
                     <input id="input_cep">
-                    <label for="input_rua">Logradouro</label>
-                    <input id="input_rua">
-                    <select name="" id="">
-                        <option value="">Desnatado</option>
-                        <option value="">Integral</option>
-                        <option value="">Semidesnatado</option>
-                    </select>
+
+                    <div class="div-checkbox">
+                        <input type="checkbox">
+                        <input type="checkbox">
+                        <input type="checkbox">
+                    </div>
+                   
+                   
+                   
+                    
 
 
                  
@@ -96,3 +99,82 @@
 
 </body>
 </html>
+
+<script>
+
+
+function usuario() {
+  //aguardar();
+  //Recupere o valor da nova input pelo nome do id
+  // Agora vá para o método fetch logo abaixo
+  var logradouro = input_rua.value;
+  var bairro = input_bairro.value;
+  var numero = input_numero.value;
+  var complemento = input_complemento.value;
+  var cep = input_cep.value;
+
+
+    if (
+      logradouro == "" ||
+      bairro == "" ||
+      numero == "" ||
+      complemento == "" ||
+      cep == ""
+    ) {
+      cardErro.style.opacity = "1";
+      mensagem_erro.innerHTML = "Preencha todos os campos";
+      input_logradouro.style.borderColor = "#b03838";
+      input_bairro.style.borderColor = "#b03838";
+      input_numero.style.borderColor = "#b03838";
+      input_complemento.style.borderColor = "#b03838";
+      input_cep.style.borderColor = "#b03838";
+      finalizarAguardar();
+      return false;
+    } else {
+      // Enviando o valor da nova input
+      fetch("empresa/cadastrarArmazem", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          // crie um atributo que recebe o valor recuperado aqui
+          // Agora vá para o arquivo routes/empresa.js
+          logradouroServer: logradouro,
+          bairroServer: bairro,
+          numeroServer: numero,
+          complementoServer: complemento,
+          cepServer: cep,
+        }),
+      })
+        .then(function (resposta) {
+          console.log("resposta: ", resposta);
+
+          if (resposta.ok) {
+            cardErro.style.opacity = "1";
+
+            modal.style.top = "0";
+
+            setTimeout(() => {
+              window.location = "login.html";
+            }, "5000");
+
+            limparFormulario();
+            finalizarAguardar();
+          } else {
+            throw "Houve um erro ao tentar realizar o cadastro!";
+          }
+        })
+        .catch(function (resposta) {
+          console.log(`#ERRO: ${resposta}`);
+          finalizarAguardar();
+        });
+
+      return false;
+    }
+  } 
+  
+
+
+
+</script>
