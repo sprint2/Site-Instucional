@@ -310,46 +310,32 @@ function sumirMensagem() {
   cardErro.style.opacity = "0";
 }
 
-function carregarDados() {
-  nomeEmpresa = document.getElementById("nomeEmp");
-  nomeEmpresa.innerText = sessionStorage.NOME_EMPRESA;
-  var idEmpresa = sessionStorage.ID_EMPRESA;
-  var idUsuario = sessionStorage.ID_USUARIO;
-  var idArmazem = sessionStorage.ID_ARMAZEM;
+function puxarDados() {
+    
+      var idEmpresa = sessionStorage.ID_EMPRESA;
+      var idUsuario = sessionStorage.ID_USUARIO;
+      var idArmazem = sessionStorage.ID_ARMAZEM;
 
-  fetch("dashboard/listar", {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify({
-      idEmpresaServer: idEmpresa,
-      idUsuarioServer: idUsuario,
-      idArmazemServer: idArmazem
+    nomeEmpresa = document.getElementById("nomeEmp");
+    nomeEmpresa.innerText = sessionStorage.NOME_EMPRESA;
 
-    }),
-  })
-    .then(function (resultado) {
+    
 
-
-      if (resultado.ok) {
-        console.log(resultado);
-
-        resultado.json().then((json) => {
-          console.log(json);
-          console.log(JSON.stringify(json));
-        });
-      } else {
-
-
-
-      }
+    fetch(`/graficos/listarMes`)
+    .then(function (resposta) {
+        if(resposta.ok) {
+            
+            console.log(resposta)
+        } else {
+            throw ('Houve um erro no API');
+        }
+    }).catch(function (resposta) {
+        console.error(resposta);
     })
-    .catch(function (erro) {
-      console.log(erro);
-    });
 
-  ctxPorcent = document.getElementById("chart-porcent");
+}
+
+  /*ctxPorcent = document.getElementById("chart-porcent");
 
   new Chart(ctxPorcent, {
     type: "pie",
@@ -380,4 +366,4 @@ function carregarDados() {
 
 
   return false;
-}
+}*/

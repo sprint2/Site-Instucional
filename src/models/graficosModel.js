@@ -24,7 +24,7 @@ function listar(idEmpresa, idUsuario, idArmazem) {
     return database.executar(instrucao);
 }
 
-function listarMes() {
+function listarMes(idEmpresa) {
   var instrucao = `
   SELECT
     tipo AS tipoAlerta,
