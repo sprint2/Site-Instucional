@@ -1,29 +1,5 @@
 var database = require("../database/config");
 
-function listar(idEmpresa, idUsuario, idArmazem) {
-    console.log(
-      "ACESSEI O empresa MODEL \n \n\t\t >> Se aqui der erro de 'Error: connect ECONNREFUSED',\n \t\t >> verifique suas credenciais de acesso ao banco\n \t\t >> e se o servidor de seu BD está rodando corretamente. \n\n function entrar(): ",
-      email,
-      senha
-    );
-    var instrucao = `
-    SELECT
-     sum(aviso.tipo = 'temperatura') as avisoTemp,
-     sum(aviso.tipo = 'umidade')  as avisoUmidade,
-     empresa.idEmpresa as idEmpresa,
-     empresa.nome as "Nome da Empresa"  
-    FROM
-    aviso
-    join armazem on aviso.fkArmazemAviso = armazem.idArmazem
-    join empresa on armazem.fkEmpresa = empresa.idEmpresa  
-		where idArmazem = ${idArmazem} and
-    dataAviso >= DATE_SUB(now(), INTERVAL 8 WEEK);
-
-      `;
-    console.log("Executando a instrução SQL: \n" + instrucao);
-    return database.executar(instrucao);
-}
-
 function listarMes(idEmpresa) {
   var instrucao = `
   SELECT
@@ -103,7 +79,7 @@ function listarAntepenultimoMes(idEmpresa) {
   `;
 
   console.log("Executando a instrução SQL: "+instrucao);
-  return database.executar(instruca);
+  return database.executar(instrucao);
 }
 
 function listarQuartoMes(idEmpresa) {
@@ -127,12 +103,30 @@ function listarQuartoMes(idEmpresa) {
   return database.executar(instrucao);
 }
 
+function listarPie(idEmpresa) {
+  var instrucao = `
+  SELECT
+     sum(alerta.tipo = 'temperatura') as alertaTemp,
+     sum(alerta.tipo = 'umidade')  as alertaUmidade
+FROM
+    alerta
+    join sensor on alerta.fkSensorAlerta = sensor.idSensor
+	join armazem on armazem.idArmazem = sensor.fkArmazem
+    join empresa on armazem.fkEmpresa = empresa.idEmpresa  
+		where armazem.idArmazem = 1 and
+    dataAlerta >= DATE_SUB(now(), INTERVAL 8 WEEK);
+  `;
+
+  console.log("Executando a instrução SQL: " + instrucao);
+
+  return database.executar(instrucao);
+}
+
 module.exports = {
-  listar,
   listarMes,
   listarUltimoMes,
   listarPenultimoMes,
   listarAntepenultimoMes,
-  listarQuartoMes
+  listarQuartoMes,
+  listarPie
 };
-  

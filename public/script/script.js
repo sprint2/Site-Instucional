@@ -361,6 +361,22 @@ function puxarAntepenultimoMes(idEmpresa) {
 
 }
 
+function puxarPie(idEmpresa) {
+  fetch(`/graficos/listarPie/${idEmpresa}`, { cache: 'no-store' }).then(function (response) {
+    if (response.ok) {
+        response.json().then(function (resposta) {
+            console.log(`Dados recebidos: ${JSON.stringify(resposta)}`);
+            return JSON.stringify(resposta)
+        });
+    } else {
+        console.error('Nenhum dado encontrado ou erro na API');
+    }
+})
+    .catch(function (error) {
+        console.error(`Erro na obtenção dos dados p/ gráfico: ${error.message}`);
+    });
+}
+
 
 function puxarQuartoMes(idEmpresa) {
   fetch(`/graficos/listarQuartoMes/${idEmpresa}`, { cache: 'no-store' }).then(function (response) {
@@ -384,12 +400,14 @@ function puxarDados() {
     var dadosUltimoMes = puxarUltimoMes(idEmpresa);
     var dadosPenultimoMes = puxarPenultimoMes(idEmpresa);
     var dadosAntepenultimoMes = puxarAntepenultimoMes(idEmpresa);
-    var dadosQuartoMes = puxarQuartoMes(idEmpresa)
+    var dadosQuartoMes = puxarQuartoMes(idEmpresa);
+    var Pie = puxarPie(idEmpresa);
 
     console.log("ultimo"+dadosUltimoMes);
     console.log("antepenultimo"+dadosAntepenultimoMes);
     console.log("penultimo"+dadosPenultimoMes);
     console.log("quarto"+dadosQuartoMes);
+    console.log("pie" + Pie)
     nomeEmpresa = document.getElementById("nomeEmp");
     nomeEmpresa.innerText = sessionStorage.NOME_EMPRESA;
     
