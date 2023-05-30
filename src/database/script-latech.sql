@@ -63,8 +63,6 @@ fkArmazem int,
     constraint pkTripla primary key (idProdArm, fkTipoProduto, fkArmazem)
 );
 
-
-
 CREATE TABLE sensor (
 idSensor INT PRIMARY KEY auto_increment,
 nomeSensor VARCHAR(10),
@@ -76,13 +74,15 @@ fkArmazem INT,
 		REFERENCES armazem(idArmazem)
 );
 
-create table aviso (
-idAviso int primary key auto_increment,
+create table alerta (
+idAlerta int primary key auto_increment,
 tipo varchar(45),
 	constraint tipochk check (tipo in('temperatura', 'umidade')),
-dataAviso datetime,
-fkSensorAviso int,
-	constraint fkAvisoSensor foreign key(fkSensorAviso) 
+nivel varchar(45),
+	constraint nivelchk check (nivel in('baixa', 'alta', 'quente', 'frio')),
+dataAlerta datetime,
+fkSensorAlerta int,
+	constraint fkAvisoSensor foreign key(fkSensorAlerta) 
 		references sensor(idSensor)
 );
 
@@ -126,12 +126,9 @@ INSERT INTO endereco VALUES
 (NULL, 'Rua Antônio Miranda', 'Jardim Ana Lúcia', '1211', '11Andar', '04812-050'),
 (NULL, 'Rua Lauro de Freitas', 'Vila Sílvia', '7789', NULL, '03820-270');
 
-
 INSERT INTO endereco VALUES
 (NULL, 'Rua Das Esperanças', 'Sapopemba', '989', NULL, '09060-030');
     
-
-
 INSERT INTO empresa VALUES
 (NULL, 'Italac', '01.257.995/0032-30', '2546-9877', 'interno@italac.com', 1),
 (NULL, 'Longa Vida', '01.979.512/0054-16', '2546-9877', 'responsavel.dist@longavida.com', 2),
@@ -202,8 +199,6 @@ INSERT INTO metricas VALUES
 (NULL, '4.0', '45.0', '7', '65', 1),
 (NULL, '4', '45.0', '7', '65', 2);
 
-
-
 desc metricaHistorico;
 INSERT INTO metricaHistorico VALUES
 (NULL, '2023-05-02 09:59:59' , 50, 5, 1, 1),
@@ -217,64 +212,64 @@ INSERT INTO metricaHistorico VALUES
 (NULL, '2023-05-02 10:30:59' , 50, 5, 1, 9),
 (NULL, '2023-05-02 11:00:00' , 52, 5, 1, 10);
 
-insert into aviso values
-(null, 'temperatura','2023-01-01 00:00:00',1),
-(null, 'temperatura','2023-01-02 08:30:00',1),
-(null, 'temperatura','2023-01-05 14:15:00',1),
-(null, 'temperatura','2023-01-08 10:00:00',1),
-(null, 'temperatura','2023-01-12 18:45:00',1),
-(null, 'temperatura','2023-01-15 09:30:00',2),
-(null, 'temperatura','2023-01-18 12:00:00',2),
-(null, 'temperatura','2023-01-20 16:20:00',2),
-(null, 'temperatura','2023-01-24 11:30:00',2),
-(null, 'temperatura','2023-01-26 17:45:00',2),
-(null, 'umidade','2023-01-29 14:00:00',3),
-(null, 'umidade','2023-02-02 09:15:00',3),
-(null, 'umidade','2023-02-05 13:30:00',3),
-(null, 'umidade','2023-02-08 19:00:00',3),
-(null, 'umidade','2023-02-10 10:45:00',3),
-(null, 'umidade','2023-02-14 15:20:00',2),
-(null, 'umidade','2023-02-17 08:00:00',2),
-(null, 'umidade','2023-02-20 11:30:00',2),
-(null, 'umidade','2023-02-23 17:15:00',2),
-(null, 'umidade','2023-02-26 12:45:00',2),
-(null, 'umidade','2023-02-26 12:45:00',2),
-(null, 'temperatura','2023-05-01 00:00:00',1),
-(null, 'temperatura','2023-05-02 08:30:00',1),
-(null, 'temperatura','2023-05-05 14:15:00',1),
-(null, 'temperatura','2023-05-08 10:00:00',1),
-(null, 'temperatura','2023-05-12 18:45:00',1),
-(null, 'temperatura','2023-05-15 09:30:00',2),
-(null, 'temperatura','2023-05-18 12:00:00',2),
-(null, 'temperatura','2023-05-20 16:20:00',2),
-(null, 'temperatura','2023-04-24 11:30:00',2),
-(null, 'temperatura','2023-04-26 17:45:00',2),
-(null, 'umidade','2023-05-29 14:00:00',3),
-(null, 'umidade','2023-05-02 09:15:00',3),
-(null, 'umidade','2023-05-05 13:30:00',3),
-(null, 'umidade','2023-05-08 19:00:00',3),
-(null, 'umidade','2023-05-10 10:45:00',3),
-(null, 'umidade','2023-05-14 15:20:00',2),
-(null, 'umidade','2023-05-17 08:00:00',2),
-(null, 'umidade','2023-05-20 11:30:00',2),
-(null, 'umidade','2023-05-23 17:15:00',2),
-(null, 'umidade','2023-05-26 12:45:00',2),
-(null, 'umidade','2023-05-26 12:45:00',2),
-(null, 'umidade','2023-05-22 14:45:00',2),
-(null, 'umidade','2023-05-22 15:45:00',2),
-(null, 'umidade','2023-05-22 16:45:00',2),
-(null, 'umidade','2023-05-22 17:45:00',2),
-(null, 'umidade','2023-05-22 18:45:00',2);
+insert into alerta values
+(null, 'temperatura', 'quente','2023-01-01 00:00:00',1),
+(null, 'temperatura', 'frio','2023-01-02 08:30:00',1),
+(null, 'temperatura', 'quente','2023-01-05 14:15:00',1),
+(null, 'temperatura', 'quente','2023-01-08 10:00:00',1),
+(null, 'temperatura', 'frio','2023-01-12 18:45:00',1),
+(null, 'temperatura', 'frio', '2023-01-15 09:30:00',2),
+(null, 'temperatura', 'frio','2023-01-18 12:00:00',2),
+(null, 'temperatura', 'quente','2023-01-20 16:20:00',2),
+(null, 'temperatura', 'quente','2023-01-24 11:30:00',2),
+(null, 'temperatura', 'quente','2023-01-26 17:45:00',2),
+(null, 'umidade', 'baixa','2023-01-29 14:00:00',3),
+(null, 'umidade', 'alta','2023-02-02 09:15:00',3),
+(null, 'umidade', 'baixa','2023-02-05 13:30:00',3),
+(null, 'umidade', 'baixa','2023-02-08 19:00:00',3),
+(null, 'umidade', 'baixa','2023-02-10 10:45:00',3),
+(null, 'umidade', 'alta','2023-02-14 15:20:00',2),
+(null, 'umidade', 'alta','2023-02-17 08:00:00',2),
+(null, 'umidade', 'alta','2023-02-20 11:30:00',2),
+(null, 'umidade', 'baixa','2023-02-23 17:15:00',2),
+(null, 'umidade', 'alta','2023-02-26 12:45:00',2),
+(null, 'umidade', 'alta','2023-02-26 12:45:00',2),
+(null, 'temperatura', 'frio','2023-05-01 00:00:00',1),
+(null, 'temperatura', 'quente','2023-05-02 08:30:00',1),
+(null, 'temperatura', 'quente','2023-05-05 14:15:00',1),
+(null, 'temperatura', 'frio','2023-05-08 10:00:00',1),
+(null, 'temperatura', 'quente','2023-05-12 18:45:00',1),
+(null, 'temperatura', 'quente','2023-05-15 09:30:00',2),
+(null, 'temperatura', 'frio','2023-05-18 12:00:00',2),
+(null, 'temperatura', 'frio','2023-05-20 16:20:00',2),
+(null, 'temperatura', 'quente','2023-04-24 11:30:00',2),
+(null, 'temperatura', 'quente','2023-04-26 17:45:00',2),
+(null, 'umidade', 'baixa','2023-05-29 14:00:00',3),
+(null, 'umidade', 'alta','2023-05-02 09:15:00',3),
+(null, 'umidade', 'alta','2023-05-05 13:30:00',3),
+(null, 'umidade', 'baixa','2023-05-08 19:00:00',3),
+(null, 'umidade', 'baixa','2023-05-10 10:45:00',3),
+(null, 'umidade', 'alta','2023-05-14 15:20:00',2),
+(null, 'umidade', 'alta','2023-05-17 08:00:00',2),
+(null, 'umidade', 'baixa','2023-05-20 11:30:00',2),
+(null, 'umidade', 'baixa','2023-05-23 17:15:00',2),
+(null, 'umidade', 'alta','2023-05-26 12:45:00',2),
+(null, 'umidade', 'alta','2023-05-26 12:45:00',2),
+(null, 'umidade', 'baixa','2023-05-22 14:45:00',2),
+(null, 'umidade', 'alta','2023-05-22 15:45:00',2),
+(null, 'umidade', 'alta','2023-05-22 16:45:00',2),
+(null, 'umidade', 'baixa','2023-05-22 17:45:00',2),
+(null, 'umidade', 'alta','2023-05-22 18:45:00',2);
 
     
     
 -- SELECT GRÁFICO PIE --
 SELECT
-     sum(aviso.tipo = 'temperatura') as avisoTemp,
-     sum(aviso.tipo = 'umidade')  as avisoUmidade
+     sum(alerta.tipo = 'temperatura') as alertaTemp,
+     sum(alerta.tipo = 'umidade')  as alertaUmidade
 FROM
-    aviso
-    join sensor on aviso.fkSensorAviso = sensor.idSensor
+    alerta
+    join sensor on alerta.fkSensorAlerta = sensor.idSensor
 	join armazem on armazem.idArmazem = sensor.fkArmazem
     join empresa on armazem.fkEmpresa = empresa.idEmpresa  
 		where armazem.idArmazem = 1 and
@@ -283,53 +278,53 @@ FROM
                 
 -- ALERTAS EMITIDOS NO MÊS --
 SELECT
-    COUNT(idAviso) as registros
+    COUNT(idAlerta) as registros
 FROM
-    aviso
-    join sensor on aviso.fkSensorAviso = sensor.idSensor
+    alerta
+    join sensor on alerta.fkSensorAlerta = sensor.idSensor
     join armazem on armazem.idArmazem = sensor.fkArmazem
 		where armazem.idArmazem = 1 and
-    dataAviso >= DATE_SUB(now(), INTERVAL 1 MONTH);
+    dataAlerta >= DATE_SUB(now(), INTERVAL 1 MONTH);
 
 
 -- ÚLTIMOS 4 MESES --
 SELECT
-    DATE_FORMAT(dataAviso, "%Y-%m") AS Ano_Mês,
-    COUNT(idAviso) as registros
+    DATE_FORMAT(dataAlerta, "%Y-%m") AS Ano_Mês,
+    COUNT(idAlerta) as registros
 FROM
-    aviso
-    join sensor on aviso.fkSensorAviso = sensor.idSensor
+    alerta
+    join sensor on alerta.fkSensorAlerta = sensor.idSensor
 	join armazem on armazem.idArmazem = sensor.fkArmazem
 		where armazem.idArmazem = 1 and
     dataAviso >= DATE_SUB(now(), INTERVAL 4 MONTH)
     GROUP BY
-    DATE_FORMAT(aviso.dataAviso, "%Y-%m");
+    DATE_FORMAT(alerta.dataAlerta, "%Y-%m");
     
 -- NÍVEIS DE UMIDADE NO ARMAZEM REGISTRADO NAS ULTIMAS 6 HORAS --
 SELECT
-    DATE_FORMAT(dataAviso, "%H:%i") AS Horas,
-     sum(aviso.tipo = 'umidade') as Registros
+    DATE_FORMAT(dataAlerta, "%H:%i") AS Horas,
+     sum(alerta.tipo = 'umidade') as Registros
 FROM
-    aviso
-    join sensor on aviso.fkSensorAviso = sensor.idSensor
+    alerta
+    join sensor on alerta.fkSensorAlerta = sensor.idSensor
 	join armazem on armazem.idArmazem = sensor.fkArmazem
 		where armazem.idArmazem = 1 and
-    dataAviso >= DATE_SUB(now(), INTERVAL 6 hour)
+    dataAlerta >= DATE_SUB(now(), INTERVAL 6 hour)
     GROUP BY
-    DATE_FORMAT(aviso.dataAviso, "%H:%i");
+    DATE_FORMAT(alerta.dataAlerta, "%H:%i");
     
 -- NÍVEIS DE TEMPERATURA NO ARMAZEM REGISTRADO NAS ULTIMAS 6 HORAS --
 SELECT
-    DATE_FORMAT(dataAviso, "%H:%i") AS Horas,
-    sum(aviso.tipo = 'temperatura') as Registros
+    DATE_FORMAT(dataAlerta, "%H:%i") AS Horas,
+    sum(alerta.tipo = 'temperatura') as Registros
 FROM
-    aviso
-    join sensor on aviso.fkSensorAviso = sensor.idSensor
+    alerta
+    join sensor on alerta.fkSensorAlerta = sensor.idSensor
 	join armazem on armazem.idArmazem = sensor.fkArmazem
 		where armazem.idArmazem = 1 and
-    dataAviso >= DATE_SUB(now(), INTERVAL 6 hour)
+    dataAlerta >= DATE_SUB(now(), INTERVAL 6 hour)
     GROUP BY
-    DATE_FORMAT(aviso.dataAviso, "%H:%i");
+    DATE_FORMAT(aviso.dataAlerta, "%H:%i");
 
 
 -- Select para ver todos os usuarios de uma empresa em especifico
@@ -362,3 +357,61 @@ fkArmazem
 				where s.fkArmazem = 1 and a.fkEmpresa = 1
 					order by idMetricaHistorico desc limit 1;
     
+-- select das ocorrencias no ultimo mês
+SELECT
+	tipo, 
+	COUNT(idAlerta) as registros	
+FROM 
+	alerta
+JOIN sensor ON fkSensorAlerta = idSensor
+JOIN armazem ON fkArmazem = idArmazem
+JOIN empresa ON fkEmpresa = idEmpresa
+WHERE
+	MONTH(dataAlerta) >= MONTH(DATE_SUB(NOW(), INTERVAL 1 MONTH)) AND
+    idEmpresa = 1
+GROUP BY tipo;
+
+-- select das ocorrencias no penultimo mês
+SELECT
+	tipo, 
+	COUNT(idAlerta) as registros
+FROM 
+	alerta
+JOIN sensor ON fkSensorAlerta = idSensor
+JOIN armazem ON fkArmazem = idArmazem
+JOIN empresa ON fkEmpresa = idEmpresa
+WHERE
+	MONTH(dataAlerta) <= MONTH(DATE_SUB(NOW(), INTERVAL 1 MONTH)) AND 
+    dataAlerta >= MONTH(DATE_SUB(NOW(), INTERVAL 2 MONTH)) AND
+    idEmpresa = 1
+GROUP BY tipo;
+
+-- select das ocorrencias no antepenultimo mês
+SELECT
+	tipo, 
+	COUNT(idAlerta) as registros
+FROM 
+	alerta
+JOIN sensor ON fkSensorAlerta = idSensor
+JOIN armazem ON fkArmazem = idArmazem
+JOIN empresa ON fkEmpresa = idEmpresa
+WHERE
+	MONTH(dataAlerta) <= MONTH(DATE_SUB(NOW(), INTERVAL 2 MONTH)) AND 
+    dataAlerta >= MONTH(DATE_SUB(NOW(), INTERVAL 3 MONTH)) AND
+    idEmpresa = 1
+GROUP BY tipo;
+
+-- select das ocorrencias no quarto antepenultimo mês
+SELECT
+	tipo, 
+	COUNT(idAlerta) as registros
+FROM 
+	alerta
+JOIN sensor ON fkSensorAlerta = idSensor
+JOIN armazem ON fkArmazem = idArmazem
+JOIN empresa ON fkEmpresa = idEmpresa
+WHERE
+	MONTH(dataAlerta) <= MONTH(DATE_SUB(NOW(), INTERVAL 3 MONTH)) AND 
+    dataAlerta >= MONTH(DATE_SUB(NOW(), INTERVAL 4 MONTH)) AND
+    idEmpresa = 1
+GROUP BY tipo;
