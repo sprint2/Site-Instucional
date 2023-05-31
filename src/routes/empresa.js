@@ -19,8 +19,13 @@ router.post("/cadastrar", function (req, res) {
 router.post("/autenticar", function (req, res) {
     empresaController.entrar(req, res);
 });
+
 router.post("/cadastrarUsuario", function (req, res) {
-    empresaController.entrar(req, res);
+    empresaController.usuario(req, res);
+});
+
+router.post("/cadastrarArmazem", function (req, res) {
+    empresaController.armazem(req, res);
 });
 
 module.exports = router;
