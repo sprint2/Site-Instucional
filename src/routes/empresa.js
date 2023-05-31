@@ -24,8 +24,4 @@ router.post("/cadastrarUsuario", function (req, res) {
     empresaController.usuario(req, res);
 });
 
-router.post("/cadastrarArmazem", function (req, res) {
-    empresaController.armazem(req, res);
-});
-
 module.exports = router;

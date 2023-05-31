@@ -18,15 +18,18 @@ function entrar(email, senha) {
     senha
   );
   var instrucao = `
-    select usuario.username as nome,
-    usuario.senha,
-    usuario.idUsuario,
-    empresa.idEmpresa,
-    empresa.nome as EmpresaNome,
-    empresa.cnpj,
-    empresa.tel,
-    armazem.idArmazem 
-    from usuario join empresa on fkEmpUsuario = idEmpresa JOIN armazem on fkEmpresa = idEmpresa WHERE username = '${email}' AND senha = '${senha}' ;
+    select 
+      usuario.username as nome,
+      usuario.senha,
+      usuario.idUsuario,
+      empresa.idEmpresa,
+      empresa.nome as EmpresaNome,
+      empresa.cnpj
+    from 
+      usuario 
+    join empresa on fkEmpUsuario = idEmpresa
+    WHERE 
+      username = '${email}' AND senha = '${senha}';
     `;
     // var instrucao2 = `
     // (SELECT * FROM armazem JOIN empresa ON fkEmpresa = idEmpresa WHERE idEmpresa = (select idEmpresa from empresa where email = '${email}')));
