@@ -1,4 +1,3 @@
-var dataMonth = [];
 // animação da navbar
 
 window.onscroll = function () {
@@ -312,27 +311,30 @@ function sumirMensagem() {
   cardErro.style.opacity = "0";
 }
 
+// Parte dos Gráficos
+var dataMonth = [];
+
 function puxarUltimoMes(idEmpresa) {
   fetch(`/graficos/listarUltimoMes/${idEmpresa}`, { cache: 'no-store' }).then(function (response) {
     if (response.ok) {
-        response.json().then(function (resposta) {
-            // console.log(`Dados recebidos: ${JSON.stringify(resposta)}`);
-            var respostaData = {};
-            resposta.forEach(element => {
-              if(element.tipo == 'temperatura') {
-                respostaData.temp = element.registros
-              } else if(element.tipo == 'umidade') {
-                respostaData.umidd = element.registros
-              } 
-            });
-            dataMonth.push(respostaData);
+      response.json().then(function (resposta) {
+        // console.log(`Dados recebidos: ${JSON.stringify(resposta)}`);
+        var respostaData = {};
+        resposta.forEach(element => {
+          if (element.tipo == 'temperatura') {
+            respostaData.temp = element.registros
+          } else if (element.tipo == 'umidade') {
+            respostaData.umidd = element.registros
+          }
         });
+        dataMonth.push(respostaData);
+      });
     } else {
-        console.error('Nenhum dado encontrado ou erro na API');
+      console.error('Nenhum dado encontrado ou erro na API');
     }
-})
+  })
     .catch(function (error) {
-        console.error(`Erro na obtenção dos dados p/ gráfico: ${error.message}`);
+      console.error(`Erro na obtenção dos dados p/ gráfico: ${error.message}`);
     });
 
 }
@@ -340,24 +342,24 @@ function puxarUltimoMes(idEmpresa) {
 function puxarPenultimoMes(idEmpresa) {
   fetch(`/graficos/listarPenultimoMes/${idEmpresa}`, { cache: 'no-store' }).then(function (response) {
     if (response.ok) {
-        response.json().then(function (resposta) {
-            // console.log(`Dados recebidos: ${JSON.stringify(resposta)}`);
-            var respostaData = {};
-            resposta.forEach(element => {
-              if(element.tipo == 'temperatura') {
-                respostaData.temp = element.registros
-              } else if(element.tipo == 'umidade') {
-                respostaData.umidd = element.registros
-              } 
-            });
-            dataMonth.push(respostaData);
+      response.json().then(function (resposta) {
+        // console.log(`Dados recebidos: ${JSON.stringify(resposta)}`);
+        var respostaData = {};
+        resposta.forEach(element => {
+          if (element.tipo == 'temperatura') {
+            respostaData.temp = element.registros
+          } else if (element.tipo == 'umidade') {
+            respostaData.umidd = element.registros
+          }
         });
+        dataMonth.push(respostaData);
+      });
     } else {
-        console.error('Nenhum dado encontrado ou erro na API');
+      console.error('Nenhum dado encontrado ou erro na API');
     }
-})
+  })
     .catch(function (error) {
-        console.error(`Erro na obtenção dos dados p/ gráfico: ${error.message}`);
+      console.error(`Erro na obtenção dos dados p/ gráfico: ${error.message}`);
     });
 
 }
@@ -365,24 +367,24 @@ function puxarPenultimoMes(idEmpresa) {
 function puxarAntepenultimoMes(idEmpresa) {
   fetch(`/graficos/listarAntepenultimoMes/${idEmpresa}`, { cache: 'no-store' }).then(function (response) {
     if (response.ok) {
-        response.json().then(function (resposta) {
-            // console.log(`Dados recebidos: ${JSON.stringify(resposta)}`);
-            var respostaData = {};
-            resposta.forEach(element => {
-              if(element.tipo == 'temperatura') {
-                respostaData.temp = element.registros
-              } else if(element.tipo == 'umidade') {
-                respostaData.umidd = element.registros
-              } 
-            });
-            dataMonth.push(respostaData);
+      response.json().then(function (resposta) {
+        // console.log(`Dados recebidos: ${JSON.stringify(resposta)}`);
+        var respostaData = {};
+        resposta.forEach(element => {
+          if (element.tipo == 'temperatura') {
+            respostaData.temp = element.registros
+          } else if (element.tipo == 'umidade') {
+            respostaData.umidd = element.registros
+          }
         });
+        dataMonth.push(respostaData);
+      });
     } else {
-        console.error('Nenhum dado encontrado ou erro na API');
+      console.error('Nenhum dado encontrado ou erro na API');
     }
-})
+  })
     .catch(function (error) {
-        console.error(`Erro na obtenção dos dados p/ gráfico: ${error.message}`);
+      console.error(`Erro na obtenção dos dados p/ gráfico: ${error.message}`);
     });
 
 }
@@ -390,231 +392,203 @@ function puxarAntepenultimoMes(idEmpresa) {
 function puxarQuartoMes(idEmpresa) {
   fetch(`/graficos/listarQuartoMes/${idEmpresa}`, { cache: 'no-store' }).then(function (response) {
     if (response.ok) {
-        response.json().then(function (resposta) {
-            // console.log(`Dados recebidos: ${JSON.stringify(resposta)}`);
-            var respostaData = {};
-            resposta.forEach(element => {
-              if(element.tipo == 'temperatura') {
-                respostaData.temp = element.registros
-              } else if(element.tipo == 'umidade') {
-                respostaData.umidd = element.registros
-              } 
-            });
-            dataMonth.push(respostaData);
+      response.json().then(function (resposta) {
+        // console.log(`Dados recebidos: ${JSON.stringify(resposta)}`);
+        var respostaData = {};
+        resposta.forEach(element => {
+          if (element.tipo == 'temperatura') {
+            respostaData.temp = element.registros
+          } else if (element.tipo == 'umidade') {
+            respostaData.umidd = element.registros
+          }
         });
+        dataMonth.push(respostaData);
+
+        var dataAlertaTemp = [dataMonth[0].temp, dataMonth[1].temp, dataMonth[2].temp, dataMonth[3].temp];
+        var dataAlertaUmidd = [dataMonth[0].umidd, dataMonth[1].umidd, dataMonth[2].umidd, dataMonth[3].umidd];
+
+
+        const ctxAlert = document.getElementById("chart-alert");
+        const labels = ["Janeiro", "Fevereiro", "Março", "Abril"]
+        new Chart(ctxAlert, {
+          type: "bar",
+          data: {
+            labels: labels,
+            datasets: [
+              {
+                label: "Umidade",
+                backgroundColor: "#58A1E4",
+                borderColor: "#58A1E4",
+                data: dataAlertaUmidd,
+                borderWidth: 1,
+              },
+              {
+                label: "Temperatura",
+                backgroundColor: "#025183",
+                borderColor: "#025183",
+                data: dataAlertaTemp,
+                borderWidth: 1,
+              },
+            ],
+          },
+          options: {
+            layout: {
+              padding: {
+                bottom: 20,
+              },
+            },
+          },
+        });
+      });
     } else {
-        console.error('Nenhum dado encontrado ou erro na API');
+      console.error('Nenhum dado encontrado ou erro na API');
     }
-})
+  })
     .catch(function (error) {
-        console.error(`Erro na obtenção dos dados p/ gráfico: ${error.message}`);
+      console.error(`Erro na obtenção dos dados p/ gráfico: ${error.message}`);
     });
 
 }
-
+// Gráfico de Pizza
+var alertTemp = [];
+var alertUmid = [];
 function puxarPie(idEmpresa) {
-  fetch(`/graficos/listarPie/${idEmpresa}`, {cache: 'no-store' }).then(function (response) {
+  alertTemp = [];
+  alertUmid = [];
+  fetch(`/graficos/listarPie/${idEmpresa}`, { cache: 'no-store' }).then(function (response) {
     if (response.ok) {
-        response.json().then(function (resposta) {
-          resposta.forEach(element => {
-            
-          });
-            console.log(`Dados recebidos: ${JSON.stringify(resposta)}`);
-            return JSON.stringify(resposta)
+      response.json().then(function (resposta) {
+        console.log(`Dados recebidos: ${JSON.stringify(resposta)}`);
+        resposta.forEach(element => {
+          alertTemp.push(element.temperatura);
+          alertUmid.push(element.umidade);
         });
-    } else {
-        console.error('Nenhum dado encontrado ou erro na API');
-    }
-})
-    .catch(function (error) {
-        console.error(`Erro na obtenção dos dados p/ gráfico: ${error.message}`);
-    });
-}
 
+        const ctxPorcent = document.getElementById("chart-porcent");
+        new Chart(ctxPorcent, {
+          type: "pie",
+          data: {
+            labels: ["Temperatura", "Umidade"],
+            datasets: [
+              {
+                label: "# of Votes",
+                data: [alertTemp, alertUmid],
+                backgroundColor: ["#025183", "#58A1E4"],
+                borderColor: ["#025183", "#58A1E4"],
+                borderWidth: 1,
+              },
+            ],
+          },
+          options: {
+            plugins: {
+              legend: {
+                position: "right",
+              },
+            },
+            layout: {
+              padding: 0,
+              margin: 0,
+            },
+          },
+        });
+      });
+    } else {
+      console.error('Nenhum dado encontrado ou erro na API');
+    }
+  })
+    .catch(function (error) {
+      console.error(`Erro na obtenção dos dados p/ gráfico: ${error.message}`);
+    });
+
+}
 
 function puxarDados() {
-    var idEmpresa = sessionStorage.ID_EMPRESA;
-    puxarUltimoMes(idEmpresa);
-    puxarPenultimoMes(idEmpresa);
-    puxarAntepenultimoMes(idEmpresa);
-    puxarQuartoMes(idEmpresa);
-    puxarPie(idEmpresa);
+  var idEmpresa = sessionStorage.ID_EMPRESA;
+  puxarUltimoMes(idEmpresa);
+  puxarPenultimoMes(idEmpresa);
+  puxarAntepenultimoMes(idEmpresa);
+  puxarQuartoMes(idEmpresa);
+  puxarPie(idEmpresa);
 
-    var dataAlertaTemp = [dataMonth[0].temp, dataMonth[1].temp, dataMonth[2].temp, dataMonth[3].temp];
-    var dataAlertaUmidd = [dataMonth[0].umidd, dataMonth[1].umidd, dataMonth[2].umidd, dataMonth[3].umidd];
-
-    console.log(dataAlertaTemp);
-    console.log(dataAlertaUmidd);
-
-    nomeEmpresa = document.getElementById("nomeEmp");
-    nomeEmpresa.innerText = sessionStorage.NOME_EMPRESA;   
-
-    const ctxArm = document.getElementById("chart-arm");
-    new Chart(ctxArm, {
-      type: "line",
-      data: {
-        labels: [
-          "01/01 - 07/01",
-          "08/01 - 14/01",
-          "15/01 - 21/01",
-          "22/01 - 28/01",
-          "29/01 - 04/02",
-          "05/02 - 11/02",
-          "12/02 - 18/02",
-          "19/02 - 25/02",
-        ],
-        datasets: [
-          {
-            label: "Quantidade de armazens",
-            backgroundColor: "#025183",
-            borderColor: "#025183",
-            data: [18, 21, 17, 22, 26, 22, 20, 15],
-            borderWidth: 1,
-          },
-        ],
-      },
-      options: {
-        layout: {
-          padding: {
-            bottom: 20,
-          },
-        },
-      },
-    });
-  
-    const ctxUmdd = document.getElementById("chart-umdd");
-    new Chart(ctxUmdd, {
-      type: "line",
-      data: {
-        labels: [
-          "13h00",
-          "13h30",
-          "14h00",
-          "14h30",
-          "15h00",
-          "15h30",
-          "16h00",
-          "16h30",
-          "17h00",
-          "17h30",
-          "18h00",
-        ],
-        datasets: [
-          {
-            label: "Níveis de umidade",
-            backgroundColor: "#58A1E4",
-            borderColor: "#58A1E4",
-            data: [
-              60.0, 65.0, 55.0, 60.0, 70.0, 65.0, 58.0, 68.0, 67.0, 52.0, 63.0,
-              58.0, 61.0, 56.0,
-            ],
-            borderWidth: 1,
-          },
-        ],
-      },
-      options: {
-        layout: {
-          padding: {
-            bottom: 20,
-          },
-        },
-      },
-    });
-  
-    const ctxAlert = document.getElementById("chart-alert");
-    new Chart(ctxAlert, {
-      type: "bar",
-      data: {
-        labels: ["Janeiro", "Fevereiro", "Março", "Abril"],
-        datasets: [
-          {
-            label: "Umidade",
-            backgroundColor: "#58A1E4",
-            borderColor: "#58A1E4",
-            data: dataAlertaUmidd,
-            borderWidth: 1,
-          },
-          {
-            label: "Temperatura",
-            backgroundColor: "#025183",
-            borderColor: "#025183",
-            data: dataAlertaTemp,
-            borderWidth: 1,
-          },
-        ],
-      },
-      options: {
-        layout: {
-          padding: {
-            bottom: 20,
-          },
-        },
-      },
-    });
-  
-    const ctxPorcent = document.getElementById("chart-porcent");
-    new Chart(ctxPorcent, {
-      type: "pie",
-      data: {
-        labels: ["Temperatura", "Umidade"],
-        datasets: [
-          {
-            label: "# of Votes",
-            data: [110, 108],
-            backgroundColor: ["#025183", "#58A1E4"],
-            borderColor: ["#025183", "#58A1E4"],
-            borderWidth: 1,
-          },
-        ],
-      },
-      options: {
-        plugins: {
-          legend: {
-            position: "right",
-          },
-        },
-        layout: {
-          padding: 0,
-          margin: 0,
-        },
-      },
-    });
-
-    puxarDados();
-}
-
-  /*ctxPorcent = document.getElementById("chart-porcent");
-
-  new Chart(ctxPorcent, {
-    type: "pie",
+  if (dataMonth.length < 4) {
+    console.log("ainda menor que 4")
+  } else {
+    dataMonth = []
+  }
+  nomeEmpresa = document.getElementById("nomeEmp");
+  nomeEmpresa.innerText = sessionStorage.NOME_EMPRESA;
+  const ctxArm = document.getElementById("chart-arm");
+  new Chart(ctxArm, {
+    type: "line",
     data: {
-      labels: ["Temperatura", "Umidade"],
+      labels: [
+        "01/01 - 07/01",
+        "08/01 - 14/01",
+        "15/01 - 21/01",
+        "22/01 - 28/01",
+        "29/01 - 04/02",
+        "05/02 - 11/02",
+        "12/02 - 18/02",
+        "19/02 - 25/02",
+      ],
       datasets: [
         {
-          label: "# of Votes",
-          data: [14, 56],
-          backgroundColor: ["#025183", "#58A1E4"],
-          borderColor: ["#025183", "#58A1E4"],
+          label: "Quantidade de armazens",
+          backgroundColor: "#025183",
+          borderColor: "#025183",
+          data: [18, 21, 17, 22, 26, 22, 20, 15],
           borderWidth: 1,
         },
       ],
     },
     options: {
-      plugins: {
-        legend: {
-          position: "right",
-        },
-      },
       layout: {
-        padding: 0,
-        margin: 0,
+        padding: {
+          bottom: 20,
+        },
       },
     },
   });
 
-
-  return false;
-}*/
+  const ctxUmdd = document.getElementById("chart-umdd");
+  new Chart(ctxUmdd, {
+    type: "line",
+    data: {
+      labels: [
+        "13h00",
+        "13h30",
+        "14h00",
+        "14h30",
+        "15h00",
+        "15h30",
+        "16h00",
+        "16h30",
+        "17h00",
+        "17h30",
+        "18h00",
+      ],
+      datasets: [
+        {
+          label: "Níveis de umidade",
+          backgroundColor: "#58A1E4",
+          borderColor: "#58A1E4",
+          data: [
+            60.0, 65.0, 55.0, 60.0, 70.0, 65.0, 58.0, 68.0, 67.0, 52.0, 63.0,
+            58.0, 61.0, 56.0,
+          ],
+          borderWidth: 1,
+        },
+      ],
+    },
+    options: {
+      layout: {
+        padding: {
+          bottom: 20,
+        },
+      },
+    },
+  });
+}
 
 /*  Cadastro do usuario */
 function usuario() {

@@ -106,8 +106,8 @@ function listarQuartoMes(idEmpresa) {
 function listarPie(idEmpresa) {
   var instrucao = `
   SELECT
-     sum(alerta.tipo = 'temperatura') as alertaTemp,
-     sum(alerta.tipo = 'umidade')  as alertaUmidade
+     sum(alerta.tipo = 'temperatura') as temperatura,
+     sum(alerta.tipo = 'umidade')  as umidade
 FROM
     alerta
     join sensor on alerta.fkSensorAlerta = sensor.idSensor
