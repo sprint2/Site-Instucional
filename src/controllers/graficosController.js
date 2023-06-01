@@ -34,7 +34,7 @@ function listarUltimoMes(req, res) {
         }
       })
     .catch(function (resultado) {
-      console.log("\nHouve um erro ao buscar resultados");
+      console.log("\nHouve um erro ao buscar resultados (último mês)");
     })
 }
 
@@ -52,7 +52,7 @@ function listarPenultimoMes(req, res) {
         }
       })
     .catch(function (resultado) {
-      console.log("\nHouve um erro ao buscar resultados");
+      console.log("\nHouve um erro ao buscar resultados (penúltimo mês)");
     })
 }
 
@@ -70,7 +70,7 @@ function listarAntepenultimoMes(req, res) {
         }
       })
     .catch(function (resultado) {
-      console.log("\nHouve um erro ao buscar resultados");
+      console.log("\nHouve um erro ao buscar resultados (antepenultimo mês)");
     })
 }
 
@@ -89,12 +89,13 @@ function listarQuartoMes(req, res) {
         }
       })
     .catch(function (resultado) {
-      console.log("\nHouve um erro ao buscar resultados");
+      console.log("\nHouve um erro ao buscar resultados (quarto mês)");
     })
 }
 
 function listarPie(req, res) {
-  var idEmpresa = req.params.idEmpresaServer
+  var idEmpresa = req.params.idEmpresa;
+
   dashboardModel.listarPie(idEmpresa).then(function (resultado) {
     if (resultado.length > 0) {
       console.log("e aqui")
@@ -105,7 +106,7 @@ function listarPie(req, res) {
     }
   })
     .catch(function (resultado) {
-      console.log("\nHouve um erro ao buscar resultados");
+      console.log("\nHouve um erro ao buscar resultados (pie)");
     })
 
 }

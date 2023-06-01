@@ -106,15 +106,16 @@ function listarQuartoMes(idEmpresa) {
 function listarPie(idEmpresa) {
   var instrucao = `
   SELECT
-     sum(alerta.tipo = 'temperatura') as temperatura,
-     sum(alerta.tipo = 'umidade')  as umidade
-FROM
+    IFNULL(SUM(alerta.tipo = 'temperatura'), 0.000001) AS temperatura,
+    IFNULL(SUM(alerta.tipo = 'umidade'), 0.000001) AS umidade
+  FROM
     alerta
-    join sensor on alerta.fkSensorAlerta = sensor.idSensor
-	join armazem on armazem.idArmazem = sensor.fkArmazem
-    join empresa on armazem.fkEmpresa = empresa.idEmpresa  
-		where armazem.idArmazem = 1 and
-    dataAlerta >= DATE_SUB(now(), INTERVAL 8 WEEK);
+  JOIN sensor ON alerta.fkSensorAlerta = sensor.idSensor
+  JOIN armazem ON armazem.idArmazem = sensor.fkArmazem
+  JOIN empresa ON armazem.fkEmpresa = empresa.idEmpresa
+  WHERE
+    empresa.idEmpresa = ${idEmpresa} AND 
+    dataAlerta >= DATE_SUB(NOW(), INTERVAL 6 MONTH);
   `;
 
   console.log("Executando a instrução SQL: " + instrucao);
