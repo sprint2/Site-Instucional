@@ -277,6 +277,8 @@ function puxarDados() {
    puxarAntepenultimoMes(idEmpresa);
    puxarQuartoMes(idEmpresa);
    puxarPie(idEmpresa);
+   puxarArmazens(idEmpresa);
+   puxarArmazemMaior(idEmpresa);
 
    if (dataMonth.length < 4) {
       console.log("ainda menor que 4")
@@ -359,4 +361,61 @@ function puxarDados() {
          },
       },
    });
+}
+
+function puxarArmazens(idEmpresa) {
+   fetch(`/armazem/listar/${idEmpresa}`, { cache: 'no-store' }).then(function (response) {
+      if (response.ok) {
+         if (response.status === 204) {
+            console.log("vazio")
+         } else {
+            response.json().then(function (resposta) {
+               // console.log(`Dados recebidos: ${JSON.stringify(resposta)}`);
+               var div = document.getElementById("lista_armazens");
+               resposta.forEach(element => {
+                  div.innerHTML += `
+                  <li id="armazem${element.idArmazem}" idArmazem='${element.idArmazem}' onclick="puxarIdArmazem('armazem${element.idArmazem}')">
+                     <img src="../../img/icons/aviso.png" alt="" />
+                     <a href="../armazem/dash-armazem.html"> Armazem ${element.idArmazem} </a>
+                  </li>
+                  `
+               });
+            });
+         }
+      } else {
+         console.error('Nenhum dado encontrado ou erro na API');
+      }
+   })
+   .catch(function (error) {
+      console.error(`Erro na obtenção dos dados p/ gráfico: ${error.message}`);
+   });
+}
+
+function puxarIdArmazem(id) {
+   var liArmazem = document.getElementById(id);
+   var idArmazem = liArmazem.getAttribute("idArmazem");
+
+   sessionStorage.ID_ARMAZEM = idArmazem;
+   console.log("session: "+sessionStorage.ID_ARMAZEM);
+}
+
+function puxarArmazemMaior(idEmpresa) {
+   fetch(`/armazem/listarMaxAlertas/${idEmpresa}`).then(function (resposta) {
+      if(resposta.ok) {
+         if(resposta.status === 204) {
+            console.log("ta vazio")
+         } else {
+            resposta.json().then(function (resposta) {
+               console.log(`Dados recebidos: ${JSON.stringify(resposta)}`);
+               var maxAlert = document.getElementById("max_alert_arm")
+               maxAlert.innerHTML = `
+               <img src="../../img/icons/aviso.png" alt="" />
+               Armazem ${resposta[0].idArmazem}
+               <img src="../../img/icons/calendario.png" alt="" />
+               ${resposta[0].qtd_alertas}
+               `
+            })
+         }
+      }
+   })
 }

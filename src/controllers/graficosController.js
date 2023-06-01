@@ -105,9 +105,9 @@ function listarPie(req, res) {
       res.status(204).send("Nenhum resultado encontrado!")
     }
   })
-    .catch(function (resultado) {
-      console.log("\nHouve um erro ao buscar resultados (pie)");
-    })
+  .catch(function (resultado) {
+    console.log("\nHouve um erro ao buscar resultados (pie)");
+  })
 
 }
 

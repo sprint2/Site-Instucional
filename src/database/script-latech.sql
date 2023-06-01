@@ -192,7 +192,11 @@ INSERT INTO sensor VALUES
 (NULL, 'DHT11', 'Temp/Hum', 'I', NULL),
 (NULL, 'DHT11', 'Temp/Hum', 'I', NULL),
 (NULL, 'DHT11', 'Temp/Hum', 'I', NULL),
-(NULL, 'DHT11', 'Temp/Hum', 'I', NULL); 
+(NULL, 'DHT11', 'Temp/Hum', 'I', NULL),
+(NULL, 'DHT11', 'Temp/Hum', 'I', 6),
+(NULL, 'DHT11', 'Temp/Hum', 'I', 6),
+(NULL, 'DHT11', 'Temp/Hum', 'I', 6),
+(NULL, 'DHT11', 'Temp/Hum', 'I', 6);  
 
 -- Inserido as métricas ideais de cada sensor/armazem
 INSERT INTO metricas VALUES
@@ -259,7 +263,17 @@ insert into alerta values
 (null, 'umidade', 'alta','2023-05-22 15:45:00',2),
 (null, 'umidade', 'alta','2023-05-22 16:45:00',2),
 (null, 'umidade', 'baixa','2023-05-22 17:45:00',2),
-(null, 'umidade', 'alta','2023-05-22 18:45:00',2);
+(null, 'umidade', 'alta','2023-05-22 18:45:00',2),
+(null, 'temperatura', 'quente','2023-01-01 00:00:00',18),
+(null, 'temperatura', 'frio','2023-01-02 08:30:00',18),
+(null, 'temperatura', 'quente','2023-01-05 14:15:00',18),
+(null, 'temperatura', 'quente','2023-01-08 10:00:00',18),
+(null, 'temperatura', 'frio','2023-01-12 18:45:00',18),
+(null, 'temperatura', 'frio', '2023-01-15 09:30:00',18),
+(null, 'temperatura', 'frio','2023-01-18 12:00:00',18),
+(null, 'temperatura', 'quente','2023-01-20 16:20:00',18),
+(null, 'temperatura', 'quente','2023-01-24 11:30:00',18),
+(null, 'temperatura', 'quente','2023-01-26 17:45:00',18);
 
     
     
@@ -415,3 +429,62 @@ WHERE
     dataAlerta >= MONTH(DATE_SUB(NOW(), INTERVAL 4 MONTH)) AND
     idEmpresa = 1
 GROUP BY tipo;
+
+-- quantidade de alertas por armazem
+SELECT 
+    idArmazem,
+	COUNT(idAlerta) as qtd_alertas
+FROM 
+	alerta
+JOIN sensor ON fkSensorAlerta = idSensor
+JOIN armazem ON fkArmazem = idArmazem
+JOIN empresa ON fkEmpresa = idEmpresa
+WHERE 
+	idEmpresa = 1 AND
+	dataAlerta >= DATE_SUB(NOW(), INTERVAL 1 MONTH)
+GROUP BY idArmazem 
+	ORDER BY qtd_alertas DESC;
+
+-- armazem com maior quantidade de alertas
+SELECT 
+    idArmazem,
+	COUNT(idAlerta) as qtd_alertas
+FROM 
+	alerta
+JOIN sensor ON fkSensorAlerta = idSensor
+JOIN armazem ON fkArmazem = idArmazem
+JOIN empresa ON fkEmpresa = idEmpresa
+WHERE 
+	idEmpresa = 1 AND
+	dataAlerta >= DATE_SUB(NOW(), INTERVAL 1 MONTH)
+GROUP BY idArmazem 
+ORDER BY qtd_alertas DESC
+    LIMIT 1;
+
+-- quantidade de alertas emitidos no últimos mês (geral)
+SELECT 
+	COUNT(idAlerta) as qtd_alertas
+FROM
+	alerta
+JOIN sensor ON fkSensorAlerta = idSensor
+JOIN armazem ON fkArmazem = idArmazem
+JOIN empresa ON fkEmpresa = idEmpresa
+WHERE 
+	idEmpresa = 1 AND
+	dataAlerta >= DATE_SUB(NOW(), INTERVAL 1 MONTH);
+    
+-- quantidade de alertas emitidos no último mês (armazem)
+SELECT 
+	COUNT(idAlerta) as qtd_alertas
+FROM
+	alerta
+JOIN sensor ON fkSensorAlerta = idSensor
+JOIN armazem ON fkArmazem = idArmazem
+JOIN empresa ON fkEmpresa = idEmpresa
+WHERE 
+	idEmpresa = 1 AND
+    idArmazem = 1 AND
+	dataAlerta >= DATE_SUB(NOW(), INTERVAL 1 MONTH);
+
+	
+

@@ -12,6 +12,7 @@ var indexRouter = require("./src/routes/index");
 var empresaRouter = require("./src/routes/empresa");
 var avisosRouter = require("./src/routes/avisos");
 var graficosRouter = require("./src/routes/graficos");
+var armazemRouter = require("./src/routes/armazem");
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
@@ -22,7 +23,8 @@ app.use(cors());
 app.use("/", indexRouter);
 app.use("/empresa", empresaRouter);
 app.use("/avisos", avisosRouter);
-app.use("/graficos", graficosRouter)
+app.use("/graficos", graficosRouter);
+app.use("/armazem", armazemRouter);
 
 app.listen(PORTA, function () {
     console.log(`Servidor do seu site já está rodando! Acesse o caminho a seguir para visualizar: http://localhost:${PORTA} \n
