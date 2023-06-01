@@ -110,9 +110,49 @@ function puxarQuartoMes(idEmpresa) {
    fetch(`/graficos/listarQuartoMes/${idEmpresa}`, { cache: 'no-store' }).then(function (response) {
       if (response.ok) {
          if(response.status === 204) {
-            respostaData.temp = 0;
-            respostaData.umidd = 0;
-            dataMonth.push(respostaData);
+            for(let i = 0; i < 4; i++) {
+               respostaData.temp = 0;
+               respostaData.umidd = 0;
+               dataMonth.push(respostaData);
+            }
+            var dataAlertaTemp = [dataMonth[0].temp, dataMonth[1].temp, dataMonth[2].temp, dataMonth[3].temp];
+            var dataAlertaUmidd = [dataMonth[0].umidd, dataMonth[1].umidd, dataMonth[2].umidd, dataMonth[3].umidd];
+
+            const ctxAlert = document.getElementById("chart-alert");
+            if (Chart.instances[ctxAlert]) {
+               // Se houver, destrua-o
+               Chart.instances[ctxAlert].destroy();
+            }            
+            const labels = ["Janeiro", "Fevereiro", "Março", "Abril"]
+            new Chart(ctxAlert, {
+               type: "bar",
+               data: {
+                  labels: labels,
+                  datasets: [
+                     {
+                        label: "Umidade",
+                        backgroundColor: "#58A1E4",
+                        borderColor: "#58A1E4",
+                        data: dataAlertaUmidd,
+                        borderWidth: 1,
+                     },
+                     {
+                        label: "Temperatura",
+                        backgroundColor: "#025183",
+                        borderColor: "#025183",
+                        data: dataAlertaTemp,
+                        borderWidth: 1,
+                     },
+                  ],
+               },
+               options: {
+                  layout: {
+                     padding: {
+                        bottom: 20,
+                     },
+                  },
+               },
+            });
          } else {
             response.json().then(function (resposta) {
                // console.log(`Dados recebidos: ${JSON.stringify(resposta)}`);
@@ -124,11 +164,16 @@ function puxarQuartoMes(idEmpresa) {
                   }
                });
                dataMonth.push(respostaData);
-
+               
                var dataAlertaTemp = [dataMonth[0].temp, dataMonth[1].temp, dataMonth[2].temp, dataMonth[3].temp];
                var dataAlertaUmidd = [dataMonth[0].umidd, dataMonth[1].umidd, dataMonth[2].umidd, dataMonth[3].umidd];
 
+
                const ctxAlert = document.getElementById("chart-alert");
+               if (Chart.instances[ctxAlert]) {
+                  // Se houver, destrua-o
+                  Chart.instances[ctxAlert].destroy();
+               }  
                const labels = ["Janeiro", "Fevereiro", "Março", "Abril"]
                new Chart(ctxAlert, {
                   type: "bar",
@@ -195,7 +240,7 @@ function puxarPie(idEmpresa) {
                labels: ["Temperatura", "Umidade"],
                datasets: [
                   {
-                     label: "# of Votes",
+                     label: "Quantidade de alertas",
                      data: [alertTemp, alertUmid],
                      backgroundColor: ["#025183", "#58A1E4"],
                      borderColor: ["#025183", "#58A1E4"],
