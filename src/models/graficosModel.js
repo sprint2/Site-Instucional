@@ -57,7 +57,7 @@ function listarPenultimoMes(idEmpresa) {
     GROUP BY tipo;
   `;
 
-  console.log("Executando a instrução SQL: "+instrucao)
+  console.log("Executando a instrução SQL: " + instrucao)
   return database.executar(instrucao);
 }
 
@@ -78,7 +78,7 @@ function listarAntepenultimoMes(idEmpresa) {
     GROUP BY tipo;
   `;
 
-  console.log("Executando a instrução SQL: "+instrucao);
+  console.log("Executando a instrução SQL: " + instrucao);
   return database.executar(instrucao);
 }
 
@@ -99,7 +99,7 @@ function listarQuartoMes(idEmpresa) {
     GROUP BY tipo;
   `;
 
-  console.log("Executando a instrução SQL: "+instrucao);
+  console.log("Executando a instrução SQL: " + instrucao);
   return database.executar(instrucao);
 }
 
@@ -123,8 +123,51 @@ function listarPie(idEmpresa) {
   return database.executar(instrucao);
 }
 
+function listarLine8(idEmpresa) {
+  var instrucao = `
+  SELECT
+    Month(dataAlerta) as MesAlerta,
+    alerta.tipo,
+    alerta.nivel,
+    date_format(alerta.dataAlerta, "%M") as MesDoAlerta
+FROM
+    alerta
+    join sensor on alerta.fkSensorAlerta = sensor.idSensor
+    join armazem on armazem.idArmazem = sensor.fkArmazem
+    join empresa on armazem.fkEmpresa = empresa.idEmpresa
+		where empresa.idEmpresa = ${idEmpresa} and
+    dataAlerta >= DATE_SUB(now(), INTERVAL 1 MONTH) and alerta.tipo = "temperatura";
+  `;
+
+  console.log("Executando a instrução SQL: " + instrucao);
+
+  return database.executar(instrucao);
+}
+
+function listarLineUmid(idEmpresa) {
+  var instrucao = `SELECT
+  Month(dataAlerta) as MesAlerta,
+  alerta.tipo,
+  alerta.nivel,
+  date_format(alerta.dataAlerta, "%M") as MesDoAlerta
+FROM
+  alerta
+  join sensor on alerta.fkSensorAlerta = sensor.idSensor
+  join armazem on armazem.idArmazem = sensor.fkArmazem
+  join empresa on armazem.fkEmpresa = empresa.idEmpresa
+  where empresa.idEmpresa = ${idEmpresa} and
+  dataAlerta >= DATE_SUB(now(), INTERVAL 1 MONTH) and alerta.tipo = "umidade";
+  `;
+
+  console.log("Executando a instrução SQL: " + instrucao);
+
+  return database.executar(instrucao);
+}
+
 module.exports = {
   listarMes,
+  listarLine8,
+  listarLineUmid,
   listarUltimoMes,
   listarPenultimoMes,
   listarAntepenultimoMes,

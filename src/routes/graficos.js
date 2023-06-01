@@ -11,6 +11,10 @@ router.get("/listarPie/:idEmpresa", function(req, res) {
    graficosController.listarPie(req, res);
 })
 
+router.get("/listarLine8/:idEmpresa", function(req, res) {
+   graficosController.listarLine8(req, res);
+})
+
 router.get("/listarMes", function(req, res) {
    graficosController.listarMes(req, res);
 })

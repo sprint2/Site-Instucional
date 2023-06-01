@@ -301,6 +301,10 @@ FROM
     dataAlerta >= DATE_SUB(now(), INTERVAL 1 MONTH);
 
 
+-- Alertas das últimas semanas -- 
+SELECT 
+	
+
 -- ÚLTIMOS 4 MESES --
 SELECT
     DATE_FORMAT(dataAlerta, "%Y-%m") AS Ano_Mês,
