@@ -325,58 +325,6 @@ function puxarArmazem8(idEmpresa) {
 
 }
 
-// Grafico de Linha Umidade
-var armazensUmid = []
-var dataAlertaUmid = []
-function puxarArmazemUmid(idEmpresa) {
-   var idEmpresa = sessionStorage.ID_EMPRESA;
-   armazensUmid = [];
-   dataAlertaUmid = [];
-
-   fetch(`/graficos/listarLineUmid/${idEmpresa}`, { cache: 'no-store' }).then(function (response) {
-      if (response.ok) {
-
-         response.json().then(function (resposta) {
-            console.log("Dados recebidos (Linha 8): " + JSON.stringify(resposta));
-            resposta.forEach(element => {
-               dataAlertaUmid.push(element.MesDoAlerta)
-               armazensUmid.push(element.MesAlerta)
-               console.log(element.MesAlerta)
-            });
-         })
-         const ctxUmdd = document.getElementById("chart-umdd");
-   new Chart(ctxUmdd, {
-      type: "line",
-      data: {
-         labels: [Umidade],
-         datasets: [
-            {
-               label: "Níveis de umidade",
-               backgroundColor: "#58A1E4",
-               borderColor: "#58A1E4",
-               data: [10, 40, 50, 34, 24],
-               borderWidth: 1,
-            },
-         ],
-      },
-      options: {
-         layout: {
-            padding: {
-               bottom: 20,
-            },
-         },
-      },
-   });
-         
-      } else {
-         console.error('Nenhum dado encontrado ou erro na API');
-      }
-   })
-      .catch(function (error) {
-         console.error(`Erro na obtenção dos dados p/ gráfico: ${error.message}`);
-      });
-
-}
 
 function puxarDados() {
    var idEmpresa = sessionStorage.ID_EMPRESA;
@@ -388,7 +336,7 @@ function puxarDados() {
    puxarArmazens(idEmpresa);
    puxarArmazemMaior(idEmpresa);
    puxarArmazem8(idEmpresa);
-   puxarArmazemUmid(idEmpresa);
+   //puxarArmazemUmid(idEmpresa);
    mostrarAlertas(idEmpresa);
    
    if (dataMonth.length < 4) {
