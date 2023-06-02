@@ -46,7 +46,7 @@ function puxarUltimoMes(idEmpresa) {
 
 
 function puxarPenultimoMes(idEmpresa) {
-   var respostaData = {};
+   var respostaData = [];
    fetch(`/graficos/listarPenultimoMes/${idEmpresa}`, { cache: 'no-store' }).then(function (response) {
       if (response.ok) {
          if (response.status === 204) {
@@ -77,7 +77,7 @@ function puxarPenultimoMes(idEmpresa) {
 }
 
 function puxarAntepenultimoMes(idEmpresa) {
-   var respostaData = {};
+   var respostaData = [];
    fetch(`/graficos/listarAntepenultimoMes/${idEmpresa}`, { cache: 'no-store' }).then(function (response) {
       if (response.ok) {
          if (response.status === 204) {
@@ -107,7 +107,7 @@ function puxarAntepenultimoMes(idEmpresa) {
 }
 
 function puxarQuartoMes(idEmpresa) {
-   var respostaData = {};
+   var respostaData = [];
    fetch(`/graficos/listarQuartoMes/${idEmpresa}`, { cache: 'no-store' }).then(function (response) {
       if (response.ok) {
          if (response.status === 204) {
@@ -388,7 +388,7 @@ function puxarDados() {
    puxarArmazens(idEmpresa);
    puxarArmazemMaior(idEmpresa);
    puxarArmazem8(idEmpresa);
-   //puxarArmazemUmid(idEmpresa);
+   puxarArmazemUmid(idEmpresa);
    mostrarAlertas(idEmpresa);
    
    if (dataMonth.length < 4) {
