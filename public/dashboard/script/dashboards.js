@@ -12,11 +12,12 @@ function dataHora() {
 
 // Parte dos Gráficos
 var dataMonth = [];
+var respostaData = [];
 
 function puxarUltimoMes(idEmpresa) {
-   var respostaData = {};
    fetch(`/graficos/listarUltimoMes/${idEmpresa}`, { cache: 'no-store' }).then(function (response) {
       if (response.ok) {
+         respostaData = []
          if (response.status === 204) {
             respostaData.temp = 0;
             respostaData.umidd = 0;
