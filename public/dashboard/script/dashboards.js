@@ -398,7 +398,9 @@ function puxarDados() {
    }
    nomeEmpresa = document.getElementById("nomeEmp");
    nomeEmpresa.innerText = sessionStorage.NOME_EMPRESA;
-
+   setTimeout(() => {
+      puxarDados()
+   }, 5);
 }
 
 function puxarArmazens(idEmpresa) {
