@@ -150,6 +150,7 @@ function listarLineUmid(req, res) {
 module.exports = {
   testar,
   listarLine8,
+  listarLineUmid,
   listarPie,
   listarMes,
   listarUltimoMes,
