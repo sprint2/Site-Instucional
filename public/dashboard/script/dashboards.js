@@ -400,7 +400,7 @@ function puxarDados() {
    nomeEmpresa.innerText = sessionStorage.NOME_EMPRESA;
    setTimeout(() => {
       puxarDados()
-   }, 5);
+   }, 20000);
 }
 
 function puxarArmazens(idEmpresa) {
