@@ -12,7 +12,6 @@ function dataHora() {
 
 // Parte dos Gráficos
 var dataMonth = [];
-var dataMonth = [];
 
 function puxarUltimoMes(idEmpresa) {
    var respostaData = {};
