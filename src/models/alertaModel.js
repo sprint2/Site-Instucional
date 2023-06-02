@@ -34,6 +34,25 @@ function listarAlertasRecentes(idEmpresa) {
   return database.executar(instrucao);
 }
 
+function listarQtdAlertas(idEmpresa) {
+  var instrucao  = `
+  SELECT 
+    COUNT(idAlerta) as qtd_alertas
+  FROM
+    alerta
+  JOIN sensor ON fkSensorAlerta = idSensor
+  JOIN armazem ON fkArmazem = idArmazem
+  JOIN empresa ON fkEmpresa = idEmpresa
+  WHERE 
+    idEmpresa = 1 AND
+    idArmazem = 1 AND
+    dataAlerta >= DATE_SUB(NOW(), INTERVAL 1 MONTH);
+  `;
+
+  console.log('Executando a instrução SQL: \n' +instrucao);
+  return database.executar(instrucao);
+}
+
 function cadastrarAlerta(nivel, tipo) {
   console.log(
     "ACESSEI O alerta MODEL \n \n\t\t >> Se aqui der erro de 'Error: connect ECONNREFUSED',\n \t\t >> verifique suas credenciais de acesso ao banco\n \t\t >> e se o servidor de seu BD está rodando corretamente. \n\n function cadastrarAlerta()",
@@ -52,5 +71,6 @@ function cadastrarAlerta(nivel, tipo) {
 module.exports = {
   listarAlertas,
   listarAlertasRecentes,
-  cadastrarAlerta
+  cadastrarAlerta,
+  listarQtdAlertas
 };

@@ -36,6 +36,7 @@ header {
 }
 
 nav {
+    position: relative;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
@@ -187,6 +188,26 @@ nav ul li a img {
     display: flex;
     flex-direction: column;
     gap: 4px;
+}
+
+.lit-not {
+    position: relative;
+    height: fit-content;
+}
+
+.qtd-alertas {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    padding: 3px;
+    color: white;
+    background-color: red;
+    border-radius: 50%;
+    position: absolute;
+    font-size: 8px;
+    top: 8%;
+    left: 45%;
 }
 
 select {

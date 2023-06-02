@@ -507,9 +507,35 @@ function mostrarAlertas(idEmpresa) {
                   setTimeout(() => {
                      divAlert.style.display = 'none';
                   }, tempoAnimacao * 1000);
+
+                  // mostrarQtdAlertas(idEmpresa);
                });
             })
          }
       }
    })
+   .catch(function (error) {
+      console.error(`Erro na obtenção dos dados p/ gráfico: ${error.message}`);
+   });
+}
+
+function mostrarQtdAlertas(idEmpresa) {
+   fetch(`/alertas/listarQtdAlertas/${idEmpresa}`).then(function (resposta) {
+      if(resposta.ok) {
+         if(resposta.status === 204) {
+            console.log("ta vazio");
+         } else {
+            var ul = document.getElementById("ul_nav");
+            resposta.json().then(function (resposta) {
+               var qtdAlertas = document.createElement("div");
+               qtdAlertas.classList.add("qtd-alertas");
+               qtdAlertas.textContent = resposta[0].qtd_alertas;
+               ul.appendChild(qtdAlertas);
+            });
+         }
+      }
+   })
+   .catch(function (error) {
+      console.error(`Erro na obtenção dos dados p/ gráfico: ${error.message}`);
+   });
 }

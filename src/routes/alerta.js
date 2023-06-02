@@ -11,4 +11,9 @@ router.get("/listarAlertasRecentes/:idEmpresa", function (req, res) {
     alertaController.listarAlertasRecentes(req, res);
 });
 
+router.get("/listarQtdAlertas/:idEmpresa", function (req, res) {
+    alertaController.listarQtdAlertas(req, res);
+});
+
+
 module.exports = router;
