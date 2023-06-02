@@ -69,19 +69,124 @@ nav ul li a img {
     width: 25px;
 }
 
-.ph-gear-six {
+.ph {
     color: white;
     font-size: 30px;
 }
 
-.ph-question {
-    color: white;
-    font-size: 30px;
+.notification-container {
+    width: 16vw;
+    position: absolute;
+    top: 15vh;
+    left: 5vw;
+    display: none;
+    justify-content: center;
+    align-items: center;
+    gap: 4px;
+    padding: 8px;
+    background-color: white;
+    border-radius: 8px;
+    box-shadow: 0px 1px 10px 1px black;
 }
 
-.ph-sign-out {
-    color: white;
-    font-size: 30px;
+.notification .ph {
+    color: rgb(78, 30, 30);
+    font-size: 3rem;
+}
+
+.notification .ph-x-circle {
+    position: absolute;
+    font-size: 18px;
+    top: 4px;
+    right: 4px;
+}
+
+.alert {
+    width: 16vw;
+    border-radius: 4px;
+    background-color: rgb(226, 111, 111);
+    color: rgb(78, 30, 30);
+    font-size: 13px;
+}
+
+.alert-content {
+    padding: 8px;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+}
+
+.alert .ph {
+    color: rgb(78, 30, 30);
+    font-size: 3rem;
+}
+
+.alert .ph-x-circle {
+    position: absolute;
+    font-size: 18px;
+    top: 4px;
+    right: 4px;
+}
+
+.timer {
+    width: 100%;
+    height: 4px;
+    border-radius: 0 0 4px 4px;
+    background-color: rgb(78, 30, 30);
+    transition: all .5s;
+}
+
+.slideIn {
+    animation: slideIn .7s linear;
+}
+
+@keyframes slideIn {
+    from {
+        right: -100vw
+    }
+    to {
+        right: 2.6%;
+    }
+}
+
+@keyframes timerLoad {
+    from {
+        width: 0;
+    }
+    to {
+        width: 100%;
+    }
+}
+
+.notification {
+    position: relative;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    padding: 8px;
+    border-radius: 4px;
+    background-color: rgb(226, 111, 111);
+    color: rgb(78, 30, 30);
+    font-size: 13px;
+}
+
+.notification-titulo {
+    font-weight: 600;
+}
+
+.notification-text {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+#alerts_container {
+    position: absolute;
+    top: 5%;
+    right: 2.6%;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
 }
 
 select {

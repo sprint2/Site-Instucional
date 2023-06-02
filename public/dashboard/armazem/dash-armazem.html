@@ -8,6 +8,7 @@
     <link rel="stylesheet" href="../style/style-dashboard.css">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="/../../script/script.js"></script>
+    <script src="https://unpkg.com/@phosphor-icons/web"></script>
 
     <title>Dashboard - Geral</title>
 </head>
@@ -25,19 +26,22 @@
             <ul>
                 <li>
                     <a href="/../dashboard/armazem/dash-armazem.html">
-                        <img src="/../../img/icons/home.svg" alt="">
+                        <i class="ph ph-house"></i>
                     </a>
                 </li>
                 <li>
-                    <a href="/../dashboard/armazem/dash-armazem-temp.html">
-                        <img src="/../../img/icons/temperatura.svg" alt="" class="temp">
-                    </a>
-                </li>
-                <li>
-                    <a href="/../dashboard/armazem/dash-armazem-umidd.html">
-                        <img src="/../../img/icons/umidade.svg" alt="">
-                    </a>
-                </li>
+                    <i class="ph ph-bell"></i>
+                  </li> 
+                  <div class="notification-container">
+                    <div class="notification">
+                      <i class="ph ph-warning"></i>
+                      <div class="notification-text">
+                        <span class="notification-titulo">Alerta de <span id="tipo_alerta">temperatura</span>!</span>
+                        <span class="notification-conteudo">O armazém <span id="armazem_alerta">1</span> emitiu um alerta de <span id="tipo_alerta">temperatura</span> no dia <span id="data_alerta">dd/mm/yyyy</span></span>
+                      </div>
+                      <i class="ph ph-x-circle"></i>
+                    </div>
+                  </div>
             </ul>
             <!-- divisão da nav -->
             <ul>

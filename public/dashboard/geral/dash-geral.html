@@ -14,6 +14,18 @@
   </head>
 
   <body onload="puxarDados(), dataHora()">
+    <!-- <div class="alert slideIn">
+      <div class="alert-content">
+        <i class="ph ph-warning"></i>
+        <div class="notification-text">
+          <span class="notification-titulo">Alerta de <span id="tipo_alerta">temperatura</span>!</span>
+          <span class="notification-conteudo">O armazém <span id="armazem_alerta">1</span> emitiu um alerta de <br><span id="tipo_alerta">temperatura</span> no dia <span id="data_alerta">dd/mm/yyyy</span></span>
+        </div>
+        <i class="ph ph-x-circle"></i>
+      </div>
+      <div class="timer"></div>
+    </div> -->
+    <div id="alerts_container"></div>
     <div class="top-line">
       <div class="empresa">
         <h1 class="empresa-nome">
@@ -27,19 +39,14 @@
         <ul>
           <li>
             <a href="/../dashboard/geral/dash-geral.html">
-              <img src="../../img/icons/home.svg" alt="" />
+              <i class="ph ph-house"></i>
             </a>
           </li>
-          <!-- <li>
-                        <a href="/public/dashboard/geral/dash-geral-temp.html">
-                            <img src="/public/img/icons/temperatura.svg" alt="" class="temp">
-                        </a>
-                    </li>
-                    <li>
-                        <a href="/public/dashboard/geral/dash-geral-umidd.html">
-                            <img src="/public/img/icons/umidade.svg" alt="">
-                        </a>
-                    </li> -->
+          <li>
+            <i class="ph ph-bell"></i>
+          </li> 
+          <div class="notification-container">
+          </div>
         </ul>
         <!-- divisão da nav -->
         <ul>

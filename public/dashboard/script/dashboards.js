@@ -294,17 +294,18 @@ function puxarArmazem8(idEmpresa) {
                console.log(element.MesAlerta)
             });
          })
+         console.log(armazens8);
          const ctxArm = document.getElementById("chart-arm");
          new Chart(ctxArm, {
             type: "line",
             data: {
-               labels: dataAlerta,
+               labels: dataAlerta8,
                datasets: [
                   {
                      label: "Quantidade de armazens",
                      backgroundColor: "#025183",
                      borderColor: "#025183",
-                     data: armazens,
+                     data: armazens8,
                      borderWidth: 1,
                   },
                ],
@@ -322,7 +323,7 @@ function puxarArmazem8(idEmpresa) {
       }
    })
       .catch(function (error) {
-         console.error(`Erro na obtenção dos dados p/ gráfico: ${error.message}`);
+         console.error(`Erro na obtenção dos dados p/ gráfico (line8): ${error.message}`);
       });
 
 }
@@ -391,6 +392,7 @@ function puxarDados() {
    puxarArmazemMaior(idEmpresa);
    puxarArmazem8(idEmpresa);
    puxarArmazemUmid(idEmpresa);
+   mostrarAlertas(idEmpresa);
    
    if (dataMonth.length < 4) {
       console.log("ainda menor que 4")
@@ -453,6 +455,59 @@ function puxarArmazemMaior(idEmpresa) {
                <img src="../../img/icons/calendario.png" alt="" />
                ${resposta[0].qtd_alertas}
                `
+            })
+         }
+      }
+   })
+}
+
+function mostrarAlertas(idEmpresa) {
+   fetch(`/alerta/listarAlertasRecentes/${idEmpresa}`).then(function (resposta) {
+      if(resposta.ok) {
+         if(resposta.status === 204) {
+            console.log("ta vazio");
+         } else {
+            resposta.json().then(function (resposta) {
+               // console.log(`Dados recebidos: ${JSON.stringify(resposta)}`);
+               var alertsContainer = document.getElementById("alerts_container");
+               var tempoAnimacao = 4;
+               resposta.forEach(element => {
+                  tempoAnimacao += 2;
+                  var divAlert = document.createElement("div");
+                  var divAlertContent = document.createElement("div");
+                  var warning = document.createElement("i");
+                  var alertText = document.createElement("div");
+                  var spanTitulo = document.createElement("span");
+                  var spanConteudo = document.createElement("span");
+                  var timer = document.createElement("div");
+                  var br = document.createElement("br");
+
+                  divAlert.classList.add("alert");
+                  divAlert.classList.add("slideIn");
+                  divAlertContent.classList.add("alert-content");
+                  warning.classList.add("ph");
+                  warning.classList.add("ph-warning");
+                  spanTitulo.classList.add("notification-titulo");
+                  spanConteudo.classList.add("notification-conteudo");
+                  timer.classList.add("timer");
+
+                  spanTitulo.textContent = `Alerta de ${element.tipo} temperatura!`;
+                  spanConteudo.textContent = `O armazém ${element.idArmazem} emitiu um alerta de \n${element.tipo} no dia ${element.data_alerta} às ${element.hora_alerta}`;
+
+                  alertText.appendChild(spanTitulo);
+                  alertText.appendChild(br);
+                  alertText.appendChild(spanConteudo);
+                  divAlertContent.appendChild(warning);
+                  divAlertContent.appendChild(alertText);
+                  divAlert.appendChild(divAlertContent);
+                  divAlert.appendChild(timer);
+                  alertsContainer.appendChild(divAlert);
+
+                  timer.style.animation = `timerLoad ${tempoAnimacao}s infinite linear`;
+                  setTimeout(() => {
+                     divAlert.style.display = 'none';
+                  }, tempoAnimacao * 1000);
+               });
             })
          }
       }
