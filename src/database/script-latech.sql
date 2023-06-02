@@ -81,6 +81,7 @@ tipo varchar(45),
 nivel varchar(45),
 	constraint nivelchk check (nivel in('baixa', 'alta', 'quente', 'frio')),
 dataAlerta datetime,
+visto boolean,
 fkSensorAlerta int,
 	constraint fkAvisoSensor foreign key(fkSensorAlerta) 
 		references sensor(idSensor)
@@ -217,63 +218,63 @@ INSERT INTO metricaHistorico VALUES
 (NULL, '2023-05-02 11:00:00' , 52, 5, 1, 10);
 
 insert into alerta values
-(null, 'temperatura', 'quente','2023-01-01 00:00:00',1),
-(null, 'temperatura', 'frio','2023-01-02 08:30:00',1),
-(null, 'temperatura', 'quente','2023-01-05 14:15:00',1),
-(null, 'temperatura', 'quente','2023-01-08 10:00:00',1),
-(null, 'temperatura', 'frio','2023-01-12 18:45:00',1),
-(null, 'temperatura', 'frio', '2023-01-15 09:30:00',2),
-(null, 'temperatura', 'frio','2023-01-18 12:00:00',2),
-(null, 'temperatura', 'quente','2023-01-20 16:20:00',2),
-(null, 'temperatura', 'quente','2023-01-24 11:30:00',2),
-(null, 'temperatura', 'quente','2023-01-26 17:45:00',2),
-(null, 'umidade', 'baixa','2023-01-29 14:00:00',3),
-(null, 'umidade', 'alta','2023-02-02 09:15:00',3),
-(null, 'umidade', 'baixa','2023-02-05 13:30:00',3),
-(null, 'umidade', 'baixa','2023-02-08 19:00:00',3),
-(null, 'umidade', 'baixa','2023-02-10 10:45:00',3),
-(null, 'umidade', 'alta','2023-02-14 15:20:00',2),
-(null, 'umidade', 'alta','2023-02-17 08:00:00',2),
-(null, 'umidade', 'alta','2023-02-20 11:30:00',2),
-(null, 'umidade', 'baixa','2023-02-23 17:15:00',2),
-(null, 'umidade', 'alta','2023-02-26 12:45:00',2),
-(null, 'umidade', 'alta','2023-02-26 12:45:00',2),
-(null, 'temperatura', 'frio','2023-05-01 00:00:00',1),
-(null, 'temperatura', 'quente','2023-05-02 08:30:00',1),
-(null, 'temperatura', 'quente','2023-05-05 14:15:00',1),
-(null, 'temperatura', 'frio','2023-05-08 10:00:00',1),
-(null, 'temperatura', 'quente','2023-05-12 18:45:00',1),
-(null, 'temperatura', 'quente','2023-05-15 09:30:00',2),
-(null, 'temperatura', 'frio','2023-05-18 12:00:00',2),
-(null, 'temperatura', 'frio','2023-05-20 16:20:00',2),
-(null, 'temperatura', 'quente','2023-04-24 11:30:00',2),
-(null, 'temperatura', 'quente','2023-04-26 17:45:00',2),
-(null, 'umidade', 'baixa','2023-05-29 14:00:00',3),
-(null, 'umidade', 'alta','2023-05-02 09:15:00',3),
-(null, 'umidade', 'alta','2023-05-05 13:30:00',3),
-(null, 'umidade', 'baixa','2023-05-08 19:00:00',3),
-(null, 'umidade', 'baixa','2023-05-10 10:45:00',3),
-(null, 'umidade', 'alta','2023-05-14 15:20:00',2),
-(null, 'umidade', 'alta','2023-05-17 08:00:00',2),
-(null, 'umidade', 'baixa','2023-05-20 11:30:00',2),
-(null, 'umidade', 'baixa','2023-05-23 17:15:00',2),
-(null, 'umidade', 'alta','2023-05-26 12:45:00',2),
-(null, 'umidade', 'alta','2023-05-26 12:45:00',2),
-(null, 'umidade', 'baixa','2023-05-22 14:45:00',2),
-(null, 'umidade', 'alta','2023-05-22 15:45:00',2),
-(null, 'umidade', 'alta','2023-05-22 16:45:00',2),
-(null, 'umidade', 'baixa','2023-05-22 17:45:00',2),
-(null, 'umidade', 'alta','2023-05-22 18:45:00',2),
-(null, 'temperatura', 'quente','2023-01-01 00:00:00',18),
-(null, 'temperatura', 'frio','2023-01-02 08:30:00',18),
-(null, 'temperatura', 'quente','2023-01-05 14:15:00',18),
-(null, 'temperatura', 'quente','2023-01-08 10:00:00',18),
-(null, 'temperatura', 'frio','2023-01-12 18:45:00',18),
-(null, 'temperatura', 'frio', '2023-01-15 09:30:00',18),
-(null, 'temperatura', 'frio','2023-01-18 12:00:00',18),
-(null, 'temperatura', 'quente','2023-01-20 16:20:00',18),
-(null, 'temperatura', 'quente','2023-01-24 11:30:00',18),
-(null, 'temperatura', 'quente','2023-01-26 17:45:00',18);
+(null, 'temperatura', 'quente','2023-01-01 00:00:00', false,1),
+(null, 'temperatura', 'frio','2023-01-02 08:30:00', false,1),
+(null, 'temperatura', 'quente','2023-01-05 14:15:00', false,1),
+(null, 'temperatura', 'quente','2023-01-08 10:00:00', false,1),
+(null, 'temperatura', 'frio','2023-01-12 18:45:00', false,1),
+(null, 'temperatura', 'frio', '2023-01-15 09:30:00', false,2),
+(null, 'temperatura', 'frio','2023-01-18 12:00:00', false,2),
+(null, 'temperatura', 'quente','2023-01-20 16:20:00', false,2),
+(null, 'temperatura', 'quente','2023-01-24 11:30:00', false,2),
+(null, 'temperatura', 'quente','2023-01-26 17:45:00', false,2),
+(null, 'umidade', 'baixa','2023-01-29 14:00:00', false,3),
+(null, 'umidade', 'alta','2023-02-02 09:15:00', false,3),
+(null, 'umidade', 'baixa','2023-02-05 13:30:00', false,3),
+(null, 'umidade', 'baixa','2023-02-08 19:00:00', false,3),
+(null, 'umidade', 'baixa','2023-02-10 10:45:00', false,3),
+(null, 'umidade', 'alta','2023-02-14 15:20:00', false,2),
+(null, 'umidade', 'alta','2023-02-17 08:00:00', false,2),
+(null, 'umidade', 'alta','2023-02-20 11:30:00', false,2),
+(null, 'umidade', 'baixa','2023-02-23 17:15:00', false,2),
+(null, 'umidade', 'alta','2023-02-26 12:45:00', false,2),
+(null, 'umidade', 'alta','2023-02-26 12:45:00', false,2),
+(null, 'temperatura', 'frio','2023-05-01 00:00:00', false,1),
+(null, 'temperatura', 'quente','2023-05-02 08:30:00', false,1),
+(null, 'temperatura', 'quente','2023-05-05 14:15:00', false,1),
+(null, 'temperatura', 'frio','2023-05-08 10:00:00', false,1),
+(null, 'temperatura', 'quente','2023-05-12 18:45:00', false,1),
+(null, 'temperatura', 'quente','2023-05-15 09:30:00', false,2),
+(null, 'temperatura', 'frio','2023-05-18 12:00:00', false,2),
+(null, 'temperatura', 'frio','2023-05-20 16:20:00', false,2),
+(null, 'temperatura', 'quente','2023-04-24 11:30:00', false,2),
+(null, 'temperatura', 'quente','2023-04-26 17:45:00', false,2),
+(null, 'umidade', 'baixa','2023-05-29 14:00:00', false,3),
+(null, 'umidade', 'alta','2023-05-02 09:15:00', false,3),
+(null, 'umidade', 'alta','2023-05-05 13:30:00', false,3),
+(null, 'umidade', 'baixa','2023-05-08 19:00:00', false,3),
+(null, 'umidade', 'baixa','2023-05-10 10:45:00', false,3),
+(null, 'umidade', 'alta','2023-05-14 15:20:00', false,2),
+(null, 'umidade', 'alta','2023-05-17 08:00:00', false,2),
+(null, 'umidade', 'baixa','2023-05-20 11:30:00', false,2),
+(null, 'umidade', 'baixa','2023-05-23 17:15:00', false,2),
+(null, 'umidade', 'alta','2023-05-26 12:45:00', false,2),
+(null, 'umidade', 'alta','2023-05-26 12:45:00', false,2),
+(null, 'umidade', 'baixa','2023-05-22 14:45:00', false,2),
+(null, 'umidade', 'alta','2023-05-22 15:45:00', false,2),
+(null, 'umidade', 'alta','2023-05-22 16:45:00', false,2),
+(null, 'umidade', 'baixa','2023-05-22 17:45:00', false,2),
+(null, 'umidade', 'alta','2023-05-22 18:45:00', false,2),
+(null, 'temperatura', 'quente','2023-01-01 00:00:00', false,18),
+(null, 'temperatura', 'frio','2023-01-02 08:30:00', false,18),
+(null, 'temperatura', 'quente','2023-01-05 14:15:00', false,18),
+(null, 'temperatura', 'quente','2023-01-08 10:00:00', false,18),
+(null, 'temperatura', 'frio','2023-01-12 18:45:00', false,18),
+(null, 'temperatura', 'frio', '2023-01-15 09:30:00', false,18),
+(null, 'temperatura', 'frio','2023-01-18 12:00:00', false,18),
+(null, 'temperatura', 'quente','2023-01-20 16:20:00', false,18),
+(null, 'temperatura', 'quente','2023-01-24 11:30:00', false,18),
+(null, 'temperatura', 'quente','2023-01-26 17:45:00', false,18);
 
     
     
@@ -287,7 +288,7 @@ FROM
 	join armazem on armazem.idArmazem = sensor.fkArmazem
     join empresa on armazem.fkEmpresa = empresa.idEmpresa  
 		where armazem.idArmazem = 1 and
-    dataAviso >= DATE_SUB(now(), INTERVAL 8 WEEK);
+    dataAlerta >= DATE_SUB(now(), INTERVAL 8 WEEK);
 
                 
 -- ALERTAS EMITIDOS NO MÊS --
@@ -302,7 +303,6 @@ FROM
 
 
 -- Alertas das últimas semanas -- 
-SELECT 
 	
 
 -- ÚLTIMOS 4 MESES --
@@ -314,7 +314,7 @@ FROM
     join sensor on alerta.fkSensorAlerta = sensor.idSensor
 	join armazem on armazem.idArmazem = sensor.fkArmazem
 		where armazem.idArmazem = 1 and
-    dataAviso >= DATE_SUB(now(), INTERVAL 4 MONTH)
+    dataAlerta >= DATE_SUB(now(), INTERVAL 4 MONTH)
     GROUP BY
     DATE_FORMAT(alerta.dataAlerta, "%Y-%m");
     
@@ -490,5 +490,6 @@ WHERE
     idArmazem = 1 AND
 	dataAlerta >= DATE_SUB(NOW(), INTERVAL 1 MONTH);
 
-	
+UPDATE alerta SET visto = true WHERE idAlerta = 1;
+SELECT * FROM alerta;
 

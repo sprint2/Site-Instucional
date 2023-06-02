@@ -339,9 +339,10 @@ function puxarArmazemUmid(idEmpresa) {
          response.json().then(function (resposta) {
             console.log("Dados recebidos (Linha 8): " + JSON.stringify(resposta));
             resposta.forEach(element => {
-               dataAlertaUmid.push(element.MesDoAlerta)
-               armazensUmid.push(element.MesAlerta)
+               dataAlertaUmid.push(element.HorarioAlerta)
+               armazensUmid.push(element.Medida)
                console.log(element.MesAlerta)
+               console.log(element.HorarioAlerta)
             });
          })
          const ctxUmdd = document.getElementById("chartUmd");
@@ -404,6 +405,7 @@ function puxarDados() {
 }
 
 function puxarArmazens(idEmpresa) {
+   lista_armazens.innerHTML = ""
    fetch(`/armazem/listar/${idEmpresa}`, { cache: 'no-store' }).then(function (response) {
       if (response.ok) {
          if (response.status === 204) {
