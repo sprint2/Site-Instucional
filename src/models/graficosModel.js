@@ -130,7 +130,6 @@ function listarLine8(idEmpresa) {
   alerta.tipo,
   alerta.nivel,
   date_format(alerta.dataAlerta, "%H:%i") as HorarioAlerta,
-  date_format(alerta.dataAlerta, "%M") as MesDoAlerta,
   alerta.medida as Medida
 FROM
     alerta

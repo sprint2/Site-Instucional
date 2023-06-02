@@ -8,12 +8,13 @@
     <link rel="stylesheet" href="../style/style-dashboard.css">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="/../../script/script.js"></script>
+    <script src="../script/dashboardArmazem.js"></script>
     <script src="https://unpkg.com/@phosphor-icons/web"></script>
 
     <title>Dashboard - Geral</title>
 </head>
 
-<body onload="carregarDados()">
+<body onload="puxarDados()">
     <div class="top-line">
         <div class="empresa">
             <h1 class="empresa-nome"><span id="nomeEmp"></span> - Geral</h1>
@@ -69,7 +70,7 @@
                 </div>
                 <div class="container">
                     <h3>Níveis de umidade registrados no armazém nas últimas 6 horas</h3>
-                    <canvas id="chart-umdd"></canvas>
+                    <canvas id="chartUmd"></canvas>
                 </div>
             </div>
             <div class="inner-content">
@@ -108,89 +109,3 @@
 </body>
 
 </html>
-
-<script>
-    const ctxTemp = document.getElementById('chart-temp');
-
-    new Chart(ctxTemp, {
-        type: 'line',
-        data: {
-            labels: ['13h00', '13h30', '14h00', '14h30', '15h00', '15h30', '16h00', '16h30', '17h00', '17h30', '18h00'],
-            datasets: [{
-                label: 'Temperatura',
-                backgroundColor: '#025183',
-                borderColor: '#025183',
-                data: [1, 1.5, 1.25, 1.5, 1.625, 1.75, 1.6, 1.45, 1.35, 1.55, 1.7, 1.8, 1.2, 1.3, 1.4, 1.68, 1.59, 1.43],
-                borderWidth: 1,
-            },
-            ]
-        },
-        options: {
-            layout: {
-                padding: {
-                    bottom: 20
-                }
-            }
-        }
-    });
-
-
-    const ctxUmdd = document.getElementById('chart-umdd');
-
-    new Chart(ctxUmdd, {
-        type: 'line',
-        data: {
-            labels: ['13h00', '13h30', '14h00', '14h30', '15h00', '15h30', '16h00', '16h30', '17h00', '17h30', '18h00'],
-            datasets: [{
-                label: 'Níveis de umidade',
-                backgroundColor: '#58A1E4',
-                borderColor: '#58A1E4',
-                data: [60.0, 65.0, 55.0, 60.0, 70.0, 65.0, 58.0, 68.0, 67.0, 52.0, 63.0, 58.0, 61.0, 56.0],
-                borderWidth: 1
-            },
-            ]
-        },
-        options: {
-            layout: {
-                padding: {
-                    bottom: 20
-                }
-            },
-
-        }
-    });
-
-    ctxAlert = document.getElementById('chart-alert');
-
-    new Chart(ctxAlert, {
-        type: 'bar',
-        data: {
-            labels: ['Janeiro', 'Fevereiro', 'Março', 'Abril'],
-            datasets: [{
-                label: 'Umidade',
-                backgroundColor: '#58A1E4',
-                borderColor: '#58A1E4',
-                data: [20, 15, 13, 8],
-                borderWidth: 1
-            },
-            {
-                label: 'Temperatura',
-                backgroundColor: '#025183',
-                borderColor: '#025183',
-                data: [4, 2, 1, 7],
-                borderWidth: 1
-            }
-
-            ]
-        },
-        options: {
-            layout: {
-                padding: {
-                    bottom: 20
-                }
-            }
-        }
-    });
-
-    
-</script>

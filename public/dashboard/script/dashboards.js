@@ -14,6 +14,7 @@ function dataHora() {
 var dataMonth = [];
 var respostaData = [];
 
+// Gráficos dos Ultimos 4 Meses
 function puxarUltimoMes(idEmpresa) {
    fetch(`/graficos/listarUltimoMes/${idEmpresa}`, { cache: 'no-store' }).then(function (response) {
       if (response.ok) {
@@ -43,8 +44,6 @@ function puxarUltimoMes(idEmpresa) {
          console.error(`Erro na obtenção dos dados p/ gráfico (ultimo): ${error.message}`);
       });
 }
-
-
 function puxarPenultimoMes(idEmpresa) {
    var respostaData = [];
    fetch(`/graficos/listarPenultimoMes/${idEmpresa}`, { cache: 'no-store' }).then(function (response) {
@@ -75,7 +74,6 @@ function puxarPenultimoMes(idEmpresa) {
       });
 
 }
-
 function puxarAntepenultimoMes(idEmpresa) {
    var respostaData = [];
    fetch(`/graficos/listarAntepenultimoMes/${idEmpresa}`, { cache: 'no-store' }).then(function (response) {
@@ -105,7 +103,6 @@ function puxarAntepenultimoMes(idEmpresa) {
          console.error(`Erro na obtenção dos dados p/ gráfico (antepenultimo): ${error.message}`);
       });
 }
-
 function puxarQuartoMes(idEmpresa) {
    var respostaData = [];
    fetch(`/graficos/listarQuartoMes/${idEmpresa}`, { cache: 'no-store' }).then(function (response) {
@@ -216,6 +213,7 @@ function puxarQuartoMes(idEmpresa) {
       });
 
 }
+
 // Gráfico de Pizza
 var alertTemp = [];
 var alertUmid = [];
@@ -271,7 +269,6 @@ function puxarPie(idEmpresa) {
 
 }
 
-
 // Grafico de Linha Temperatura
 var armazens8 = []
 var dataAlerta8 = []
@@ -286,8 +283,8 @@ function puxarArmazem8(idEmpresa) {
          response.json().then(function (resposta) {
             console.log("Dados recebidos (Linha 8): " + JSON.stringify(resposta));
             resposta.forEach(element => {
-               dataAlerta8.push(element.MesDoAlerta)
-               armazens8.push(element.MesAlerta)
+               dataAlerta8.push(element.HorarioAlerta)
+               armazens8.push(element.Medida)
                console.log(element.MesAlerta)
             });
          })
@@ -379,6 +376,7 @@ function puxarArmazemUmid(idEmpresa) {
 
 }
 
+// Função que vai puxar todos os gráficos
 function puxarDados() {
    var idEmpresa = sessionStorage.ID_EMPRESA;
    puxarUltimoMes(idEmpresa);
@@ -404,6 +402,7 @@ function puxarDados() {
    }, 20000);
 }
 
+// Função de Puxar os Armazens
 function puxarArmazens(idEmpresa) {
    lista_armazens.innerHTML = ""
    fetch(`/armazem/listar/${idEmpresa}`, { cache: 'no-store' }).then(function (response) {
