@@ -348,13 +348,13 @@ function puxarArmazemUmid(idEmpresa) {
    new Chart(ctxUmdd, {
       type: "line",
       data: {
-         labels: [dataAlertaUmid],
+         labels: [Umidade],
          datasets: [
             {
                label: "Níveis de umidade",
                backgroundColor: "#58A1E4",
                borderColor: "#58A1E4",
-               data: [armazensUmid],
+               data: [10, 40, 50, 34, 24],
                borderWidth: 1,
             },
          ],
