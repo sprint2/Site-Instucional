@@ -1,7 +1,4 @@
-//pegar
-var dtArmazem = [
-   "1","2","3","4","5","6","7","8","9","10","11","12"
-]
+
 function dataHora() {
    const data = new Date();
 
@@ -391,7 +388,7 @@ function puxarDados() {
    puxarArmazens(idEmpresa);
    puxarArmazemMaior(idEmpresa);
    puxarArmazem8(idEmpresa);
-   puxarArmazemUmid(idEmpresa);
+   //puxarArmazemUmid(idEmpresa);
    mostrarAlertas(idEmpresa);
    
    if (dataMonth.length < 4) {
