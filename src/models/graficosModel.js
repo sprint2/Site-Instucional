@@ -146,10 +146,7 @@ FROM
 
 function listarLineUmid(idEmpresa) {
   var instrucao = `SELECT
-  Month(dataAlerta) as MesAlerta,
-  alerta.tipo,
-  alerta.nivel,
-  date_format(alerta.dataAlerta, "%M") as MesDoAlerta
+  *
 FROM
   alerta
   join sensor on alerta.fkSensorAlerta = sensor.idSensor
