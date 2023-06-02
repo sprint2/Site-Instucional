@@ -348,7 +348,7 @@ function puxarArmazemUmid(idEmpresa) {
    new Chart(ctxUmdd, {
       type: "line",
       data: {
-         labels: [armazensUmid],
+         labels: [dataAlertaUmid],
          datasets: [
             {
                label: "Níveis de umidade",
