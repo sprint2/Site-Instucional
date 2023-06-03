@@ -147,10 +147,29 @@ function listarLineUmid(req, res) {
 
 }
 
+function listarLineTemp(req, res) {
+  var idEmpresa = req.params.idEmpresa;
+
+  dashboardModel.listarLineTemp(idEmpresa).then(function (resultado) {
+    if (resultado.length > 0) {
+      console.log("e aqui")
+      res.status(200).json(resultado);
+      console.log("entramos" + resultado.length)
+    } else {
+      res.status(204).send("Nenhum resultado encontrado!")
+    }
+  })
+  .catch(function (resultado) {
+    console.log("\nHouve um erro ao buscar resultados (pie)");
+  })
+
+}
+
 module.exports = {
   testar,
   listarLine8,
   listarLineUmid,
+  listarLineTemp,
   listarPie,
   listarMes,
   listarUltimoMes,

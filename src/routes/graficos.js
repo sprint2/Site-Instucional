@@ -19,6 +19,10 @@ router.get("/listarLineUmid/:idEmpresa", function(req, res) {
    graficosController.listarLineUmid(req, res);
 })
 
+router.get("/listarLineTemp/:idEmpresa", function(req, res) {
+   graficosController.listarLineTemp(req, res);
+})
+
 router.get("/listarMes", function(req, res) {
    graficosController.listarMes(req, res);
 })

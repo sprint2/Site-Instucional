@@ -213,7 +213,6 @@ function puxarPie(idEmpresa) {
         if (response.ok) {
 
             response.json().then(function (resposta) {
-                console.log("Dados recebidos (PIE): " + JSON.stringify(resposta));
                 resposta.forEach(element => {
                     alertTemp.push(element.temperatura);
                     alertUmid.push(element.umidade);
@@ -257,61 +256,10 @@ function puxarPie(idEmpresa) {
 
 }
 
-// Grafico de Linha Temperatura
-var armazens8 = []
-var dataAlerta8 = []
-function puxarArmazem8(idEmpresa) {
-    var idEmpresa = sessionStorage.ID_EMPRESA;
-    armazens8 = [];
-    dataAlerta8 = [];
-
-    fetch(`/graficos/listarLine8/${idEmpresa}`, { cache: 'no-store' }).then(function (response) {
-        if (response.ok) {
-
-            response.json().then(function (resposta) {
-                console.log("Dados recebidos (Linha 8): " + JSON.stringify(resposta));
-                resposta.forEach(element => {
-                    dataAlerta8.push(element.HorarioAlerta)
-                    armazens8.push(element.Medida)
-                    console.log(element.MesAlerta)
-                });
-            })
-            console.log(armazens8);
-            const ctxTemp = document.getElementById('chart-temp');
-            new Chart(ctxTemp, {
-                type: 'line',
-                data: {
-                    labels: ['13h00', '13h30', '14h00', '14h30', '15h00', '15h30', '16h00', '16h30', '17h00', '17h30', '18h00'],
-                    datasets: [{
-                        label: 'Temperatura',
-                        backgroundColor: '#025183',
-                        borderColor: '#025183',
-                        data: [1, 1.5, 1.25, 1.5, 1.625, 1.75, 1.6, 1.45, 1.35, 1.55, 1.7, 1.8, 1.2, 1.3, 1.4, 1.68, 1.59, 1.43],
-                        borderWidth: 1,
-                    },
-                    ]
-                },
-                options: {
-                    layout: {
-                        padding: {
-                            bottom: 20
-                        }
-                    }
-                }
-            });
-        } else {
-            console.error('Nenhum dado encontrado ou erro na API');
-        }
-    })
-        .catch(function (error) {
-            console.error(`Erro na obtenção dos dados p/ gráfico (line8): ${error.message}`);
-        });
-
-}
-
 // Grafico de Linha Umidade
 var armazensUmid = []
 var dataAlertaUmid = []
+var chartLineUmid;
 function puxarArmazemUmid(idEmpresa) {
     var idEmpresa = sessionStorage.ID_EMPRESA;
     armazensUmid = [];
@@ -321,15 +269,15 @@ function puxarArmazemUmid(idEmpresa) {
         if (response.ok) {
 
             response.json().then(function (resposta) {
-                console.log("Dados recebidos (Linha 8): " + JSON.stringify(resposta));
                 resposta = resposta.reverse();
                 resposta.forEach(element => {
-                    dataAlertaUmid.push(element.horarioUmid)
-                    armazensUmid.push(element.umidade)
+                    horarioUmid = `${element.horaUmid}:${element.minutoUmid}`
+                    dataAlertaUmid.push(horarioUmid);
+                    armazensUmid.push(element.umidade);
                 });
             })
             const ctxUmdd = document.getElementById("chartUmd");
-            new Chart(ctxUmdd, {
+            chartLineUmid = new Chart(ctxUmdd, {
                 type: "line",
                 data: {
                     labels: dataAlertaUmid,
@@ -362,65 +310,62 @@ function puxarArmazemUmid(idEmpresa) {
 
 }
 
-// Função que vai puxar todos os gráficos
-function puxarDados() {
+// Grafico de Linha Temperatura
+var armazensTemp = []
+var dataAlertaTemp = []
+var chartLineTemp;
+function puxarArmazemTemp(idEmpresa) {
     var idEmpresa = sessionStorage.ID_EMPRESA;
-    puxarUltimoMes(idEmpresa);
-    puxarPenultimoMes(idEmpresa);
-    puxarAntepenultimoMes(idEmpresa);
-    puxarQuartoMes(idEmpresa);
-    puxarPie(idEmpresa);
-    puxarArmazem8(idEmpresa);
-    puxarArmazemUmid(idEmpresa);
-    mostrarAlertas(idEmpresa);
+    armazensTemp = [];
+    dataAlertaTemp = [];
 
-    if (dataMonth.length < 4) {
-        console.log("ainda menor que 4")
-    } else {
-        dataMonth = []
-    }
-    nomeEmpresa = document.getElementById("nomeEmp");
-    nomeEmpresa.innerText = sessionStorage.NOME_EMPRESA;
-    /*setTimeout(() => {
-       puxarDados()
-    }, 20000);*/
+    fetch(`/graficos/listarLineTemp/${idEmpresa}`, { cache: 'no-store' }).then(function (response) {
+        if (response.ok) {
+
+            response.json().then(function (resposta) {
+                resposta = resposta.reverse();
+                resposta.forEach(element => {
+                    horarioTemp = `${element.horaTemp}:${element.minutoTemp}`
+                    dataAlertaTemp.push(horarioTemp);
+                    armazensTemp.push(element.temperatura);
+                });
+            })
+            
+            const ctxTemp = document.getElementById("chartTemp");
+            chartLineTemp = new Chart(ctxTemp, {
+                type: "line",
+                data: {
+                    labels: dataAlertaTemp,
+                    datasets: [
+                        {
+                            label: "Temperatura",
+                            backgroundColor: "#025183",
+                            borderColor: "#025183",
+                            data: armazensTemp,
+                            borderWidth: 1,
+                        },
+                    ],
+                },
+                options: {
+                    layout: {
+                        padding: {
+                            bottom: 20,
+                        },
+                    },
+                },
+            });
+
+        } else {
+            console.error('Nenhum dado encontrado ou erro na API');
+        }
+    })
+        .catch(function (error) {
+            console.error(`Erro na obtenção dos dados p/ gráfico: ${error.message}`);
+        });
+
 }
 
-
-
-
-ctxAlert = document.getElementById('chart-alert');
-
-new Chart(ctxAlert, {
-    type: 'bar',
-    data: {
-        labels: ['Janeiro', 'Fevereiro', 'Março', 'Abril'],
-        datasets: [{
-            label: 'Umidade',
-            backgroundColor: '#58A1E4',
-            borderColor: '#58A1E4',
-            data: [20, 15, 13, 8],
-            borderWidth: 1
-        },
-        {
-            label: 'Temperatura',
-            backgroundColor: '#025183',
-            borderColor: '#025183',
-            data: [4, 2, 1, 7],
-            borderWidth: 1
-        }
-
-        ]
-    },
-    options: {
-        layout: {
-            padding: {
-                bottom: 20
-            }
-        }
-    }
-});
-
+//funções de alertas
 function verifMedida(tipo) {
     var qtdAcimaUmid;
     var qtdAcimaTemp;
@@ -449,4 +394,92 @@ function gerarAlerta(tipo) {
     } else {
         alert('ta suave chefe');
     }
+}
+
+function atualizarLinhaUmid(idEmpresa) {
+    fetch(`/graficos/listarLineUmid/${idEmpresa}`, { cache: 'no-store' }).then(function (response) {
+        if (response.ok) {
+
+            response.json().then(function (resposta) {
+                // console.log("Dados recebidos (Linha 8): " + JSON.stringify(resposta));
+                var medidaRecente = resposta[0];
+                var horarioRecente = `${medidaRecente.horaUmid}:${medidaRecente.minutoUmid}`;
+                if(horarioRecente == dataAlertaUmid[dataAlertaUmid.length - 1]) {
+                    console.log('dado mais recente plotado')
+                } else {
+                    armazensUmid.shift();
+                    armazensUmid.push(medidaRecente.umidade);
+                    dataAlertaUmid.shift();
+                    dataAlertaUmid.push(horarioRecente);
+                    chartLineUmid.update();
+                }
+            })
+        } else {
+            console.error('Nenhum dado encontrado ou erro na API');
+        }
+    })
+        .catch(function (error) {
+            console.error(`Erro na obtenção dos dados p/ gráfico: ${error.message}`);
+        });  
+}
+
+function atualizarLinhaTemp(idEmpresa) {
+    fetch(`/graficos/listarLineTemp/${idEmpresa}`, { cache: 'no-store' }).then(function (response) {
+        if (response.ok) {
+
+            response.json().then(function (resposta) {
+                // console.log("Dados recebidos (Linha 8): " + JSON.stringify(resposta));
+                var medidaRecente = resposta[0];
+                var horarioRecente = `${medidaRecente.horaTemp}:${medidaRecente.minutoTemp}`;
+                if(horarioRecente == dataAlertaTemp[dataAlertaTemp.length - 1]) {
+                    console.log('dado mais recente plotado')
+                } else {
+                    armazensTemp.shift();
+                    armazensTemp.push(medidaRecente.temperatura);
+                    dataAlertaTemp.shift();
+                    dataAlertaTemp.push(horarioRecente);
+                    chartLineTemp.update();
+                }
+            })
+        } else {
+            console.error('Nenhum dado encontrado ou erro na API');
+        }
+    })
+        .catch(function (error) {
+            console.error(`Erro na obtenção dos dados p/ gráfico: ${error.message}`);
+        });  
+}
+
+function atualizarGraficos() {
+    var idEmpresa = sessionStorage.ID_EMPRESA;
+    atualizarLinhaTemp(idEmpresa);
+    atualizarLinhaUmid(idEmpresa);
+
+    setTimeout(() => {
+        atualizarGraficos()
+    }, 2000);
+}
+
+// Função que vai puxar todos os gráficos
+function puxarDados() {
+    var idEmpresa = sessionStorage.ID_EMPRESA;
+    puxarUltimoMes(idEmpresa);
+    puxarPenultimoMes(idEmpresa);
+    puxarAntepenultimoMes(idEmpresa);
+    puxarQuartoMes(idEmpresa);
+    puxarPie(idEmpresa);
+    puxarArmazemTemp(idEmpresa);
+    puxarArmazemUmid(idEmpresa);
+    atualizarGraficos();
+
+    if (dataMonth.length < 4) {
+        console.log("ainda menor que 4")
+    } else {
+        dataMonth = []
+    }
+    nomeEmpresa = document.getElementById("nomeEmp");
+    nomeEmpresa.innerText = sessionStorage.NOME_EMPRESA;
+    /*setTimeout(() => {
+       puxarDados()
+    }, 20000);*/
 }

@@ -150,7 +150,8 @@ FROM
 function listarLineUmid(idEmpresa) {
   var instrucao = `
   SELECT 
-	date_format(mh.dataHora, '%h:%m') as horarioUmid,
+    hour(dataHora) as horaUmid,
+    minute(dataHora) as minutoUmid,
     mh.umidade,
     minimoUmid,
     maximoUmid
@@ -162,8 +163,35 @@ function listarLineUmid(idEmpresa) {
   JOIN empresa emp ON arm.fkEmpresa = emp.idEmpresa
   WHERE
     idEmpresa = 1 AND
+    idArmazem = 1
+  ORDER BY dataHora DESC
+  LIMIT 10;
+  `;
+
+  console.log("Executando a instrução SQL: " + instrucao);
+
+  return database.executar(instrucao);
+}
+
+function listarLineTemp(idEmpresa) {
+  var instrucao = `
+  SELECT 
+    hour(dataHora) as horaTemp,
+    minute(dataHora) as minutoTemp,
+    mh.temperatura,
+    minimoTemp,
+    maximoTemp
+  FROM 
+    metricaHistorico mh
+  JOIN sensor s ON mh.fkSensor = s.idSensor
+  JOIN metricas m ON mh.fkMetricaIdeal = m.idMetricas
+  JOIN armazem arm ON s.fkArmazem = arm.idArmazem
+  JOIN empresa emp ON arm.fkEmpresa = emp.idEmpresa
+  WHERE
+    idEmpresa = 1 AND
       idArmazem = 1
-  ORDER BY dataHora DESC;
+  ORDER BY dataHora DESC
+  LIMIT 10;
   `;
 
   console.log("Executando a instrução SQL: " + instrucao);
@@ -175,6 +203,7 @@ module.exports = {
   listarMes,
   listarLine8,
   listarLineUmid,
+  listarLineTemp,
   listarUltimoMes,
   listarPenultimoMes,
   listarAntepenultimoMes,
