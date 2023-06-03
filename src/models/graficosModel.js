@@ -148,22 +148,22 @@ FROM
 }
 
 function listarLineUmid(idEmpresa) {
-  var instrucao = `SELECT
-  Month(dataAlerta) as MesAlerta,
-  alerta.tipo,
-  alerta.nivel,
-  date_format(alerta.dataAlerta, "%H:%i") as HorarioAlerta,
-  date_format(alerta.dataAlerta, "%M") as MesDoAlerta,
-  alerta.medida as Medida
-FROM
-  alerta
-  join sensor on alerta.fkSensorAlerta = sensor.idSensor
-  join armazem on armazem.idArmazem = sensor.fkArmazem
-  join empresa on armazem.fkEmpresa = empresa.idEmpresa
-  where empresa.idEmpresa = ${idEmpresa} and
-  dataAlerta >= DATE_SUB(now(), INTERVAL 1 MONTH) and alerta.tipo = "umidade"
-  ORDER BY HorarioAlerta ASC
-  LIMIT 10;
+  var instrucao = `
+  SELECT 
+	date_format(mh.dataHora, '%h:%m') as horarioUmid,
+    mh.umidade,
+    minimoUmid,
+    maximoUmid
+  FROM 
+    metricaHistorico mh
+  JOIN sensor s ON mh.fkSensor = s.idSensor
+  JOIN metricas m ON mh.fkMetricaIdeal = m.idMetricas
+  JOIN armazem arm ON s.fkArmazem = arm.idArmazem
+  JOIN empresa emp ON arm.fkEmpresa = emp.idEmpresa
+  WHERE
+    idEmpresa = 1 AND
+      idArmazem = 1
+  ORDER BY dataHora DESC;
   `;
 
   console.log("Executando a instrução SQL: " + instrucao);

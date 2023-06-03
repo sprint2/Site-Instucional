@@ -16,6 +16,7 @@ function listarAlertas() {
 function listarAlertasRecentes(idEmpresa) {
   var instrucao = `
   SELECT
+    idAlerta, 
     tipo, nivel, (date_format(alerta.dataAlerta, "%d/%m/%y")) as data_alerta, date_format(dataAlerta, "%h:%m") as hora_alerta, idArmazem 
   FROM
     alerta 
@@ -23,7 +24,7 @@ function listarAlertasRecentes(idEmpresa) {
   JOIN armazem ON fkArmazem = idArmazem
   JOIN empresa ON fkEmpresa = idEmpresa
   WHERE
-    dataAlerta >= DATE_SUB(now(), interval 1 month) AND idEmpresa = ${idEmpresa}
+    dataAlerta >= DATE_SUB(now(), interval 1 month) AND idEmpresa = ${idEmpresa} AND visto = false
   ORDER BY
     dataAlerta 
   DESC LIMIT 3;
@@ -46,10 +47,20 @@ function listarQtdAlertas(idEmpresa) {
   WHERE 
     idEmpresa = 1 AND
     idArmazem = 1 AND
+    visto = false AND
     dataAlerta >= DATE_SUB(NOW(), INTERVAL 1 MONTH);
   `;
 
   console.log('Executando a instrução SQL: \n' +instrucao);
+  return database.executar(instrucao);
+}
+
+function atualizarAlerta(idAlerta) {
+  var instrucao = `
+    UPDATE alerta SET visto = true WHERE idAlerta = ${idAlerta}
+  `;
+
+  console.log("Executanod a instrução SQL: \n"+instrucao);
   return database.executar(instrucao);
 }
 
@@ -72,5 +83,6 @@ module.exports = {
   listarAlertas,
   listarAlertasRecentes,
   cadastrarAlerta,
-  listarQtdAlertas
+  listarQtdAlertas, 
+  atualizarAlerta
 };

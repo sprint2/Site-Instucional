@@ -115,6 +115,9 @@ CREATE TABLE metricaHistorico (
     CONSTRAINT pkSenHist PRIMARY KEY (idMetricaHistorico , fkSensor)
 );
 
+select * from metricas;
+select * from sensor;
+
 -- Inserido endereços que sera usado na tabela empresa e na tabela armazém
 INSERT INTO endereco VALUES
 (NULL, 'Av Nova Cantareira', 'Tucuruvi', '262', 'Sl32', '02340-000'),
@@ -216,7 +219,12 @@ INSERT INTO metricaHistorico VALUES
 (NULL, '2023-05-02 09:59:59' , 50, 5, 1, 7),
 (NULL, '2023-05-02 09:59:59' , 45, 7, 1, 8),
 (NULL, '2023-05-02 10:30:59' , 50, 5, 1, 9),
-(NULL, '2023-05-02 11:00:00' , 52, 5, 1, 10);
+(NULL, '2023-05-02 11:00:00' , 52, 5, 1, 10),
+(NULL, '2023-06-01 08:00:00', 70, 25, 1, 1),
+(NULL, '2023-06-01 09:00:00', 65, 26, 1, 1),
+(NULL, '2023-06-01 10:00:00', 68, 24, 2, 1),
+(NULL, '2023-06-01 11:00:00', 72, 27, 2, 1),
+(NULL, '2023-06-01 12:00:00', 69, 25, 1, 1);
 
 insert into alerta values
 (null, 'temperatura', 'quente','2023-01-01 00:00:00', false, 20,1),
@@ -571,4 +579,20 @@ FROM
   ORDER BY HorarioAlerta ASC
   LIMIT 10;
 
+-- SELECT DINÂMICO PARA UMIDADE
+SELECT 
+	mh.dataHora,
+    mh.umidade,
+    minimoUmid,
+    maximoUmid
+FROM 
+	metricaHistorico mh
+JOIN sensor s ON mh.fkSensor = s.idSensor
+JOIN metricas m ON mh.fkMetricaIdeal = m.idMetricas
+JOIN armazem arm ON s.fkArmazem = arm.idArmazem
+JOIN empresa emp ON arm.fkEmpresa = emp.idEmpresa
+WHERE
+	idEmpresa = 1 AND
+    idArmazem = 1
+ORDER BY dataHora DESC;
 

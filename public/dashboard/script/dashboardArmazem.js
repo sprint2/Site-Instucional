@@ -322,11 +322,10 @@ function puxarArmazemUmid(idEmpresa) {
 
             response.json().then(function (resposta) {
                 console.log("Dados recebidos (Linha 8): " + JSON.stringify(resposta));
+                resposta = resposta.reverse();
                 resposta.forEach(element => {
-                    dataAlertaUmid.push(element.HorarioAlerta)
-                    armazensUmid.push(element.Medida)
-                    console.log(element.MesAlerta)
-                    console.log(element.HorarioAlerta)
+                    dataAlertaUmid.push(element.horarioUmid)
+                    armazensUmid.push(element.umidade)
                 });
             })
             const ctxUmdd = document.getElementById("chartUmd");
@@ -421,3 +420,33 @@ new Chart(ctxAlert, {
         }
     }
 });
+
+function verifMedida(tipo) {
+    var qtdAcimaUmid;
+    var qtdAcimaTemp;
+    if(tipo == 'temperatura') {
+        armazensTemp.forEach(temperatura => {
+            if(temperatura > 6) {
+                qtdAcimaTemp++;
+            }
+        });
+        return qtdAcimaTemp;
+    } else if(tipo == 'umidade') {
+        armazensUmid.forEach(umidade => {
+            if(umidade > 50) {
+                qtdAcimaUmid++;
+            }
+        });
+        return qtdAcimaUmid;
+    }
+}
+
+function gerarAlerta(tipo) {
+    var medidas = verifMedida(tipo);
+
+    if(medidas >= 6) {
+        alert('temos um problema');
+    } else {
+        alert('ta suave chefe');
+    }
+}

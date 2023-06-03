@@ -461,6 +461,7 @@ function puxarArmazemMaior(idEmpresa) {
    })
 }
 
+var idsAlertas = [];
 function mostrarAlertas(idEmpresa) {
    fetch(`/alerta/listarAlertasRecentes/${idEmpresa}`).then(function (resposta) {
       if(resposta.ok) {
@@ -471,7 +472,9 @@ function mostrarAlertas(idEmpresa) {
                // console.log(`Dados recebidos: ${JSON.stringify(resposta)}`);
                var alertsContainer = document.getElementById("alerts_container");
                var tempoAnimacao = 4;
+               idsAlertas = [];
                resposta.forEach(element => {
+                  idsAlertas.push(element.idAlerta)
                   tempoAnimacao += 2;
                   var divAlert = document.createElement("div");
                   var divAlertContent = document.createElement("div");
@@ -508,7 +511,10 @@ function mostrarAlertas(idEmpresa) {
                      divAlert.style.display = 'none';
                   }, tempoAnimacao * 1000);
 
-                  // mostrarQtdAlertas(idEmpresa);
+                  mostrarQtdAlertas(idEmpresa);
+                  idsAlertas.forEach(element => {
+                     atualizarAlerta(element);
+                  });
                });
             })
          }
@@ -520,7 +526,7 @@ function mostrarAlertas(idEmpresa) {
 }
 
 function mostrarQtdAlertas(idEmpresa) {
-   fetch(`/alertas/listarQtdAlertas/${idEmpresa}`).then(function (resposta) {
+   fetch(`/alerta/listarQtdAlertas/${idEmpresa}`).then(function (resposta) {
       if(resposta.ok) {
          if(resposta.status === 204) {
             console.log("ta vazio");
@@ -537,5 +543,13 @@ function mostrarQtdAlertas(idEmpresa) {
    })
    .catch(function (error) {
       console.error(`Erro na obtenção dos dados p/ gráfico: ${error.message}`);
+   });
+}
+
+function atualizarAlerta(idAlerta) {
+   fetch(`/alerta/atualizarAlerta/${idAlerta}`).then(function (resposta) {
+      console.log("Alerta editado: "+resposta);
+   }).catch(function (error) {
+      console.erro(`Erro na obtenção dos dados p/ gráficos: ${error.message}`);
    });
 }
