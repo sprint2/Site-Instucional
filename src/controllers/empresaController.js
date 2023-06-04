@@ -127,28 +127,43 @@ function usuario(req, res) {
       });
   }
 }
-function usuario(req, res) {
+
+function armazem(req, res) {
   // Crie uma variável que vá recuperar os valores do arquivo cadastro.html
-  var email = req.body.emailServer;
-  var senha = req.body.senhaServer;
+  var logradouro = req.body.logradouroServer;
+  var bairro = req.body.bairroServer;
+  var numero = req.body.numeroServer;
+  var complemento = req.body.complementoServer;
+  var cep = req.body.cepServer;
+  var identificacao = req.body.identificacaoServer;
 
   // Faça as validações dos valores
   
-  if (email == undefined) {
-    res.status(400).send("Sua email está undefined!");
-  } else if (senha == undefined) {
-    res.status(400).send("Sua senha está undefined!");
-  } else {
+  if (logradouro == undefined) {
+    res.status(400).send("Seu logradouro está undefined!");
+  } else if (bairro == undefined) {
+    res.status(400).send("Seu bairro está undefined!");
+  } else if(numero == undefined) {
+    res.status(400).send("Seu número está undefined!")
+  } else if(complemento == undefined) {
+    res.status(400).send("Seu complemento está undefined!")
+  } else if(cep == undefined) {
+    res.status(400).send("Seu cep está undefined!")
+  } else if(identificacao == undefined) {
+    res.status(400).send("Sua identificação está undefined!")
+  }
+  
+  else {
     // Passe os valores como parâmetro e vá para o arquivo empresaModel.js
-    empresaModel
-      .cadastrar(email, senha)
+    armazemModel
+      .armazem(logradouro, bairro, numero, complemento, cep, identificacao)
       .then(function (resultado) {
         res.json(resultado);
       })
       .catch(function (erro) {
         console.log(erro);
         console.log(
-          "\nHouve um erro ao realizar o cadastro! Erro: ",
+          "\nHouve um erro ao realizar o cadastro de armazem! Erro: ",
           erro.sqlMessage
         );
         res.status(500).json(erro.sqlMessage);
@@ -162,4 +177,5 @@ module.exports = {
   listar,
   testar,
   usuario,
+  armazem,
 };

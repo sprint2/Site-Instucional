@@ -9,7 +9,7 @@
     <title>Cadastro Armazém</title>
 </head>
 <body> 
-    <div class="tudao">
+    <!-- <div class="tudao"> -->
         <div class="top-line">
             <div class="empresa">
                 <h1 class="empresa-nome">
@@ -38,7 +38,7 @@
                         </a>
                     </li>
                     <li>
-                        <a href="">
+                        <a href="https://latech-help.atlassian.net/servicedesk/customer/portals" target="_blank">
                             <img src="../../img/icons/ajuda.svg" alt="">
                             Help
                         </a>
@@ -58,29 +58,28 @@
             <div class="container-cadastro">
                 <div class="caixa-cadastro">
                     <h2>Cadastro de Armazéns</h2>
-                    <label for="">Cadastre os armazéns da sua Empresa</label>                  
+                    <label for="">Cadastre seu armazém para começar a ter controle de sua temperatura e umidade na palma de sua mão</label>                  
                     <div class="alerta-erro">
                         <div class="card-erro" id="cardErro">
                             <span id="mensagem_erro"></span>
                         </div>
                     </div>
+                    <label for="input_identificacao">Identificação</label>
+                    <input id="input_identificacao">
                     <label for="input_rua">Logradouro</label>
                     <input id="input_rua">
-                    <label for="input_bairro">Bairro</label>
-                    <input id="input_bairro">
-                    <label for="input_numero">Numero</label>
-                    <input id="input_numero">
-                    <label for="input_complemento">Complemento</label>
-                    <input id="input_complemento">
-                    <label for="input_cep">CEP</label>
-                    <input id="input_cep">
-
-                    <div class="div-checkbox">
-                        <input type="checkbox">
-                        <input type="checkbox">
-                        <input type="checkbox">
-                    </div>
-              
+                    <div class="flex">
+                    <label for="input_bairro">Bairro
+                    <input id="input_bairro"></label>
+                    <label for="input_numero">Número
+                    <input id="input_numero"></label>
+                  </div>
+                  <div class="flex">
+                    <label for="input_complemento">Complemento
+                    <input id="input_complemento"></label>
+                    <label for="input_cep">CEP
+                    <input id="input_cep"></label>
+              </div>
                     <button onclick="armazem()">Cadastrar novo Armazém</button>
                 </div>
             </div>
@@ -106,14 +105,15 @@ function armazem() {
   var numero = input_numero.value;
   var complemento = input_complemento.value;
   var cep = input_cep.value;
-
+  var indentificacao = input_identificacao.value;
 
     if (
       logradouro == "" ||
       bairro == "" ||
       numero == "" ||
       complemento == "" ||
-      cep == ""
+      cep == "" ||
+      indentificacao == ""
     ) {
       cardErro.style.opacity = "1";
       mensagem_erro.innerHTML = "Preencha todos os campos";
@@ -122,6 +122,7 @@ function armazem() {
       input_numero.style.borderColor = "#b03838";
       input_complemento.style.borderColor = "#b03838";
       input_cep.style.borderColor = "#b03838";
+      input_identificacao.style.borderColor = "#b03838";
       finalizarAguardar();
       return false;
     } else {
@@ -139,6 +140,7 @@ function armazem() {
           numeroServer: numero,
           complementoServer: complemento,
           cepServer: cep,
+          indentificacaoServer: indentificacao,
         }),
       })
         .then(function (resposta) {
@@ -150,7 +152,7 @@ function armazem() {
             modal.style.top = "0";
 
             setTimeout(() => {
-              window.location = "login.html";
+              window.location = "cadastroUsuario.html";
             }, "5000");
 
             limparFormulario();
@@ -167,6 +169,9 @@ function armazem() {
       return false;
     }
   } 
+
+
+
   
 
 
