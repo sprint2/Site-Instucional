@@ -125,21 +125,17 @@ function listarPie(idEmpresa) {
 
 function listarLine8(idEmpresa) {
   var instrucao = `
-  SELECT
-  Month(dataAlerta) as MesAlerta,
-  alerta.tipo,
-  alerta.nivel,
-  date_format(alerta.dataAlerta, "%H:%i") as HorarioAlerta,
-  alerta.medida as Medida
-FROM
-    alerta
-    join sensor on alerta.fkSensorAlerta = sensor.idSensor
-    join armazem on armazem.idArmazem = sensor.fkArmazem
-    join empresa on armazem.fkEmpresa = empresa.idEmpresa
-		where empresa.idEmpresa = ${idEmpresa} and
-    dataAlerta >= DATE_SUB(now(), INTERVAL 1 MONTH) and alerta.tipo = "temperatura"
-    ORDER BY HorarioAlerta ASC
-    LIMIT 10;
+  SELECT 
+    COUNT(idAlerta) as qtd_alerta,
+    MONTH(dataAlerta) as mes_alerta
+  FROM alerta
+  JOIN sensor ON fkSensorAlerta = idSensor
+  JOIN armazem ON fkArmazem = idArmazem
+  JOIN empresa ON fkEmpresa = idEmpresa
+  WHERE
+      idEmpresa = ${idEmpresa}
+  GROUP BY MONTH(dataAlerta)
+  ORDER BY MONTH(dataAlerta);
   `;
 
   console.log("Executando a instrução SQL: " + instrucao);

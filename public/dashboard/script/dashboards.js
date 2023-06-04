@@ -283,9 +283,8 @@ function puxarArmazem8(idEmpresa) {
          response.json().then(function (resposta) {
             console.log("Dados recebidos (Linha 8): " + JSON.stringify(resposta));
             resposta.forEach(element => {
-               dataAlerta8.push(element.HorarioAlerta)
-               armazens8.push(element.Medida)
-               console.log(element.MesAlerta)
+               dataAlerta8.push(element.mes_alerta)
+               armazens8.push(element.qtd_alerta)
             });
          })
          console.log(armazens8);
@@ -463,7 +462,7 @@ function puxarArmazemMaior(idEmpresa) {
 
 var idsAlertas = [];
 
-function renderAlerta(tipo, armazem, data, hora, tempoAnimacao) {
+function renderAlerta(tipo, nivel, armazem, data, hora, tempoAnimacao) {
    var alertsContainer = document.getElementById("alerts_container");
    var divAlert = document.createElement("div");
    var divAlertContent = document.createElement("div");

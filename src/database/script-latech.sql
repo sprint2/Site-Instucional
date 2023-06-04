@@ -595,4 +595,3 @@ WHERE
 	idEmpresa = 1 AND
     idArmazem = 1
 ORDER BY dataHora DESC;
-

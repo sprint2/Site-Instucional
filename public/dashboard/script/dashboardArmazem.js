@@ -438,6 +438,7 @@ function atualizarGraficos() {
     var idEmpresa = sessionStorage.ID_EMPRESA;
     atualizarLinhaTemp(idEmpresa);
     atualizarLinhaUmid(idEmpresa);
+    verifAlerta();
 
     setTimeout(() => {
         atualizarGraficos()
@@ -616,11 +617,6 @@ function mostrarAlertaMaisRecente(idEmpresa) {
              verifTempGerado = false; // Redefine a variável de controle do alerta
          }
      }
-
-     
-     setTimeout(() => {
-         verifAlerta();
-     }, 1000 * 6);
  }
 
 // Função que vai puxar todos os gráficos
