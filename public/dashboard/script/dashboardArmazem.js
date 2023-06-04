@@ -256,6 +256,13 @@ function puxarPie(idEmpresa) {
 
 }
 
+//Gráficos de linha
+var idSensor;
+var minTemp;
+var maxTemp;
+var minUmid;
+var maxUmid;
+
 // Grafico de Linha Umidade
 var armazensUmid = []
 var dataAlertaUmid = []
@@ -269,11 +276,15 @@ function puxarArmazemUmid(idEmpresa) {
         if (response.ok) {
 
             response.json().then(function (resposta) {
+                minUmid = resposta[0].minimoUmid;
+                maxUmid = resposta[0].maximoUmid;
+
                 resposta = resposta.reverse();
                 resposta.forEach(element => {
                     horarioUmid = `${element.horaUmid}:${element.minutoUmid}`
                     dataAlertaUmid.push(horarioUmid);
                     armazensUmid.push(element.umidade);
+                    idSensor = element.sensor;
                 });
             })
             const ctxUmdd = document.getElementById("chartUmd");
@@ -323,6 +334,9 @@ function puxarArmazemTemp(idEmpresa) {
         if (response.ok) {
 
             response.json().then(function (resposta) {
+                minTemp = resposta[0].minimoTemp;
+                maxTemp = resposta[0].maximoTemp;
+
                 resposta = resposta.reverse();
                 resposta.forEach(element => {
                     horarioTemp = `${element.horaTemp}:${element.minutoTemp}`
@@ -365,37 +379,7 @@ function puxarArmazemTemp(idEmpresa) {
 
 }
 
-//funções de alertas
-function verifMedida(tipo) {
-    var qtdAcimaUmid;
-    var qtdAcimaTemp;
-    if(tipo == 'temperatura') {
-        armazensTemp.forEach(temperatura => {
-            if(temperatura > 6) {
-                qtdAcimaTemp++;
-            }
-        });
-        return qtdAcimaTemp;
-    } else if(tipo == 'umidade') {
-        armazensUmid.forEach(umidade => {
-            if(umidade > 50) {
-                qtdAcimaUmid++;
-            }
-        });
-        return qtdAcimaUmid;
-    }
-}
-
-function gerarAlerta(tipo) {
-    var medidas = verifMedida(tipo);
-
-    if(medidas >= 6) {
-        alert('temos um problema');
-    } else {
-        alert('ta suave chefe');
-    }
-}
-
+//funções para atualizar os gráficos
 function atualizarLinhaUmid(idEmpresa) {
     fetch(`/graficos/listarLineUmid/${idEmpresa}`, { cache: 'no-store' }).then(function (response) {
         if (response.ok) {
@@ -405,7 +389,7 @@ function atualizarLinhaUmid(idEmpresa) {
                 var medidaRecente = resposta[0];
                 var horarioRecente = `${medidaRecente.horaUmid}:${medidaRecente.minutoUmid}`;
                 if(horarioRecente == dataAlertaUmid[dataAlertaUmid.length - 1]) {
-                    console.log('dado mais recente plotado')
+                    console.log("Umidades mais recentes");
                 } else {
                     armazensUmid.shift();
                     armazensUmid.push(medidaRecente.umidade);
@@ -432,7 +416,7 @@ function atualizarLinhaTemp(idEmpresa) {
                 var medidaRecente = resposta[0];
                 var horarioRecente = `${medidaRecente.horaTemp}:${medidaRecente.minutoTemp}`;
                 if(horarioRecente == dataAlertaTemp[dataAlertaTemp.length - 1]) {
-                    console.log('dado mais recente plotado')
+                    console.log("Temperaturas mais recentes");
                 } else {
                     armazensTemp.shift();
                     armazensTemp.push(medidaRecente.temperatura);
@@ -457,8 +441,187 @@ function atualizarGraficos() {
 
     setTimeout(() => {
         atualizarGraficos()
-    }, 2000);
+    }, 1000 * 6);
 }
+
+//funções de alertas
+function verifMedida(tipo) {
+    var qtdAcimaUmid = 0;
+    var qtdAbaixoUmid = 0;
+    var qtdAcimaTemp = 0;
+    var qtdAbaixoTemp = 0;
+
+    var medida = {};
+    if(tipo == 'temperatura') {
+        armazensTemp.forEach(temperatura => {
+            if(temperatura >= maxTemp) {
+                qtdAcimaTemp++;
+            } else if(temperatura <= minTemp) {
+                qtdAbaixoTemp++;
+            }
+        });
+        
+        if(qtdAcimaTemp >= 10) {
+            medida = {
+                tipo: 'temperatura',
+                nivel: 'quente',
+                qtd: qtdAcimaTemp
+            }
+
+            return medida;
+        } else if(qtdAbaixoTemp >= 10) {
+            medida = {
+                tipo: 'temperatura',
+                nivel: 'frio',
+                qtd: qtdAbaixoTemp
+            }
+
+            return medida;
+        }
+    } else if(tipo == 'umidade') {
+        armazensUmid.forEach(umidade => {
+            if(umidade > maxUmid) {
+                qtdAcimaUmid++;
+            } else if(umidade <= minUmid) {
+                qtdAbaixoUmid++;
+            }
+        });
+        
+        if(qtdAcimaUmid >= 10) {
+            medida = {
+                tipo: 'umidade',
+                nivel: 'alta',
+                qtd: qtdAcimaUmid
+            }
+
+            return medida;
+        } else if(qtdAbaixoUmid >= 10) {
+            medida = {
+                tipo: 'umidade',
+                nivel: 'abaixo',
+                qtd: qtdAbaixoUmid
+            }
+
+            return medida;
+        }
+    }
+}
+
+function renderAlerta(tipo, nivel, armazem, data, hora, tempoAnimacao) {
+    var alertsContainer = document.getElementById("alerts_container");
+    var divAlert = document.createElement("div");
+    var divAlertContent = document.createElement("div");
+    var warning = document.createElement("i");
+    var alertText = document.createElement("div");
+    var spanTitulo = document.createElement("span");
+    var spanConteudo = document.createElement("span");
+    var timer = document.createElement("div");
+    var br = document.createElement("br");
+ 
+    divAlert.classList.add("alert");
+    divAlert.classList.add("slideIn");
+    divAlertContent.classList.add("alert-content");
+    warning.classList.add("ph");
+    warning.classList.add("ph-warning");
+    spanTitulo.classList.add("notification-titulo");
+    spanConteudo.classList.add("notification-conteudo");
+    timer.classList.add("timer");
+ 
+    spanTitulo.textContent = `Alerta de ${tipo} ${nivel}!`;
+    spanConteudo.textContent = `O armazém ${armazem} emitiu um alerta de \n${tipo} no dia ${data} às ${hora}`;
+ 
+    alertText.appendChild(spanTitulo);
+    alertText.appendChild(br);
+    alertText.appendChild(spanConteudo);
+    divAlertContent.appendChild(warning);
+    divAlertContent.appendChild(alertText);
+    divAlert.appendChild(divAlertContent);
+    divAlert.appendChild(timer);
+    alertsContainer.appendChild(divAlert);
+ 
+    timer.style.animation = `timerLoad ${tempoAnimacao}s infinite linear`;
+    setTimeout(() => {
+       divAlert.style.display = 'none';
+    }, tempoAnimacao * 1000);
+ }
+
+function gerarAlerta(tipoAlerta) {
+    var idEmpresa = sessionStorage.ID_EMPRESA;
+    var medidas = verifMedida(tipoAlerta);
+    var metrica;
+    var armazem = sessionStorage.ID_ARMAZEM;
+
+    if(medidas.tipo == 'temperatura') {
+        metrica = armazensTemp[armazensTemp.length - 1];
+    } else if(medidas.tipo == 'umidade') {
+        metrica = armazensUmid[armazensUmid.length -1];
+    }
+    fetch(`/alerta/cadastrarAlerta/${idEmpresa}`, {
+        method: "POST",
+        headers: {
+            "Content-type": "application/json"
+        },
+        body: JSON.stringify({
+            tipo: medidas.tipo,
+            nivel: medidas.nivel,
+            medida: metrica,
+            idSensor: idSensor
+        }) 
+    }).then(function (resposta) {
+        console.log("Alerta criado!");
+        mostrarAlertaMaisRecente(idEmpresa);
+    })
+}
+
+function mostrarAlertaMaisRecente(idEmpresa) {
+    fetch(`/alerta/listarAlertasRecentes/${idEmpresa}`).then(function (resposta) {
+       if(resposta.ok) {
+          if(resposta.status === 204) {
+             console.log("ta vazio");
+          } else {
+             resposta.json().then(function (resposta) {
+                // console.log(`Dados recebidos: ${JSON.stringify(resposta)}`);
+                var tempoAnimacao = 6;
+                renderAlerta(resposta[0].tipo, resposta[0].nivel, resposta[0].idArmazem, resposta[0].data_alerta, resposta[0].hora_alerta, tempoAnimacao);
+             })
+          }
+       }
+    })
+    .catch(function (error) {
+       console.error(`Erro na obtenção dos dados p/ gráfico: ${error.message}`);
+    });
+ }
+
+ var verifTempGerado = false;
+ var verifUmidGerado = false;
+ 
+ function verifAlerta() {
+     var medidasTemp = verifMedida('temperatura');
+     var medidasUmid = verifMedida('umidade');
+
+     if(!medidasTemp || !medidasUmid) {
+        return
+     } else {
+         if (medidasUmid.qtd >= 12 && !verifUmidGerado) {
+             gerarAlerta('umidade');
+             verifUmidGerado = true;
+         } else if (medidasUmid.qtd < 12) {
+             verifUmidGerado = false; // Redefine a variável de controle do alerta
+         }
+         
+         if (medidasTemp.qtd >= 12 && !verifTempGerado) {
+             gerarAlerta('temperatura');
+             verifTempGerado = true;
+         } else if (medidasTemp.qtd < 12) {
+             verifTempGerado = false; // Redefine a variável de controle do alerta
+         }
+     }
+
+     
+     setTimeout(() => {
+         verifAlerta();
+     }, 1000 * 6);
+ }
 
 // Função que vai puxar todos os gráficos
 function puxarDados() {
@@ -470,6 +633,7 @@ function puxarDados() {
     puxarPie(idEmpresa);
     puxarArmazemTemp(idEmpresa);
     puxarArmazemUmid(idEmpresa);
+    verifAlerta();
     atualizarGraficos();
 
     if (dataMonth.length < 4) {

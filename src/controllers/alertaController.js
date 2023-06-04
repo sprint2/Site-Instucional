@@ -70,12 +70,13 @@ function listarQtdAlertas(req, res) {
 }
 
 function cadastrarAlerta(req, res) {
-  var nivel = req.body.nivelServer;
-  var tipo = req.body.tipoServer;
-  var dataAlerta = req.body.dataAlertaServer;
+  var nivel = req.body.nivel;
+  var tipo = req.body.tipo;
+  var medida = req.body.medida;
+  var idSensor = req.body.idSensor;
 
-  empresaModel
-    .cadastrar(nivel, tipo, dataAlerta)
+  alertaModel
+    .cadastrarAlerta(nivel, tipo, medida, idSensor)
     .then(function (resultado) {
       res.json(resultado);
     })
@@ -116,7 +117,8 @@ module.exports = {
   listarAlertas,
   listarAlertasRecentes,
   listarQtdAlertas,
-  atualizarAlerta
+  atualizarAlerta,
+  cadastrarAlerta
 }
 
 

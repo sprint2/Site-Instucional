@@ -64,14 +64,14 @@ function atualizarAlerta(idAlerta) {
   return database.executar(instrucao);
 }
 
-function cadastrarAlerta(nivel, tipo) {
+function cadastrarAlerta(nivel, tipo, medida, idSensor) {
   console.log(
     "ACESSEI O alerta MODEL \n \n\t\t >> Se aqui der erro de 'Error: connect ECONNREFUSED',\n \t\t >> verifique suas credenciais de acesso ao banco\n \t\t >> e se o servidor de seu BD está rodando corretamente. \n\n function cadastrarAlerta()",
     nivel,
     tipo
   );
 
-  var instrucao = ` insert into alerta (tipo, nivel, dataAlerta) values ('${tipo}', '${nivel}', now());
+  var instrucao = ` insert into alerta (nivel, tipo, dataAlerta, visto, medida, fkSensorAlerta) values ('${nivel}', '${tipo}', now(), false, ${medida}, ${idSensor});
     `;
 
     console.log("Executando a instrução SQL: \n" + instrucao);

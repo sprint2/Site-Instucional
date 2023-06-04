@@ -154,7 +154,8 @@ function listarLineUmid(idEmpresa) {
     minute(dataHora) as minutoUmid,
     mh.umidade,
     minimoUmid,
-    maximoUmid
+    maximoUmid,
+    fkSensor as sensor
   FROM 
     metricaHistorico mh
   JOIN sensor s ON mh.fkSensor = s.idSensor
@@ -165,7 +166,7 @@ function listarLineUmid(idEmpresa) {
     idEmpresa = 1 AND
     idArmazem = 1
   ORDER BY dataHora DESC
-  LIMIT 10;
+  LIMIT 12;
   `;
 
   console.log("Executando a instrução SQL: " + instrucao);
@@ -180,7 +181,8 @@ function listarLineTemp(idEmpresa) {
     minute(dataHora) as minutoTemp,
     mh.temperatura,
     minimoTemp,
-    maximoTemp
+    maximoTemp,
+    fkSensor as sensor
   FROM 
     metricaHistorico mh
   JOIN sensor s ON mh.fkSensor = s.idSensor
@@ -191,7 +193,7 @@ function listarLineTemp(idEmpresa) {
     idEmpresa = 1 AND
       idArmazem = 1
   ORDER BY dataHora DESC
-  LIMIT 10;
+  LIMIT 12;
   `;
 
   console.log("Executando a instrução SQL: " + instrucao);

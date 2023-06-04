@@ -462,6 +462,46 @@ function puxarArmazemMaior(idEmpresa) {
 }
 
 var idsAlertas = [];
+
+function renderAlerta(tipo, armazem, data, hora, tempoAnimacao) {
+   var alertsContainer = document.getElementById("alerts_container");
+   var divAlert = document.createElement("div");
+   var divAlertContent = document.createElement("div");
+   var warning = document.createElement("i");
+   var alertText = document.createElement("div");
+   var spanTitulo = document.createElement("span");
+   var spanConteudo = document.createElement("span");
+   var timer = document.createElement("div");
+   var br = document.createElement("br");
+
+   divAlert.classList.add("alert");
+   divAlert.classList.add("slideIn");
+   divAlertContent.classList.add("alert-content");
+   warning.classList.add("ph");
+   warning.classList.add("ph-warning");
+   spanTitulo.classList.add("notification-titulo");
+   spanConteudo.classList.add("notification-conteudo");
+   timer.classList.add("timer");
+
+   spanTitulo.textContent = `Alerta de ${tipo} ${nivel}!`;
+   spanConteudo.textContent = `O armazém ${armazem} emitiu um alerta de \n${tipo} no dia ${data} às ${hora}`;
+
+   alertText.appendChild(spanTitulo);
+   alertText.appendChild(br);
+   alertText.appendChild(spanConteudo);
+   divAlertContent.appendChild(warning);
+   divAlertContent.appendChild(alertText);
+   divAlert.appendChild(divAlertContent);
+   divAlert.appendChild(timer);
+   alertsContainer.appendChild(divAlert);
+
+   timer.style.animation = `timerLoad ${tempoAnimacao}s infinite linear`;
+   setTimeout(() => {
+      divAlert.style.display = 'none';
+   }, tempoAnimacao * 1000);
+}
+
+
 function mostrarAlertas(idEmpresa) {
    fetch(`/alerta/listarAlertasRecentes/${idEmpresa}`).then(function (resposta) {
       if(resposta.ok) {
@@ -476,40 +516,7 @@ function mostrarAlertas(idEmpresa) {
                resposta.forEach(element => {
                   idsAlertas.push(element.idAlerta)
                   tempoAnimacao += 2;
-                  var divAlert = document.createElement("div");
-                  var divAlertContent = document.createElement("div");
-                  var warning = document.createElement("i");
-                  var alertText = document.createElement("div");
-                  var spanTitulo = document.createElement("span");
-                  var spanConteudo = document.createElement("span");
-                  var timer = document.createElement("div");
-                  var br = document.createElement("br");
-
-                  divAlert.classList.add("alert");
-                  divAlert.classList.add("slideIn");
-                  divAlertContent.classList.add("alert-content");
-                  warning.classList.add("ph");
-                  warning.classList.add("ph-warning");
-                  spanTitulo.classList.add("notification-titulo");
-                  spanConteudo.classList.add("notification-conteudo");
-                  timer.classList.add("timer");
-
-                  spanTitulo.textContent = `Alerta de ${element.tipo} temperatura!`;
-                  spanConteudo.textContent = `O armazém ${element.idArmazem} emitiu um alerta de \n${element.tipo} no dia ${element.data_alerta} às ${element.hora_alerta}`;
-
-                  alertText.appendChild(spanTitulo);
-                  alertText.appendChild(br);
-                  alertText.appendChild(spanConteudo);
-                  divAlertContent.appendChild(warning);
-                  divAlertContent.appendChild(alertText);
-                  divAlert.appendChild(divAlertContent);
-                  divAlert.appendChild(timer);
-                  alertsContainer.appendChild(divAlert);
-
-                  timer.style.animation = `timerLoad ${tempoAnimacao}s infinite linear`;
-                  setTimeout(() => {
-                     divAlert.style.display = 'none';
-                  }, tempoAnimacao * 1000);
+                  renderAlerta(element.tipo, element.nivel, element.idArmazem, element.data_alerta, element.hora_alerta, tempoAnimacao);
 
                   mostrarQtdAlertas(idEmpresa);
                   idsAlertas.forEach(element => {

@@ -19,4 +19,8 @@ router.get("/atualizarAlerta/:idAlerta", function (req, res) {
     alertaController.atualizarAlerta(req, res);
 });
 
+router.post("/cadastrarAlerta/:idEmpresa", function (req, res) {
+    alertaController.cadastrarAlerta(req, res);
+});
+
 module.exports = router;
