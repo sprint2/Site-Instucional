@@ -150,8 +150,7 @@ FROM
 function listarLineUmid(idEmpresa) {
   var instrucao = `
   SELECT 
-    hour(dataHora) as horaUmid,
-    minute(dataHora) as minutoUmid,
+    date_format(dataHora, "%H:%i") as HorarioUmid,
     mh.umidade,
     minimoUmid,
     maximoUmid,
@@ -163,9 +162,9 @@ function listarLineUmid(idEmpresa) {
   JOIN armazem arm ON s.fkArmazem = arm.idArmazem
   JOIN empresa emp ON arm.fkEmpresa = emp.idEmpresa
   WHERE
-    idEmpresa = 1 AND
+    idEmpresa = ${idEmpresa} AND
     idArmazem = 1
-  ORDER BY dataHora DESC
+  ORDER BY dataHora ASC
   LIMIT 12;
   `;
 

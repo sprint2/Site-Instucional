@@ -323,49 +323,94 @@ function puxarArmazem8(idEmpresa) {
 }
 
 // Grafico de Linha Umidade
-var armazensUmid = []
-var dataAlertaUmid = []
+var minUmid = [];
+var maxUmid = [];
+var umidade = [];
+var dataHoraUmid = [];
+
 function puxarArmazemUmid(idEmpresa) {
    var idEmpresa = sessionStorage.ID_EMPRESA;
-   armazensUmid = [];
-   dataAlertaUmid = [];
+   minUmid = [];
+   maxUmid = [];
+   umidade = [];
+   dataHoraUmid = [];
 
    fetch(`/graficos/listarLineUmid/${idEmpresa}`, { cache: 'no-store' }).then(function (response) {
       if (response.ok) {
-
          response.json().then(function (resposta) {
-            console.log("Dados recebidos (Linha 8): " + JSON.stringify(resposta));
             resposta.forEach(element => {
-               dataAlertaUmid.push(element.HorarioAlerta)
-               armazensUmid.push(element.Medida)
-               console.log(element.MesAlerta)
-               console.log(element.HorarioAlerta)
+               dataHoraUmid.push(element.HorarioUmid);
+               minUmid.push(element.minimoUmid);
+               maxUmid.push(element.maximoUmid);
+               umidade.push(element.umidade);
             });
          })
          const ctxUmdd = document.getElementById("chartUmd");
-   new Chart(ctxUmdd, {
-      type: "line",
-      data: {
-         labels: dataAlertaUmid,
-         datasets: [
-            {
-               label: "Níveis de umidade",
-               backgroundColor: "#58A1E4",
-               borderColor: "#58A1E4",
-               data: armazensUmid,
-               borderWidth: 1,
+         new Chart(ctxUmdd, {
+            type: "line",
+            data: {
+               labels: dataHoraUmid,
+               datasets: [
+                  {
+                     label: "Minimo de Umidade",
+                     backgroundColor: "#08f7fe",
+                     borderColor: "#08f7fe",
+                     data: minUmid,
+                     borderWidth: 1,
+                     yAxisID: 'y',
+                  }, {
+                     label: "Maximo de Umidade",
+                     data: maxUmid,
+                     borderColor: "#000000",
+                     backgroundColor: "#000000",
+                     borderWidth: 1,
+                     yAxisID: 'y1',
+                  }, {
+                     label: "Umidade",
+                     data: umidade,
+                     borderColor: "#025183",
+                     backgroundColor: "#025183",
+                     borderWidth: 1,
+                     yAxisID: 'y2'
+                  }
+               ],
             },
-         ],
-      },
-      options: {
-         layout: {
-            padding: {
-               bottom: 20,
+            options: {
+               layout: {
+                  padding: {
+                     bottom: 20,
+                  },
+               },
+               scales: {
+                  y: {
+                     type: 'linear',
+                     display: true,
+                     position: 'left',
+                     max: 100,
+                     min: 0,
+                  },
+                  y1: {
+                     type: 'linear',
+                     display: true,
+                     position: 'right',
+                     max: 100,
+                     min: 0,
+
+                     grid: {
+                        drawOnChartArea: false,
+                     },
+                  },
+                  y2: {
+                     type: 'linear',
+                     display: true,
+                     position: 'none',
+                     max: 100,
+                     min: 0,
+                  }
+               }
             },
-         },
-      },
-   });
-         
+         });
+
       } else {
          console.error('Nenhum dado encontrado ou erro na API');
       }
@@ -389,7 +434,7 @@ function puxarDados() {
    puxarArmazem8(idEmpresa);
    puxarArmazemUmid(idEmpresa);
    mostrarAlertas(idEmpresa);
-   
+
    if (dataMonth.length < 4) {
       console.log("ainda menor que 4")
    } else {
@@ -484,6 +529,7 @@ function renderAlerta(tipo, armazem, data, hora, tempoAnimacao) {
    timer.classList.add("timer");
 
    spanTitulo.textContent = `Alerta de ${tipo} ${nivel}!`;
+   console.log(nivel)
    spanConteudo.textContent = `O armazém ${armazem} emitiu um alerta de \n${tipo} no dia ${data} às ${hora}`;
 
    alertText.appendChild(spanTitulo);
@@ -501,11 +547,11 @@ function renderAlerta(tipo, armazem, data, hora, tempoAnimacao) {
    }, tempoAnimacao * 1000);
 }
 
-
+var nivel = ""
 function mostrarAlertas(idEmpresa) {
    fetch(`/alerta/listarAlertasRecentes/${idEmpresa}`).then(function (resposta) {
-      if(resposta.ok) {
-         if(resposta.status === 204) {
+      if (resposta.ok) {
+         if (resposta.status === 204) {
             console.log("ta vazio");
          } else {
             resposta.json().then(function (resposta) {
@@ -517,7 +563,7 @@ function mostrarAlertas(idEmpresa) {
                   idsAlertas.push(element.idAlerta)
                   tempoAnimacao += 2;
                   renderAlerta(element.tipo, element.nivel, element.idArmazem, element.data_alerta, element.hora_alerta, tempoAnimacao);
-
+                  nivel = element.nivel
                   mostrarQtdAlertas(idEmpresa);
                   idsAlertas.forEach(element => {
                      atualizarAlerta(element);
@@ -527,15 +573,15 @@ function mostrarAlertas(idEmpresa) {
          }
       }
    })
-   .catch(function (error) {
-      console.error(`Erro na obtenção dos dados p/ gráfico: ${error.message}`);
-   });
+      .catch(function (error) {
+         console.error(`Erro na obtenção dos dados p/ gráfico: ${error.message}`);
+      });
 }
 
 function mostrarQtdAlertas(idEmpresa) {
    fetch(`/alerta/listarQtdAlertas/${idEmpresa}`).then(function (resposta) {
-      if(resposta.ok) {
-         if(resposta.status === 204) {
+      if (resposta.ok) {
+         if (resposta.status === 204) {
             console.log("ta vazio");
          } else {
             var ul = document.getElementById("ul_nav");
@@ -548,14 +594,14 @@ function mostrarQtdAlertas(idEmpresa) {
          }
       }
    })
-   .catch(function (error) {
-      console.error(`Erro na obtenção dos dados p/ gráfico: ${error.message}`);
-   });
+      .catch(function (error) {
+         console.error(`Erro na obtenção dos dados p/ gráfico: ${error.message}`);
+      });
 }
 
 function atualizarAlerta(idAlerta) {
    fetch(`/alerta/atualizarAlerta/${idAlerta}`).then(function (resposta) {
-      console.log("Alerta editado: "+resposta);
+      console.log("Alerta editado: " + resposta);
    }).catch(function (error) {
       console.erro(`Erro na obtenção dos dados p/ gráficos: ${error.message}`);
    });
