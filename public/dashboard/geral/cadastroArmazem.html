@@ -12,50 +12,7 @@
 </head>
 <body> 
     <!-- <div class="tudao"> -->
-        <!-- <div class="top-line"> -->
-            <div class="empresa">
-                <h1 class="empresa-nome">
-                    <span id="nomeEmp"></span>
-                </h1>
-        
-            </div>
-            <span id="span_data"></span>
-        </div>
-        <header>
-          <nav>
-            <ul id="ul_nav">
-              <li>
-                <a href="/../dashboard/geral/dash-geral.html">
-                  <i class="ph ph-house"></i>
-                </a>
-              </li>
-              <li>
-                <i class="ph ph-bell"></i>
-              </li> 
-              <div class="notification-container">
-              </div>
-            </ul>
-            <!-- divisão da nav -->
-            <ul>
-              <li>
-                <a href="">
-                  <i class="ph ph-gear-six"></i>
-                </a>
-              </li>
-              <li>
-                <a href="https://latech-help.atlassian.net/servicedesk/customer/portals" target="_blank">
-                  <i class="ph ph-question"></i>
-                </a>
-              </li>
-              <li>
-                <a href="/../../login.html" onclick="limparSessao()">
-                  <i class="ph ph-sign-out"></i>
-                </a>
-              </li>
-            </ul>
-          </nav>
-        </header>
-        
+        <!-- <div class="top-line"> -->       
         <div class="caixa-grande">
             
             <div class="container-cadastro">
@@ -110,7 +67,8 @@ function armazem() {
   var numero = input_numero.value;
   var complemento = input_complemento.value;
   var cep = input_cep.value;
-  var indentificacao = input_identificacao.value;
+  var identificacao = input_identificacao.value;
+  var cnpj = sessionStorage.CNPJ_EMPRESA;
 
     if (
       logradouro == "" ||
@@ -118,7 +76,7 @@ function armazem() {
       numero == "" ||
       complemento == "" ||
       cep == "" ||
-      indentificacao == ""
+      identificacao == ""
     ) {
       cardErro.style.opacity = "1";
       mensagem_erro.innerHTML = "Preencha todos os campos";
@@ -132,7 +90,7 @@ function armazem() {
       return false;
     } else {
       // Enviando o valor da nova input
-      fetch("empresa/cadastrarArmazem", {
+      fetch("/empresa/cadastrarArmazem", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -145,7 +103,8 @@ function armazem() {
           numeroServer: numero,
           complementoServer: complemento,
           cepServer: cep,
-          indentificacaoServer: indentificacao,
+          identificacaoServer: identificacao,
+          cnpj: cnpj
         }),
       })
         .then(function (resposta) {
@@ -153,8 +112,6 @@ function armazem() {
 
           if (resposta.ok) {
             cardErro.style.opacity = "1";
-
-            modal.style.top = "0";
 
             setTimeout(() => {
               window.location = "cadastroUsuario.html";

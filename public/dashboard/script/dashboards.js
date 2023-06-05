@@ -629,3 +629,13 @@ function atualizarAlerta(idAlerta) {
       console.erro(`Erro na obtenção dos dados p/ gráficos: ${error.message}`);
    });
 }
+
+function showConfig() {
+   var config = document.getElementById("config_container");
+
+   if (config.style.display == 'none') {
+       config.style.display = 'flex'
+    } else {
+       config.style.display = 'none'
+    }
+}

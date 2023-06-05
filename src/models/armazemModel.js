@@ -73,7 +73,7 @@ function listarMaxAlertas(idEmpresa) {
    return database.executar(instrucao)
 }
 
-function cadastrarArmazem(logradouro, bairro, numero, complemento, cep, identificacao, fkEmpresa, cnpj) {
+function cadastrarArmazem(logradouro, bairro, numero, complemento, cep, identificacao, cnpj) {
    console.log(
      "ACESSEI O EMPRESA MODEL \n \n\t\t >> Se aqui der erro de 'Error: connect ECONNREFUSED',\n \t\t >> verifique suas credenciais de acesso ao banco\n \t\t >> e se o servidor de seu BD está rodando corretamente. \n\n function cadastrar():",
      logradouro,
@@ -82,7 +82,6 @@ function cadastrarArmazem(logradouro, bairro, numero, complemento, cep, identifi
      complemento,
      cep,
      identificacao,
-     fkEmpresa,
      cnpj
    );
  
@@ -93,10 +92,11 @@ function cadastrarArmazem(logradouro, bairro, numero, complemento, cep, identifi
 	('${identificacao}', (select idEmpresa from empresa where cnpj = '${cnpj}'));
      `;
    var instrucao2 = `
-     insert into usuario (username, senha, fkEmpUsuario) values ('${email}', '${senha}', (select idEmpresa from empresa where cnpj = '${cnpj}'));
+     insert into endereco (logradouro, bairro, numero, complemento, cep, fkArmazem) values
+     (${logradouro}, ${bairro}, ${numero}, ${complemento}, ${cep}, (select idArmazem from armazem join empresa on fkEmpresa = idEmpresa where identificação = ${identificacao} and cnpj = ${cnpj} ));
      `;
    console.log("Executando a instrução SQL: \n" + instrucao + instrucao2);
-   return database.executar(instrucao), database.executar(instrucao2);
+   return database.executar(instrucao, instrucao2);
  }
 
 module.exports = {

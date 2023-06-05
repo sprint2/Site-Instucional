@@ -60,7 +60,8 @@ function cadastrar(nome, cnpj, tel, email, senha) {
   console.log("Executando a instrução SQL: \n" + instrucao + instrucao2);
   return database.executar(instrucao), database.executar(instrucao2);
 }
-function usuario(email, senha) {
+
+function usuario(email, senha, cnpj) {
   console.log(
     "ACESSEI O EMPRESA MODEL \n \n\t\t >> Se aqui der erro de 'Error: connect ECONNREFUSED',\n \t\t >> verifique suas credenciais de acesso ao banco\n \t\t >> e se o servidor de seu BD está rodando corretamente. \n\n function cadastrar():",
 

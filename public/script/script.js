@@ -253,10 +253,10 @@ function cadastrar() {
             cardErro.style.opacity = "1";
 
             modal.style.top = "0";
-
+            sessionStorage.CNPJ_EMPRESA = cnpjVar;
             setTimeout(() => {
-              window.location = "login.html";
-            }, "5000");
+              window.location = "../dashboard/geral/cadastroArmazem.html";
+            }, "2000");
 
             limparFormulario();
             finalizarAguardar();
@@ -301,6 +301,7 @@ function usuario() {
   var emailUser = input_email.value;
   var senhaUser = input_senha.value;
   var confiSenha = input_confiSenha.value;
+  var cnpj = sessionStorage.CNPJ_EMPRESA;
 
   if (confiSenha == senhaUser) {
     if (
@@ -317,7 +318,7 @@ function usuario() {
       return false;
     } else {
       // Enviando o valor da nova input
-      fetch("empresa/cadastrarUsuario", {
+      fetch("/empresa/cadastrarUsuario", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -327,6 +328,7 @@ function usuario() {
           // Agora vá para o arquivo routes/empresa.js
           emailServer: emailUser,
           senhaServer: senhaUser,
+          cnpjServer: cnpj
         }),
       })
         .then(function (resposta) {
@@ -335,11 +337,9 @@ function usuario() {
           if (resposta.ok) {
             cardErro.style.opacity = "1";
 
-            modal.style.top = "0";
-
             setTimeout(() => {
-              window.location = "login.html";
-            }, "5000");
+              window.location = "dash-geral.html";
+            }, "2000");
 
             limparFormulario();
             finalizarAguardar();

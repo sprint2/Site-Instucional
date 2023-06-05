@@ -633,7 +633,7 @@ function listarUltimoAlertaArm(idArmazem) {
             } else {
                 resposta.json().then(function (resposta) {
                     var spanUltimoAlerta = document.getElementById("ultimo_alerta");
-                    spanUltimoAlerta.innerHTML = `${resposta[0].data_alerta} às ${resposta[0].hora}:${resposta[0].minuto}0`;
+                    spanUltimoAlerta.innerHTML = `${resposta[0].data_alerta} às ${resposta[0].hora}:${resposta[0].minuto}`;
                 });
             }
         }
@@ -799,4 +799,14 @@ function atualizarAlerta(idAlerta) {
    }).catch(function (error) {
       console.erro(`Erro na obtenção dos dados p/ gráficos: ${error.message}`);
    });
+}
+
+function showConfig() {
+    var config = document.getElementById("config_container");
+
+    if (config.style.display == 'none') {
+        config.style.display = 'flex'
+     } else {
+        config.style.display = 'none'
+     }
 }

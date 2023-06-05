@@ -1,3 +1,4 @@
+var armazemModel = require("../models/armazemModel");
 var empresaModel = require("../models/empresaModel");
 
 var sessoes = [];
@@ -8,7 +9,7 @@ function testar(req, res) {
 }
 
 function listar(req, res) {
-  empresModel
+  empresaModel
     .listar()
     .then(function (resultado) {
       if (resultado.length > 0) {
@@ -103,6 +104,7 @@ function usuario(req, res) {
   // Crie uma variável que vá recuperar os valores do arquivo cadastro.html
   var email = req.body.emailServer;
   var senha = req.body.senhaServer;
+  var cnpj = req.body.cnpjServer;
 
   // Faça as validações dos valores
   
@@ -113,7 +115,7 @@ function usuario(req, res) {
   } else {
     // Passe os valores como parâmetro e vá para o arquivo empresaModel.js
     empresaModel
-      .cadastrar(email, senha)
+      .usuario(email, senha, cnpj)
       .then(function (resultado) {
         res.json(resultado);
       })
@@ -136,6 +138,7 @@ function armazem(req, res) {
   var complemento = req.body.complementoServer;
   var cep = req.body.cepServer;
   var identificacao = req.body.identificacaoServer;
+  var cnpj = req.body.cnpj;
 
   // Faça as validações dos valores
   
@@ -156,7 +159,7 @@ function armazem(req, res) {
   else {
     // Passe os valores como parâmetro e vá para o arquivo empresaModel.js
     armazemModel
-      .armazem(logradouro, bairro, numero, complemento, cep, identificacao)
+      .cadastrarArmazem(logradouro, bairro, numero, complemento, cep, identificacao, cnpj)
       .then(function (resultado) {
         res.json(resultado);
       })

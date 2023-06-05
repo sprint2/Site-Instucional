@@ -103,6 +103,10 @@ i {
     box-shadow: 0px 35.6783px 14.4943px rgba(0, 0, 0, 0.04), 0px 20.0691px 12.2644px rgba(0, 0, 0, 0.13), 0px 8.91959px 8.91959px rgba(0, 0, 0, 0.21), 0px 2.2299px 4.45979px rgba(0, 0, 0, 0.25), 0px 0px 0px rgba(0, 0, 0, 0.25);
 }
 
+#notification_container span {
+    width: 11vw;
+}
+
 .notification .ph {
     color: rgb(78, 30, 30);
     font-size: 3rem;
@@ -221,6 +225,30 @@ i {
     font-size: 8px;
     top: 8%;
     left: 45%;
+}
+
+#config_container {
+    width: 9vw;
+    height: fit-content;
+    max-height: 500px;
+    position: absolute;
+    bottom: 7.5vh;
+    left: 3vw;
+    display: none;
+    justify-content: center;
+    flex-direction: column;
+    overflow-x: hidden;
+    overflow-y: scroll;
+    gap: 12px;
+    padding: 12px;
+    background-color: white;
+    border-radius: 8px;
+    box-shadow: 0px 35.6783px 14.4943px rgba(0, 0, 0, 0.04), 0px 20.0691px 12.2644px rgba(0, 0, 0, 0.13), 0px 8.91959px 8.91959px rgba(0, 0, 0, 0.21), 0px 2.2299px 4.45979px rgba(0, 0, 0, 0.25), 0px 0px 0px rgba(0, 0, 0, 0.25);
+}
+
+#config_container a {
+    color: black;
+    font-weight: 600;
 }
 
 select {
@@ -423,4 +451,12 @@ select option:checked {
 
 .msg-chart {
     height: 26px;
+}
+
+.valor.indicador {
+    margin: 3%;
+}
+
+.valor i {
+    margin-top: 7%;
 }
