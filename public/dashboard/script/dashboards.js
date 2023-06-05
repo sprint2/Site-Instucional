@@ -114,7 +114,7 @@ function puxarQuartoMes(idEmpresa) {
                dataMonth.push(respostaData);
             }
             var dataAlertaTemp = [dataMonth[0].temp, dataMonth[1].temp, dataMonth[2].temp, dataMonth[3].temp];
-            var dataAlertaUmidd = [dataMonth[0].umidd, dataMonth[1].umidd, dataMonth[2].umidd, dataMonth[3].umidd];
+            var dataAlertaSensord = [dataMonth[0].umidd, dataMonth[1].umidd, dataMonth[2].umidd, dataMonth[3].umidd];
 
             const ctxAlert = document.getElementById("chart-alert");
             if (Chart.instances[ctxAlert]) {
@@ -131,7 +131,7 @@ function puxarQuartoMes(idEmpresa) {
                         label: "Umidade",
                         backgroundColor: "#58A1E4",
                         borderColor: "#58A1E4",
-                        data: dataAlertaUmidd,
+                        data: dataAlertaSensord,
                         borderWidth: 1,
                      },
                      {
@@ -164,7 +164,7 @@ function puxarQuartoMes(idEmpresa) {
                dataMonth.push(respostaData);
 
                var dataAlertaTemp = [dataMonth[0].temp, dataMonth[1].temp, dataMonth[2].temp, dataMonth[3].temp];
-               var dataAlertaUmidd = [dataMonth[0].umidd, dataMonth[1].umidd, dataMonth[2].umidd, dataMonth[3].umidd];
+               var dataAlertaSensord = [dataMonth[0].umidd, dataMonth[1].umidd, dataMonth[2].umidd, dataMonth[3].umidd];
 
 
                const ctxAlert = document.getElementById("chart-alert");
@@ -182,7 +182,7 @@ function puxarQuartoMes(idEmpresa) {
                            label: "Umidade",
                            backgroundColor: "#58A1E4",
                            borderColor: "#58A1E4",
-                           data: dataAlertaUmidd,
+                           data: dataAlertaSensord,
                            borderWidth: 1,
                         },
                         {
@@ -283,9 +283,52 @@ function puxarArmazem8(idEmpresa) {
          response.json().then(function (resposta) {
             console.log("Dados recebidos (Linha 8): " + JSON.stringify(resposta));
             resposta.forEach(element => {
-               dataAlerta8.push(element.HorarioAlerta)
-               armazens8.push(element.Medida)
-               console.log(element.MesAlerta)
+               var nomeMes;
+               switch (element.mes_alerta) {
+                  case 1:
+                     nomeMes = 'Janeiro';
+                     break;
+                  case 2:
+                     nomeMes = 'Fevereiro';
+                     break;
+                  case 3:
+                     nomeMes = 'Março';
+                     break;
+                  case 4:
+                     nomeMes = 'Abril';
+                     break;
+                  case 5:
+                     nomeMes = 'Maio';
+                     break;
+                  case 6:
+                     nomeMes = 'Junho';
+                     break;
+                  case 7:
+                     nomeMes = 'Julho';
+                     break;
+                  case 8:
+                     nomeMes = 'Agosto';
+                     break;
+                  case 9:
+                     nomeMes = 'Setembro';
+                     break;
+                  case 10:
+                     nomeMes = 'Outubro';
+                     break;
+                  case 11:
+                     nomeMes = 'Novembro';
+                     break;
+                  case 12:
+                     nomeMes = 'Dezembro';
+                     break;
+                  default:
+                     nomeMes = 'Mês inválido';
+                     break;
+               }
+
+
+               dataAlerta8.push(nomeMes)
+               armazens8.push(element.qtd_alerta)
             });
          })
          console.log(armazens8);
@@ -335,7 +378,7 @@ function puxarArmazemUmid(idEmpresa) {
    umidade = [];
    dataHoraUmid = [];
 
-   fetch(`/graficos/listarLineUmid/${idEmpresa}`, { cache: 'no-store' }).then(function (response) {
+   fetch(`/graficos/listarAlertaSensor/${idEmpresa}`, { cache: 'no-store' }).then(function (response) {
       if (response.ok) {
          response.json().then(function (resposta) {
             resposta.forEach(element => {
@@ -345,6 +388,7 @@ function puxarArmazemUmid(idEmpresa) {
                umidade.push(element.umidade);
             });
          })
+
          const ctxUmdd = document.getElementById("chartUmd");
          new Chart(ctxUmdd, {
             type: "line",
@@ -432,8 +476,9 @@ function puxarDados() {
    puxarArmazens(idEmpresa);
    puxarArmazemMaior(idEmpresa);
    puxarArmazem8(idEmpresa);
-   puxarArmazemUmid(idEmpresa);
+   puxarArmazemSensor(idEmpresa);
    mostrarAlertas(idEmpresa);
+
 
    if (dataMonth.length < 4) {
       console.log("ainda menor que 4")
@@ -442,9 +487,9 @@ function puxarDados() {
    }
    nomeEmpresa = document.getElementById("nomeEmp");
    nomeEmpresa.innerText = sessionStorage.NOME_EMPRESA;
-   setTimeout(() => {
-      puxarDados()
-   }, 20000);
+   // setTimeout(() => {
+   //    puxarDados()
+   // }, 20000);
 }
 
 // Função de Puxar os Armazens
@@ -508,8 +553,8 @@ function puxarArmazemMaior(idEmpresa) {
 
 var idsAlertas = [];
 
-function renderAlerta(tipo, armazem, data, hora, tempoAnimacao) {
-   var alertsContainer = document.getElementById("alerts_container");
+function renderAlerta(tipo, nivel, armazem, data, hora, tempoAnimacao, container) {
+   var alertsContainer = document.getElementById(container);
    var divAlert = document.createElement("div");
    var divAlertContent = document.createElement("div");
    var warning = document.createElement("i");
@@ -542,27 +587,28 @@ function renderAlerta(tipo, armazem, data, hora, tempoAnimacao) {
    alertsContainer.appendChild(divAlert);
 
    timer.style.animation = `timerLoad ${tempoAnimacao}s infinite linear`;
-   setTimeout(() => {
-      divAlert.style.display = 'none';
-   }, tempoAnimacao * 1000);
+   if (tempoAnimacao != false) {
+      setTimeout(() => {
+         divAlert.style.display = 'none';
+      }, tempoAnimacao * 1000);
+   }
 }
 
 var nivel = ""
 function mostrarAlertas(idEmpresa) {
    fetch(`/alerta/listarAlertasRecentes/${idEmpresa}`).then(function (resposta) {
-      if (resposta.ok) {
-         if (resposta.status === 204) {
+      if  (resposta.ok) {
+         if  (resposta.status === 204) {
             console.log("ta vazio");
          } else {
             resposta.json().then(function (resposta) {
                // console.log(`Dados recebidos: ${JSON.stringify(resposta)}`);
-               var alertsContainer = document.getElementById("alerts_container");
                var tempoAnimacao = 4;
                idsAlertas = [];
                resposta.forEach(element => {
                   idsAlertas.push(element.idAlerta)
                   tempoAnimacao += 2;
-                  renderAlerta(element.tipo, element.nivel, element.idArmazem, element.data_alerta, element.hora_alerta, tempoAnimacao);
+                  renderAlerta(element.tipo, element.nivel, element.idArmazem, element.data_alerta, element.hora_alerta, tempoAnimacao, "alerts_container");
                   nivel = element.nivel
                   mostrarQtdAlertas(idEmpresa);
                   idsAlertas.forEach(element => {
@@ -580,8 +626,8 @@ function mostrarAlertas(idEmpresa) {
 
 function mostrarQtdAlertas(idEmpresa) {
    fetch(`/alerta/listarQtdAlertas/${idEmpresa}`).then(function (resposta) {
-      if (resposta.ok) {
-         if (resposta.status === 204) {
+      if  (resposta.ok) {
+         if  (resposta.status === 204) {
             console.log("ta vazio");
          } else {
             var ul = document.getElementById("ul_nav");
@@ -594,15 +640,54 @@ function mostrarQtdAlertas(idEmpresa) {
          }
       }
    })
-      .catch(function (error) {
-         console.error(`Erro na obtenção dos dados p/ gráfico: ${error.message}`);
-      });
+         .catch(function (error) {
+            console.error(`Erro na obtenção dos dados p/ gráfico: ${error.message}`);
+         });
+}
+
+function mostrarTodosAlertas() {
+   var idEmpresa = sessionStorage.ID_EMPRESA;
+   var notContainer = document.getElementById("notification_container");
+
+   if (notContainer.style.display == 'none') {
+      notContainer.style.display = 'flex'
+   } else {
+      notContainer.style.display = 'none'
+   }
+   fetch(`/alerta/listarAlertas/${idEmpresa}`).then(function (resposta) {
+      if (resposta.ok) {
+         if (resposta.status === 204) {
+            notContainer.innerHTML = `<span> Não há novas notificações </span>`
+         } else {
+            notContainer.innerHTML = '';
+            tempoAnimacao = false;
+            resposta.json().then(function (resposta) {
+               for (let i = 0; i < resposta.length; i++) {
+                  const element = resposta[i];
+                  renderAlerta(element.tipo, element.nivel, element.idArmazem, element.data_alerta, element.hora_alerta, tempoAnimacao, "notification_container");
+               }
+
+            });
+         }
+      }
+   });
 }
 
 function atualizarAlerta(idAlerta) {
    fetch(`/alerta/atualizarAlerta/${idAlerta}`).then(function (resposta) {
       console.log("Alerta editado: " + resposta);
+      console.log("Alerta editado: " + resposta);
    }).catch(function (error) {
       console.erro(`Erro na obtenção dos dados p/ gráficos: ${error.message}`);
    });
+}
+
+function showConfig() {
+   var config = document.getElementById("config_container");
+
+   if (config.style.display == 'none') {
+       config.style.display = 'flex'
+    } else {
+       config.style.display = 'none'
+    }
 }

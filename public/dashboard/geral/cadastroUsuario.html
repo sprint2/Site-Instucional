@@ -1,79 +1,50 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="../style/cadastroUser.css">
-    <script src="../../script/script.js"></script>
-    <title>Cadastro Usuário</title>
-</head> 
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="../style/style-dashboard.css" />
+  <link rel="stylesheet" href="../style/cadastroUser.css">
+  <script src="../../script/script.js"></script>
+  <script src="https://unpkg.com/@phosphor-icons/web"></script>
+  <title>Cadastro Usuário</title>
+</head>
+
 <body>
-    <div class="tudao">
-        <div class="top-line">
-            <div class="empresa">
-                <h1 class="empresa-nome">
-                    <span id="nomeEmp"></span>
-                </h1>
-        
-            </div>
-            <span id="span_data"></span>
+  <!-- <div class="tudao"> -->
+  <!-- <div class="top-line"> -->
+  <div class="caixa-grande">
+
+    <div class="container-cadastro">
+      <div class="caixa-cadastro">
+        <div class="cadastro-titulo">
+          <h2>Cadastro de Usuários</h2>
         </div>
-        <header>
-            <nav>
-                <ul>
-                    <li>
-                        <a href="/../dashboard/geral/dash-geral.html">
-                            <img src="../../img/icons/home.svg" alt="">
-                        </a>
-                    </li>
-                </ul>
-                <!-- divisão da nav -->
-                <ul>
-                    <li>
-                        <a href="">
-                            <img src="../../img/icons/configurações.svg" alt="">
-                        </a>
-                    </li>
-                    <li>
-                        <a href="">
-                            <img src="../../img/icons/ajuda.svg" alt="">
-                        </a>
-                    </li>
-                    <li>
-                        <a href="../../login.html" onclick="limparSessao()">
-                            <img src="../../img/icons/logout.svg" alt="">
-                        </a>
-                    </li>
-                </ul>
-            </nav>
-        </HEADER>
-        
-        <div class="caixa-grande">
-
-            <div class="container-cadastro">
-                <div class="caixa-cadastro">
-                    <h2>Cadastro de Usuários</h2>
-                    <div class="alerta-erro">
-                        <div class="card-erro" id="cardErro">
-                            <span id="mensagem_erro"></span>
-                        </div>
-                    </div>
-                    <label for="input_email">Email</label>
-                    <input id="input_email">
-                    <label for="input_senha">Senha</label>
-                    <input type="password" id="input_senha">
-                    <label for="input_confiSenha">Confirmar Senha</label>
-                    <input type="password" id="input_confiSenha">
-                    <button onclick="usuario()">Cadastrar</button>
-                </div>
-            </div>
-
-
-            <div id="div_aguardar" class="loading-div"></div>
-            <div id="div_erros_login"></div>
+        <label for="">Cadastre os seus funcionários ou dependentes para múltiplos acessos de monitoramento.</label>
+        <div class="alerta-erro">
+          <div class="card-erro" id="cardErro">
+            <span id="mensagem_erro"></span>
+          </div>
         </div>
+        <label for="input_email">Email:</label>
+        <input id="input_email" placeholder="func.org@mail.com">
+        <label for="input_senha">Senha:</label>
+        <input type="password" id="input_senha" placeholder="*********">
+        <label for="input_confiSenha">Confirmar Senha:</label>
+        <input type="password" id="input_confiSenha" placeholder="*********">
+        <button onclick="usuario()">Cadastrar</button> <br>
+        <a class="redirecionar" href="dash-geral.html">Ir direto para a Dashboard</a>
+      </div>
     </div>
 
+
+    <div id="div_aguardar" class="loading-div"></div>
+    <div id="div_erros_login"></div>
+  </div>
+  </div>
+  <img src="../../img/background/milkwave.png" class="header-background" alt="">
 </body>
+
 </html>

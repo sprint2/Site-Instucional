@@ -69,6 +69,74 @@ function listarQtdAlertas(req, res) {
     });
 }
 
+// armazem
+function listarAlertasArm(req, res) {
+  var idArmazem = req.params.idArmazem;
+
+  alertaModel
+    .listarAlertasArm(idArmazem)
+    .then(function (resultado) {
+      if (resultado.length > 0) {
+        res.status(200).json(resultado);
+      } else {
+        res.status(204).send("Nenhum resultado encontrado!");
+      }
+    })
+    .catch(function (erro) {
+      console.log(erro);
+      console.log(
+        "Houve um erro ao realizar a consulta! Erro: ",
+        erro.sqlMessage
+      );
+      res.status(500).json(erro.sqlMessage);
+    });
+}
+
+function listarAlertasRecentesArm(req, res) {
+  var idArmazem = req.params.idArmazem;
+
+  alertaModel
+    .listarAlertasRecentesArm(idArmazem)
+    .then(function (resultado) {
+      if (resultado.length > 0) {
+        res.status(200).json(resultado);
+      } else {
+        res.status(204).send("Nenhum resultado encontrado!");
+      }
+    })
+    .catch(function (erro) {
+      console.log(erro);
+      console.log(
+        "Houve um erro ao realizar a consulta! Erro: ",
+        erro.sqlMessage
+      );
+      res.status(500).json(erro.sqlMessage);
+    });
+
+}
+
+function listarQtdAlertasArm(req, res) {
+  var idArmazem = req.params.idArmazem;
+
+  alertaModel
+    .listarQtdAlertasArm(idArmazem)
+    .then(function (resultado) {
+      if (resultado.length > 0) {
+        res.status(200).json(resultado);
+      } else {
+        res.status(204).send("Nenhum resultado encontrado!");
+      }
+    })
+    .catch(function (erro) {
+      console.log(erro);
+      console.log(
+        "Houve um erro ao realizar a consulta! Erro: ",
+        erro.sqlMessage
+      );
+      res.status(500).json(erro.sqlMessage);
+    });
+}
+
 function cadastrarAlerta(req, res) {
   var nivel = req.body.nivel;
   var tipo = req.body.tipo;
@@ -115,8 +183,11 @@ function atualizarAlerta(req, res) {
 
 module.exports = {
   listarAlertas,
+  listarAlertasArm,
   listarAlertasRecentes,
+  listarAlertasRecentesArm,
   listarQtdAlertas,
+  listarQtdAlertasArm,
   atualizarAlerta,
   cadastrarAlerta
 }

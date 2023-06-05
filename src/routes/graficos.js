@@ -43,4 +43,20 @@ router.get("/listarQuartoMes/:idEmpresa", function (req, res) {
    graficosController.listarQuartoMes(req, res);
 })
 
+router.get("/listarAlertaSensor/:idEmpresa", function (req, res) {
+   graficosController.listarAlertaSensor(req, res);
+});
+
+router.get("/listarUltimoAlerta/:idEmpresa", function (req, res) {
+   graficosController.listarUltimoAlerta(req, res);
+});
+
+router.get("/listarQtdMesArm/:idEmpresa", function (req, res) {
+   graficosController.listarQtdMesArm(req, res);
+});
+
+router.get("/listarQtdSensores/:idEmpresa", function (req, res) {
+   graficosController.listarQtdSensores(req, res);
+});
+
 module.exports = router;

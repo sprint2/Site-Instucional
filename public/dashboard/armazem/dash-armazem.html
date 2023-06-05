@@ -14,46 +14,40 @@
     <title>Dashboard - Geral</title>
 </head>
 
-<body onload="puxarDados()">
+<body onload="puxarDados(), dataHora()">
     <div id="alerts_container"></div>
     <div class="top-line">
         <div class="empresa">
             <h1 class="empresa-nome"><span id="nomeEmp"></span> - Geral</h1>
-            
+
         </div>
         <span id="span_data"></span>
     </div>
     <header>
         <nav>
-            <ul>
+            <ul id="ul_nav">
                 <li>
                     <a href="/../dashboard/armazem/dash-armazem.html">
                         <i class="ph ph-house"></i>
                     </a>
                 </li>
                 <li>
-                    <i class="ph ph-bell"></i>
-                  </li> 
-                  <div class="notification-container">
-                    <div class="notification">
-                      <i class="ph ph-warning"></i>
-                      <div class="notification-text">
-                        <span class="notification-titulo">Alerta de <span id="tipo_alerta">temperatura</span>!</span>
-                        <span class="notification-conteudo">O armazém <span id="armazem_alerta">1</span> emitiu um alerta de <span id="tipo_alerta">temperatura</span> no dia <span id="data_alerta">dd/mm/yyyy</span></span>
-                      </div>
-                      <i class="ph ph-x-circle"></i>
-                    </div>
-                  </div>
+                    <i class="ph ph-bell" onclick="mostrarTodosAlertas()"></i>
+                </li>
             </ul>
+            <div id="notification_container">
+            </div>
             <!-- divisão da nav -->
             <ul>
                 <li>
-                    <a href="">
-                        <i class="ph ph-gear-six"></i>
-                    </a>
+                    <i class="ph ph-gear-six" onclick="showConfig()"></i>
                 </li>
+                <div id="config_container">
+                    <a href="../geral/cadastroUsuario.html">Cadastrar novo usuário</a>
+                    <a href="../geral/cadastroArmazem.html">Cadastrar novo armazém</a>
+                </div>
                 <li>
-                    <a href="">
+                    <a href="https://latech-help.atlassian.net/servicedesk/customer/portals">
                         <i class="ph ph-question"></i>
                     </a>
                 </li>
@@ -68,31 +62,38 @@
                 <div class="container">
                     <h3>Temperaturas registradas no armazém nas últimas 6 horas</h3>
                     <canvas id="chartTemp"></canvas>
+                    <h3 id="temp_msg" class="msg-chart"></h3>
                 </div>
                 <div class="container">
                     <h3>Níveis de umidade registrados no armazém nas últimas 6 horas</h3>
                     <canvas id="chartUmd"></canvas>
+                    <h3 id="umid_msg" class="msg-chart"></h3>
                 </div>
             </div>
             <div class="inner-content">
                 <div class="container cards">
                     <div class="container info">
-                        <div class="lista-armazens">
-                            <h4>Lista de armazens</h4>
-                            <span class="valor">
-                               
+                        <div class="info">
+                            <h4>Sensores instalados</h4>
+                            <span class="valor indicador">
+                                <i class="ph ph-cell-signal-full"></i>
+                                <span id="qtd_sensor"></span>
                             </span>
                         </div>
-                        <div class="info" onclick="trocarPaginaDash()">
-                            <h4>Armazém com mais alertas & Alertas emitidos no mês</h4>
-                            <span class="valor">
-                                <img src="../../img/icons/aviso.png" alt="">
-                                Armazem 1
-                                <img src="../../img/icons/calendario.png" alt="">
-                                15
+                        <div class="info">
+                            <h4>Último alerta emitido</h4>
+                            <span class="valor indicador">
+                                <i class="ph ph-warning"></i>
+                                <span id="ultimo_alerta"></span>
                             </span>
                         </div>
-                      
+                        <div class="info">
+                            <h4>Alertas emitidos no mês</h4>
+                            <span class="valor indicador">
+                                <i class="ph ph-calendar"></i>
+                                <span id="alerta_mes"></span>
+                            </span>
+                        </div>
                     </div>
                     <div class="card">
                         <h3>Percentual de alertas de temperatura e umidade emitidos nas últimas 8 semanas</h3>

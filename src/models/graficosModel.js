@@ -125,21 +125,17 @@ function listarPie(idEmpresa) {
 
 function listarLine8(idEmpresa) {
   var instrucao = `
-  SELECT
-  Month(dataAlerta) as MesAlerta,
-  alerta.tipo,
-  alerta.nivel,
-  date_format(alerta.dataAlerta, "%H:%i") as HorarioAlerta,
-  alerta.medida as Medida
-FROM
-    alerta
-    join sensor on alerta.fkSensorAlerta = sensor.idSensor
-    join armazem on armazem.idArmazem = sensor.fkArmazem
-    join empresa on armazem.fkEmpresa = empresa.idEmpresa
-		where empresa.idEmpresa = ${idEmpresa} and
-    dataAlerta >= DATE_SUB(now(), INTERVAL 1 MONTH) and alerta.tipo = "temperatura"
-    ORDER BY HorarioAlerta ASC
-    LIMIT 10;
+  SELECT 
+    COUNT(idAlerta) as qtd_alerta,
+    MONTH(dataAlerta) as mes_alerta
+  FROM alerta
+  JOIN sensor ON fkSensorAlerta = idSensor
+  JOIN armazem ON fkArmazem = idArmazem
+  JOIN empresa ON fkEmpresa = idEmpresa
+  WHERE
+      idEmpresa = ${idEmpresa}
+  GROUP BY MONTH(dataAlerta)
+  ORDER BY MONTH(dataAlerta);
   `;
 
   console.log("Executando a instrução SQL: " + instrucao);
@@ -176,8 +172,7 @@ function listarLineUmid(idEmpresa) {
 function listarLineTemp(idEmpresa) {
   var instrucao = `
   SELECT 
-    hour(dataHora) as horaTemp,
-    minute(dataHora) as minutoTemp,
+    DATE_FORMAT(dataHora, '%H:%i') as horario,
     mh.temperatura,
     minimoTemp,
     maximoTemp,
@@ -200,6 +195,69 @@ function listarLineTemp(idEmpresa) {
   return database.executar(instrucao);
 }
 
+function listarAlertaSensor(idEmpresa) {
+  var instrucao = `
+  SELECT 
+	  COUNT(idAlerta) as qtd_alerta,
+    idSensor as id_sensor
+  FROM alerta
+  JOIN sensor ON fkSensorAlerta = idSensor
+  JOIN armazem ON fkArmazem = idArmazem
+  JOIN empresa ON fkEmpresa = idEmpresa
+  WHERE 
+    idEmpresa = ${idEmpresa} AND
+    dataAlerta >= date_sub(now(), interval 1 month)
+  GROUP BY idSensor;
+  `;
+
+  console.log("Executando a instrução SQL: "+instrucao);
+  return database.executar(instrucao);
+}
+
+function listarQtdSensores(idArmazem) {
+  var instrucao = `
+    SELECT COUNT(idSensor) as qtd_sensor FROM sensor 
+    JOIN armazem ON fkArmazem = idArmazem
+    WHERE idArmazem = ${idArmazem};
+  `;
+
+  console.log("Executando a instrução SQL: "+instrucao);
+  return database.executar(instrucao);
+}
+
+function listarQtdMesArm(idArmazem) {
+  var instrucao = `
+  SELECT
+	  COUNT(idAlerta) as qtd_alertas
+  FROM 
+	  alerta
+  JOIN sensor ON fkSensorAlerta = idSensor
+  JOIN armazem ON fkArmazem = idArmazem
+  JOIN empresa ON fkEmpresa = idEmpresa
+  WHERE
+	MONTH(dataAlerta) >= MONTH(DATE_SUB(NOW(), INTERVAL 1 MONTH)) AND
+    idArmazem = ${idArmazem};
+  `;
+
+  console.log("Executando a instrução SQL: \n" + instrucao)
+  return database.executar(instrucao);
+}
+
+function listarUltimoAlerta(idArmazem) {
+  var instrucao = `
+  SELECT DATE_FORMAT(dataAlerta, '%d/%m/%y') as data_alerta, HOUR(dataAlerta) as hora, MINUTE(dataAlerta) as minuto FROM alerta 
+  JOIN sensor ON fkSensorAlerta = idSensor
+  JOIN armazem ON fkArmazem = idArmazem
+  WHERE idArmazem = ${idArmazem}
+  ORDER BY dataAlerta DESC
+  LIMIT 1;
+
+  `;
+
+  console.log("Executando a instrução SQL: \n" + instrucao)
+  return database.executar(instrucao);
+}
+
 module.exports = {
   listarMes,
   listarLine8,
@@ -209,5 +267,9 @@ module.exports = {
   listarPenultimoMes,
   listarAntepenultimoMes,
   listarQuartoMes,
-  listarPie
+  listarPie,
+  listarAlertaSensor,
+  listarQtdSensores,
+  listarQtdMesArm,
+  listarUltimoAlerta
 };
