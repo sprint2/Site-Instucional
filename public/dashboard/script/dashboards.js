@@ -440,9 +440,9 @@ function puxarDados() {
    }
    nomeEmpresa = document.getElementById("nomeEmp");
    nomeEmpresa.innerText = sessionStorage.NOME_EMPRESA;
-   setTimeout(() => {
-      puxarDados()
-   }, 20000);
+   // setTimeout(() => {
+   //    puxarDados()
+   // }, 20000);
 }
 
 // Função de Puxar os Armazens
@@ -506,8 +506,8 @@ function puxarArmazemMaior(idEmpresa) {
 
 var idsAlertas = [];
 
-function renderAlerta(tipo, nivel, armazem, data, hora, tempoAnimacao) {
-   var alertsContainer = document.getElementById("alerts_container");
+function renderAlerta(tipo, nivel, armazem, data, hora, tempoAnimacao, container) {
+   var alertsContainer = document.getElementById(container);
    var divAlert = document.createElement("div");
    var divAlertContent = document.createElement("div");
    var warning = document.createElement("i");
@@ -539,9 +539,11 @@ function renderAlerta(tipo, nivel, armazem, data, hora, tempoAnimacao) {
    alertsContainer.appendChild(divAlert);
 
    timer.style.animation = `timerLoad ${tempoAnimacao}s infinite linear`;
-   setTimeout(() => {
-      divAlert.style.display = 'none';
-   }, tempoAnimacao * 1000);
+   if(tempoAnimacao != false) {
+      setTimeout(() => {
+         divAlert.style.display = 'none';
+      }, tempoAnimacao * 1000);
+   }
 }
 
 
@@ -553,13 +555,12 @@ function mostrarAlertas(idEmpresa) {
          } else {
             resposta.json().then(function (resposta) {
                // console.log(`Dados recebidos: ${JSON.stringify(resposta)}`);
-               var alertsContainer = document.getElementById("alerts_container");
                var tempoAnimacao = 4;
                idsAlertas = [];
                resposta.forEach(element => {
                   idsAlertas.push(element.idAlerta)
                   tempoAnimacao += 2;
-                  renderAlerta(element.tipo, element.nivel, element.idArmazem, element.data_alerta, element.hora_alerta, tempoAnimacao);
+                  renderAlerta(element.tipo, element.nivel, element.idArmazem, element.data_alerta, element.hora_alerta, tempoAnimacao, "alerts_container");
 
                   mostrarQtdAlertas(idEmpresa);
                   idsAlertas.forEach(element => {
@@ -593,6 +594,37 @@ function mostrarQtdAlertas(idEmpresa) {
    })
    .catch(function (error) {
       console.error(`Erro na obtenção dos dados p/ gráfico: ${error.message}`);
+   });
+}
+
+function mostrarTodosAlertas() {
+   var idEmpresa = sessionStorage.ID_EMPRESA;
+   var notContainer = document.getElementById("notification_container");
+
+   if(notContainer.style.display == 'none') {
+      notContainer.style.display = 'flex'
+   } else {
+      notContainer.style.display = 'none'
+   }
+   fetch(`/alerta/listarAlertas/${idEmpresa}`).then(function (resposta) {
+      if(resposta.ok) {
+         if(resposta.status === 204) {
+            notContainer.innerHTML = `<span> Não há novas notificações </span>`
+         } else {
+            notContainer.innerHTML = '';
+            tempoAnimacao = false;
+            resposta.json().then(function (resposta) {
+               var idsAlertas = [];
+               resposta.forEach(element => {
+                  idsAlertas.push(element.idAlerta);
+                  renderAlerta(element.tipo, element.nivel, element.idArmazem, element.data_alerta, element.hora_alerta, tempoAnimacao, "notification_container");
+               });
+
+               var qtd = document.getElementsByClassName("qt-alertas");
+               qtd[0].style.display = 'none';
+            });
+         }
+      }
    });
 }
 

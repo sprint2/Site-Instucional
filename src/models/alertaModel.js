@@ -1,12 +1,24 @@
 var database = require("../database/config");
 
-function listarAlertas() {
+function listarAlertas(idEmpresa) {
   console.log(
     "ACESSEI O EMPRESA MODEL \n \n\t\t >> Se aqui der erro de 'Error: connect ECONNREFUSED',\n \t\t >> verifique suas credenciais de acesso ao banco\n \t\t >> e se o servidor de seu BD está rodando corretamente. \n\n function listarAlertas()"
   );
   var instrucao = `
-    select * from alerta
-	order by dataAlerta limit 10
+  SELECT
+    idAlerta, 
+    tipo, nivel, (date_format(alerta.dataAlerta, "%d/%m/%y")) as data_alerta, date_format(dataAlerta, "%h:%m") as hora_alerta, idArmazem, visto
+  FROM
+    alerta 
+  JOIN sensor ON fkSensorAlerta = idSensor
+  JOIN armazem ON fkArmazem = idArmazem
+  JOIN empresa ON fkEmpresa = idEmpresa
+  WHERE
+    dataAlerta >= DATE_SUB(now(), interval 1 month) AND idEmpresa = ${idEmpresa} AND visto = false
+  ORDER BY
+    dataAlerta, visto
+  DESC;
+
     `;
 
   console.log("Executando a instrução SQL: \n" + instrucao);

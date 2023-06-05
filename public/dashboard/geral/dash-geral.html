@@ -13,7 +13,7 @@
     <title>Dashboard</title>
   </head>
 
-  <body onload="puxarDados(), dataHora()">
+  <body onload="puxarDados(), dataHora()"  style="overflow: hidden;">
     <!-- <div class="alert slideIn">
       <div class="alert-content">
         <i class="ph ph-warning"></i>
@@ -42,10 +42,10 @@
               <i class="ph ph-house"></i>
             </a>
           </li>
-          <li>
+          <li onclick="mostrarTodosAlertas()">
             <i class="ph ph-bell"></i>
           </li> 
-          <div class="notification-container">
+          <div id="notification_container">
           </div>
         </ul>
         <!-- divisão da nav -->
