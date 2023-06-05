@@ -197,6 +197,69 @@ function listarLineTemp(idEmpresa) {
   return database.executar(instrucao);
 }
 
+function listarAlertaSensor(idEmpresa) {
+  var instrucao = `
+  SELECT 
+	  COUNT(idAlerta) as qtd_alerta,
+    idSensor as id_sensor
+  FROM alerta
+  JOIN sensor ON fkSensorAlerta = idSensor
+  JOIN armazem ON fkArmazem = idArmazem
+  JOIN empresa ON fkEmpresa = idEmpresa
+  WHERE 
+    idEmpresa = ${idEmpresa} AND
+    dataAlerta >= date_sub(now(), interval 1 month)
+  GROUP BY idSensor;
+  `;
+
+  console.log("Executando a instrução SQL: "+instrucao);
+  return database.executar(instrucao);
+}
+
+function listarQtdSensores(idArmazem) {
+  var instrucao = `
+    SELECT COUNT(idSensor) as qtd_sensor FROM sensor 
+    JOIN armazem ON fkArmazem = idArmazem
+    WHERE idArmazem = ${idArmazem};
+  `;
+
+  console.log("Executando a instrução SQL: "+instrucao);
+  return database.executar(instrucao);
+}
+
+function listarQtdMesArm(idArmazem) {
+  var instrucao = `
+  SELECT
+	  COUNT(idAlerta) as qtd_alertas
+  FROM 
+	  alerta
+  JOIN sensor ON fkSensorAlerta = idSensor
+  JOIN armazem ON fkArmazem = idArmazem
+  JOIN empresa ON fkEmpresa = idEmpresa
+  WHERE
+	MONTH(dataAlerta) >= MONTH(DATE_SUB(NOW(), INTERVAL 1 MONTH)) AND
+    idArmazem = ${idArmazem};
+  `;
+
+  console.log("Executando a instrução SQL: \n" + instrucao)
+  return database.executar(instrucao);
+}
+
+function listarUltimoAlerta(idArmazem) {
+  var instrucao = `
+  SELECT DATE_FORMAT(dataAlerta, '%d/%m/%y') as data_alerta, HOUR(dataAlerta) as hora, MINUTE(dataAlerta) as minuto FROM alerta 
+  JOIN sensor ON fkSensorAlerta = idSensor
+  JOIN armazem ON fkArmazem = idArmazem
+  WHERE idArmazem = ${idArmazem}
+  ORDER BY dataAlerta DESC
+  LIMIT 1;
+
+  `;
+
+  console.log("Executando a instrução SQL: \n" + instrucao)
+  return database.executar(instrucao);
+}
+
 module.exports = {
   listarMes,
   listarLine8,
@@ -206,5 +269,9 @@ module.exports = {
   listarPenultimoMes,
   listarAntepenultimoMes,
   listarQuartoMes,
-  listarPie
+  listarPie,
+  listarAlertaSensor,
+  listarQtdSensores,
+  listarQtdMesArm,
+  listarUltimoAlerta
 };

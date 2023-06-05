@@ -75,6 +75,10 @@ nav ul li a img {
     font-size: 30px;
 }
 
+.valor .ph {
+    color: black;
+}
+
 i {
     cursor: pointer !important;
 }
@@ -385,15 +389,20 @@ select option:checked {
     text-decoration: none;
     color: #58A1E4;
 }
+
 .info span,
 .lista-armazens span {
     display: flex;
     gap: 8px;
     align-items: center;
-    font-size: 15px;
+    font-size: 1.3rem;
     font-weight: 800;   
     color: #383838;
     margin-top: 10%;
+}
+
+.info i {
+    font-size: 2.5rem !important;
 }
 
 .info h4 {

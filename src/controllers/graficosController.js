@@ -165,15 +165,83 @@ function listarLineTemp(req, res) {
 
 }
 
+function listarAlertaSensor(req, res) {
+  var idEmpresa = req.params.idEmpresa;
+
+  dashboardModel.listarAlertaSensor(idEmpresa).then(function (resposta) {
+    if(resposta.length > 0) {
+      console.log("e aqui");
+      res.status(200).json(resposta);
+      console.log("entramos "+ resposta.length);
+    } else {
+      res.status(204).send("Nenhum resultado encontrado")
+    }
+  }).catch(function (resposta) {
+    console.log("\nHouve um erro ao buscar resultados (sensor)");
+  })
+}
+
+function listarQtdMesArm(req, res) {
+  var idEmpresa = req.params.idEmpresa;
+
+  dashboardModel.listarQtdMesArm(idEmpresa).then(function (resposta) {
+    if(resposta.length > 0) {
+      console.log("e aqui");
+      res.status(200).json(resposta);
+      console.log("entramos "+ resposta.length);
+    } else {
+      res.status(204).send("Nenhum resultado encontrado")
+    }
+  }).catch(function (resposta) {
+    console.log("\nHouve um erro ao buscar resultados (sensor)");
+  })
+}
+
+function listarUltimoAlerta(req, res) {
+  var idEmpresa = req.params.idEmpresa;
+
+  dashboardModel.listarUltimoAlerta(idEmpresa).then(function (resposta) {
+    if(resposta.length > 0) {
+      console.log("e aqui");
+      res.status(200).json(resposta);
+      console.log("entramos "+ resposta.length);
+    } else {
+      res.status(204).send("Nenhum resultado encontrado")
+    }
+  }).catch(function (resposta) {
+    console.log("\nHouve um erro ao buscar resultados (sensor)");
+  })
+}
+
+function listarQtdSensores(req, res) {
+  var idEmpresa = req.params.idEmpresa;
+
+  dashboardModel.listarQtdSensores(idEmpresa).then(function (resposta) {
+    if(resposta.length > 0) {
+      console.log("e aqui");
+      res.status(200).json(resposta);
+      console.log("entramos "+ resposta.length);
+    } else {
+      res.status(204).send("Nenhum resultado encontrado")
+    }
+  }).catch(function (resposta) {
+    console.log("\nHouve um erro ao buscar resultados (sensor)");
+  })
+}
+
 module.exports = {
   testar,
+  listarMes,
   listarLine8,
   listarLineUmid,
   listarLineTemp,
-  listarPie,
-  listarMes,
   listarUltimoMes,
   listarPenultimoMes,
   listarAntepenultimoMes,
-  listarQuartoMes
+  listarQuartoMes,
+  listarPie,
+  listarAlertaSensor,
+  listarQtdSensores,
+  listarQtdMesArm,
+  listarUltimoAlerta
 };

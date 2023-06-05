@@ -593,6 +593,57 @@ function verifAlerta() {
     }
 }
 
+function listarQtdSensor(idArmazem)  {
+    fetch(`/graficos/listarQtdSensores/${idArmazem}`).then(function (resposta) {
+        if(resposta.ok) {
+            if(resposta.status == 204) {
+                console.log("ta vazio");
+            } else {
+                resposta.json().then(function (resposta) {
+                    spanQtdSensor = document.getElementById("qtd_sensor");
+                    spanQtdSensor.innerHTML = `${resposta[0].qtd_sensor}`;
+                })
+            }
+        }
+    });
+}
+
+function listarAlertasMes(idArmazem) {
+    fetch(`/graficos/listarQtdMesArm/${idArmazem}`).then(function (resposta) {        
+        if(resposta.ok) {
+            if(resposta.status == 204) {
+                console.log("ta vazio");
+            } else {
+                resposta.json().then(function (resposta) {
+                    var spanQtdAlertasMes = document.getElementById("alerta_mes");
+                    spanQtdAlertasMes.innerHTML = `${resposta[0].qtd_alertas}`;
+                });
+            }
+        }
+    });
+}
+
+function listarUltimoAlertaArm(idArmazem) {
+    fetch(`/graficos/listarUltimoAlerta/${idArmazem}`).then(function (resposta) {        
+        if(resposta.ok) {
+            if(resposta.status == 204) {
+                console.log("ta vazio");
+            } else {
+                resposta.json().then(function (resposta) {
+                    var spanUltimoAlerta = document.getElementById("ultimo_alerta");
+                    spanUltimoAlerta.innerHTML = `${resposta[0].data_alerta} às ${resposta[0].hora}:${resposta[0].minuto}`;
+                });
+            }
+        }
+    });
+}
+
+function puxarIndicadores(idArmazem) {
+    listarQtdSensor(idArmazem);
+    listarAlertasMes(idArmazem);
+    listarUltimoAlertaArm(idArmazem);
+}
+
 // Função que vai puxar todos os gráficos
 function puxarDados() {
     var idEmpresa = sessionStorage.ID_EMPRESA;
@@ -605,6 +656,7 @@ function puxarDados() {
     puxarArmazemTemp(idEmpresa);
     puxarArmazemUmid(idEmpresa);
     mostrarAlertas(idArmazem);
+    puxarIndicadores(idArmazem);
     verifAlerta();
     atualizarGraficos();
 

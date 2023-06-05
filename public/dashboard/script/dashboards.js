@@ -114,7 +114,7 @@ function puxarQuartoMes(idEmpresa) {
                dataMonth.push(respostaData);
             }
             var dataAlertaTemp = [dataMonth[0].temp, dataMonth[1].temp, dataMonth[2].temp, dataMonth[3].temp];
-            var dataAlertaUmidd = [dataMonth[0].umidd, dataMonth[1].umidd, dataMonth[2].umidd, dataMonth[3].umidd];
+            var dataAlertaSensord = [dataMonth[0].umidd, dataMonth[1].umidd, dataMonth[2].umidd, dataMonth[3].umidd];
 
             const ctxAlert = document.getElementById("chart-alert");
             if (Chart.instances[ctxAlert]) {
@@ -131,7 +131,7 @@ function puxarQuartoMes(idEmpresa) {
                         label: "Umidade",
                         backgroundColor: "#58A1E4",
                         borderColor: "#58A1E4",
-                        data: dataAlertaUmidd,
+                        data: dataAlertaSensord,
                         borderWidth: 1,
                      },
                      {
@@ -164,7 +164,7 @@ function puxarQuartoMes(idEmpresa) {
                dataMonth.push(respostaData);
 
                var dataAlertaTemp = [dataMonth[0].temp, dataMonth[1].temp, dataMonth[2].temp, dataMonth[3].temp];
-               var dataAlertaUmidd = [dataMonth[0].umidd, dataMonth[1].umidd, dataMonth[2].umidd, dataMonth[3].umidd];
+               var dataAlertaSensord = [dataMonth[0].umidd, dataMonth[1].umidd, dataMonth[2].umidd, dataMonth[3].umidd];
 
 
                const ctxAlert = document.getElementById("chart-alert");
@@ -182,7 +182,7 @@ function puxarQuartoMes(idEmpresa) {
                            label: "Umidade",
                            backgroundColor: "#58A1E4",
                            borderColor: "#58A1E4",
-                           data: dataAlertaUmidd,
+                           data: dataAlertaSensord,
                            borderWidth: 1,
                         },
                         {
@@ -366,36 +366,33 @@ function puxarArmazem8(idEmpresa) {
 }
 
 // Grafico de Linha Umidade
-var armazensUmid = []
-var dataAlertaUmid = []
-function puxarArmazemUmid(idEmpresa) {
-   var idEmpresa = sessionStorage.ID_EMPRESA;
-   armazensUmid = [];
-   dataAlertaUmid = [];
+var armazensSensor = []
+var dataAlertaSensor = []
+function puxarArmazemSensor(idEmpresa) {
 
-   fetch(`/graficos/listarLineUmid/${idEmpresa}`, { cache: 'no-store' }).then(function (response) {
+   fetch(`/graficos/listarAlertaSensor/${idEmpresa}`, { cache: 'no-store' }).then(function (response) {
       if (response.ok) {
-
          response.json().then(function (resposta) {
-            console.log("Dados recebidos (Linha 8): " + JSON.stringify(resposta));
+            console.log("Dados recebidos (sensor): " + JSON.stringify(resposta));
             resposta.forEach(element => {
-               dataAlertaUmid.push(element.HorarioAlerta)
-               armazensUmid.push(element.Medida)
-               console.log(element.MesAlerta)
-               console.log(element.HorarioAlerta)
+               console.log(element)
+               var sensor = `Sensor de id: ${element.id_sensor}`
+               dataAlertaSensor.push(sensor)
+               armazensSensor.push(element.qtd_alerta)
             });
          })
+
          const ctxUmdd = document.getElementById("chartUmd");
          new Chart(ctxUmdd, {
-            type: "line",
+            type: "bar",
             data: {
-               labels: dataAlertaUmid,
+               labels: dataAlertaSensor,
                datasets: [
                   {
                      label: "Níveis de umidade",
                      backgroundColor: "#58A1E4",
                      borderColor: "#58A1E4",
-                     data: armazensUmid,
+                     data: armazensSensor,
                      borderWidth: 1,
                   },
                ],
@@ -430,7 +427,7 @@ function puxarDados() {
    puxarArmazens(idEmpresa);
    puxarArmazemMaior(idEmpresa);
    puxarArmazem8(idEmpresa);
-   puxarArmazemUmid(idEmpresa);
+   puxarArmazemSensor(idEmpresa);
    mostrarAlertas(idEmpresa);
 
    if (dataMonth.length < 4) {
