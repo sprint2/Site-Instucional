@@ -285,45 +285,45 @@ function puxarArmazem8(idEmpresa) {
             resposta.forEach(element => {
                var nomeMes;
                switch (element.mes_alerta) {
-               case 1:
-                  nomeMes = 'Janeiro';
-                  break;
-               case 2:
-                  nomeMes = 'Fevereiro';
-                  break;
-               case 3:
-                  nomeMes = 'Março';
-                  break;
-               case 4:
-                  nomeMes = 'Abril';
-                  break;
-               case 5:
-                  nomeMes = 'Maio';
-                  break;
-               case 6:
-                  nomeMes = 'Junho';
-                  break;
-               case 7:
-                  nomeMes = 'Julho';
-                  break;
-               case 8:
-                  nomeMes = 'Agosto';
-                  break;
-               case 9:
-                  nomeMes = 'Setembro';
-                  break;
-               case 10:
-                  nomeMes = 'Outubro';
-                  break;
-               case 11:
-                  nomeMes = 'Novembro';
-                  break;
-               case 12:
-                  nomeMes = 'Dezembro';
-                  break;
-               default:
-                  nomeMes = 'Mês inválido';
-                  break;
+                  case 1:
+                     nomeMes = 'Janeiro';
+                     break;
+                  case 2:
+                     nomeMes = 'Fevereiro';
+                     break;
+                  case 3:
+                     nomeMes = 'Março';
+                     break;
+                  case 4:
+                     nomeMes = 'Abril';
+                     break;
+                  case 5:
+                     nomeMes = 'Maio';
+                     break;
+                  case 6:
+                     nomeMes = 'Junho';
+                     break;
+                  case 7:
+                     nomeMes = 'Julho';
+                     break;
+                  case 8:
+                     nomeMes = 'Agosto';
+                     break;
+                  case 9:
+                     nomeMes = 'Setembro';
+                     break;
+                  case 10:
+                     nomeMes = 'Outubro';
+                     break;
+                  case 11:
+                     nomeMes = 'Novembro';
+                     break;
+                  case 12:
+                     nomeMes = 'Dezembro';
+                     break;
+                  default:
+                     nomeMes = 'Mês inválido';
+                     break;
                }
 
 
@@ -386,29 +386,29 @@ function puxarArmazemUmid(idEmpresa) {
             });
          })
          const ctxUmdd = document.getElementById("chartUmd");
-   new Chart(ctxUmdd, {
-      type: "line",
-      data: {
-         labels: dataAlertaUmid,
-         datasets: [
-            {
-               label: "Níveis de umidade",
-               backgroundColor: "#58A1E4",
-               borderColor: "#58A1E4",
-               data: armazensUmid,
-               borderWidth: 1,
+         new Chart(ctxUmdd, {
+            type: "line",
+            data: {
+               labels: dataAlertaUmid,
+               datasets: [
+                  {
+                     label: "Níveis de umidade",
+                     backgroundColor: "#58A1E4",
+                     borderColor: "#58A1E4",
+                     data: armazensUmid,
+                     borderWidth: 1,
+                  },
+               ],
             },
-         ],
-      },
-      options: {
-         layout: {
-            padding: {
-               bottom: 20,
+            options: {
+               layout: {
+                  padding: {
+                     bottom: 20,
+                  },
+               },
             },
-         },
-      },
-   });
-         
+         });
+
       } else {
          console.error('Nenhum dado encontrado ou erro na API');
       }
@@ -432,7 +432,7 @@ function puxarDados() {
    puxarArmazem8(idEmpresa);
    puxarArmazemUmid(idEmpresa);
    mostrarAlertas(idEmpresa);
-   
+
    if (dataMonth.length < 4) {
       console.log("ainda menor que 4")
    } else {
@@ -539,7 +539,7 @@ function renderAlerta(tipo, nivel, armazem, data, hora, tempoAnimacao, container
    alertsContainer.appendChild(divAlert);
 
    timer.style.animation = `timerLoad ${tempoAnimacao}s infinite linear`;
-   if(tempoAnimacao != false) {
+   if (tempoAnimacao != false) {
       setTimeout(() => {
          divAlert.style.display = 'none';
       }, tempoAnimacao * 1000);
@@ -549,8 +549,8 @@ function renderAlerta(tipo, nivel, armazem, data, hora, tempoAnimacao, container
 
 function mostrarAlertas(idEmpresa) {
    fetch(`/alerta/listarAlertasRecentes/${idEmpresa}`).then(function (resposta) {
-      if(resposta.ok) {
-         if(resposta.status === 204) {
+      if (resposta.ok) {
+         if (resposta.status === 204) {
             console.log("ta vazio");
          } else {
             resposta.json().then(function (resposta) {
@@ -571,15 +571,15 @@ function mostrarAlertas(idEmpresa) {
          }
       }
    })
-   .catch(function (error) {
-      console.error(`Erro na obtenção dos dados p/ gráfico: ${error.message}`);
-   });
+      .catch(function (error) {
+         console.error(`Erro na obtenção dos dados p/ gráfico: ${error.message}`);
+      });
 }
 
 function mostrarQtdAlertas(idEmpresa) {
    fetch(`/alerta/listarQtdAlertas/${idEmpresa}`).then(function (resposta) {
-      if(resposta.ok) {
-         if(resposta.status === 204) {
+      if (resposta.ok) {
+         if (resposta.status === 204) {
             console.log("ta vazio");
          } else {
             var ul = document.getElementById("ul_nav");
@@ -592,36 +592,33 @@ function mostrarQtdAlertas(idEmpresa) {
          }
       }
    })
-   .catch(function (error) {
-      console.error(`Erro na obtenção dos dados p/ gráfico: ${error.message}`);
-   });
+      .catch(function (error) {
+         console.error(`Erro na obtenção dos dados p/ gráfico: ${error.message}`);
+      });
 }
 
 function mostrarTodosAlertas() {
    var idEmpresa = sessionStorage.ID_EMPRESA;
    var notContainer = document.getElementById("notification_container");
 
-   if(notContainer.style.display == 'none') {
+   if (notContainer.style.display == 'none') {
       notContainer.style.display = 'flex'
    } else {
       notContainer.style.display = 'none'
    }
    fetch(`/alerta/listarAlertas/${idEmpresa}`).then(function (resposta) {
-      if(resposta.ok) {
-         if(resposta.status === 204) {
+      if (resposta.ok) {
+         if (resposta.status === 204) {
             notContainer.innerHTML = `<span> Não há novas notificações </span>`
          } else {
             notContainer.innerHTML = '';
             tempoAnimacao = false;
             resposta.json().then(function (resposta) {
-               var idsAlertas = [];
-               resposta.forEach(element => {
-                  idsAlertas.push(element.idAlerta);
+               for (let i = 0; i < resposta.length; i++) {
+                  const element = resposta[i];
                   renderAlerta(element.tipo, element.nivel, element.idArmazem, element.data_alerta, element.hora_alerta, tempoAnimacao, "notification_container");
-               });
+               }
 
-               var qtd = document.getElementsByClassName("qt-alertas");
-               qtd[0].style.display = 'none';
             });
          }
       }
@@ -630,7 +627,7 @@ function mostrarTodosAlertas() {
 
 function atualizarAlerta(idAlerta) {
    fetch(`/alerta/atualizarAlerta/${idAlerta}`).then(function (resposta) {
-      console.log("Alerta editado: "+resposta);
+      console.log("Alerta editado: " + resposta);
    }).catch(function (error) {
       console.erro(`Erro na obtenção dos dados p/ gráficos: ${error.message}`);
    });

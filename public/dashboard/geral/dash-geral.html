@@ -1,20 +1,21 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="stylesheet" href="../style/style-dashboard.css" />
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <script src="/../../script/script.js" defer></script>
-    <script src="../script/dashboards.js" defer></script>
-    <script src="https://unpkg.com/@phosphor-icons/web"></script>
 
-    <title>Dashboard</title>
-  </head>
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" href="../style/style-dashboard.css" />
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script src="/../../script/script.js" defer></script>
+  <script src="../script/dashboards.js" defer></script>
+  <script src="https://unpkg.com/@phosphor-icons/web"></script>
 
-  <body onload="puxarDados(), dataHora()"  style="overflow: hidden;">
-    <!-- <div class="alert slideIn">
+  <title>Dashboard</title>
+</head>
+
+<body onload="puxarDados(), dataHora()" style="overflow: hidden;">
+  <!-- <div class="alert slideIn">
       <div class="alert-content">
         <i class="ph ph-warning"></i>
         <div class="notification-text">
@@ -25,98 +26,98 @@
       </div>
       <div class="timer"></div>
     </div> -->
-    <div id="alerts_container"></div>
-    <div class="top-line">
-      <div class="empresa">
-        <h1 class="empresa-nome">
-          <span id="nomeEmp"></span>
-        </h1>
-      </div>
-      <span id="span_data"></span>
+  <div id="alerts_container"></div>
+  <div class="top-line">
+    <div class="empresa">
+      <h1 class="empresa-nome">
+        <span id="nomeEmp"></span>
+      </h1>
     </div>
-    <header>
-      <nav>
-        <ul id="ul_nav">
-          <li>
-            <a href="/../dashboard/geral/dash-geral.html">
-              <i class="ph ph-house"></i>
-            </a>
-          </li>
-          <li onclick="mostrarTodosAlertas()">
-            <i class="ph ph-bell"></i>
-          </li> 
-          <div id="notification_container">
-          </div>
-        </ul>
-        <!-- divisão da nav -->
-        <ul>
-          <li>
-            <a href="">
-              <i class="ph ph-gear-six"></i>
-            </a>
-          </li>
-          <li>
-            <a href="https://latech-help.atlassian.net/servicedesk/customer/portals" target="_blank">
-              <i class="ph ph-question"></i>
-            </a>
-          </li>
-          <li>
-            <a href="/../../login.html" onclick="limparSessao()">
-              <i class="ph ph-sign-out"></i>
-            </a>
-          </li>
-        </ul>
-      </nav>
-      <div class="content">
-        <div class="inner-content">
-          <div class="container">
-            <h3>
-              Quantidade total de alertas emitidos nos últimos meses.
-            </h3>
-            <canvas id="chart-arm"></canvas>
-          </div>
-          <div class="container">
-            <h3>Quantidade de alertas emitidos no últimos 4 meses</h3>
-            <canvas id="chart-alert"></canvas>
-          </div>
+    <span id="span_data"></span>
+  </div>
+  <header>
+    <nav>
+      <ul id="ul_nav">
+        <li>
+          <a href="/../dashboard/geral/dash-geral.html">
+            <i class="ph ph-house"></i>
+          </a>
+        </li>
+        <li onclick="mostrarTodosAlertas()">
+          <i class="ph ph-bell"></i>
+        </li>
+        <div id="notification_container">
         </div>
-        <div class="inner-content">
-          <div class="container cards">
-            <div class="container info">
-              <div class="lista-armazens">
-                <h4>Lista de armazens</h4>
-                <span class="valor">
-                  <ul id="lista_armazens">
-                  </ul>
-                </span>
-              </div>
-              <div class="info" onclick="trocarPaginaDash()">
-                <h4>Armazém com mais alertas & Alertas emitidos no mês</h4>
-                <span class="valor" id="max_alert_arm">
-                  <img src="../../img/icons/aviso.png" alt="" />
-                  <span id="max_alert_arm"></span>
-                  <img src="../../img/icons/calendario.png" alt="" />
-                  <span id="qtd_alert_mes"></span>
-                </span>
-              </div>
-            </div>
-            <div class="card">
-              <h3>
-                Percentual de alertas de temperatura e umidade emitidos nos
-                últimos 6 meses
-              </h3>
-              <canvas id="chart-porcent"></canvas>
-            </div>
-          </div>
-          <div class="container">
-            <h3>
-              Níveis de umidade registrados no armazém nas últimas 6 horas
-            </h3>
-            <canvas id="chartUmd"></canvas>
-          </div>
+      </ul>
+      <!-- divisão da nav -->
+      <ul>
+        <li>
+          <a href="">
+            <i class="ph ph-gear-six"></i>
+          </a>
+        </li>
+        <li>
+          <a href="https://latech-help.atlassian.net/servicedesk/customer/portals" target="_blank">
+            <i class="ph ph-question"></i>
+          </a>
+        </li>
+        <li>
+          <a href="/../../login.html" onclick="limparSessao()">
+            <i class="ph ph-sign-out"></i>
+          </a>
+        </li>
+      </ul>
+    </nav>
+    <div class="content">
+      <div class="inner-content">
+        <div class="container">
+          <h3>
+            Quantidade total de alertas emitidos nos últimos meses.
+          </h3>
+          <canvas id="chart-arm"></canvas>
+        </div>
+        <div class="container">
+          <h3>Quantidade de alertas emitidos no últimos 4 meses</h3>
+          <canvas id="chart-alert"></canvas>
         </div>
       </div>
-    </header>
-  </body>
-</html>
+      <div class="inner-content">
+        <div class="container cards">
+          <div class="container info">
+            <div class="lista-armazens">
+              <h4>Lista de armazens</h4>
+              <span class="valor">
+                <ul id="lista_armazens">
+                </ul>
+              </span>
+            </div>
+            <div class="info" onclick="trocarPaginaDash()">
+              <h4>Armazém com mais alertas & Alertas emitidos no mês</h4>
+              <span class="valor" id="max_alert_arm">
+                <img src="../../img/icons/aviso.png" alt="" />
+                <span id="max_alert_arm"></span>
+                <img src="../../img/icons/calendario.png" alt="" />
+                <span id="qtd_alert_mes"></span>
+              </span>
+            </div>
+          </div>
+          <div class="card">
+            <h3>
+              Percentual de alertas de temperatura e umidade emitidos nos
+              últimos 6 meses
+            </h3>
+            <canvas id="chart-porcent"></canvas>
+          </div>
+        </div>
+        <div class="container">
+          <h3>
+            Níveis de umidade registrados no armazém nas últimas 6 horas
+          </h3>
+          <canvas id="chartUmd"></canvas>
+        </div>
+      </div>
+    </div>
+  </header>
+</body>
 
+</html>

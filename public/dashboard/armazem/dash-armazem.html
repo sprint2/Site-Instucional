@@ -14,37 +14,29 @@
     <title>Dashboard - Geral</title>
 </head>
 
-<body onload="puxarDados()">
+<body onload="puxarDados(), dataHora()">
     <div id="alerts_container"></div>
     <div class="top-line">
         <div class="empresa">
             <h1 class="empresa-nome"><span id="nomeEmp"></span> - Geral</h1>
-            
+
         </div>
         <span id="span_data"></span>
     </div>
     <header>
         <nav>
-            <ul>
+            <ul id="ul_nav">
                 <li>
                     <a href="/../dashboard/armazem/dash-armazem.html">
                         <i class="ph ph-house"></i>
                     </a>
                 </li>
                 <li>
-                    <i class="ph ph-bell"></i>
-                  </li> 
-                  <div class="notification-container">
-                    <div class="notification">
-                      <i class="ph ph-warning"></i>
-                      <div class="notification-text">
-                        <span class="notification-titulo">Alerta de <span id="tipo_alerta">temperatura</span>!</span>
-                        <span class="notification-conteudo">O armazém <span id="armazem_alerta">1</span> emitiu um alerta de <span id="tipo_alerta">temperatura</span> no dia <span id="data_alerta">dd/mm/yyyy</span></span>
-                      </div>
-                      <i class="ph ph-x-circle"></i>
-                    </div>
-                  </div>
+                    <i class="ph ph-bell" onclick="mostrarTodosAlertas()"></i>
+                </li>
             </ul>
+            <div id="notification_container">
+            </div>
             <!-- divisão da nav -->
             <ul>
                 <li>
@@ -80,7 +72,7 @@
                         <div class="lista-armazens">
                             <h4>Lista de armazens</h4>
                             <span class="valor">
-                               
+
                             </span>
                         </div>
                         <div class="info" onclick="trocarPaginaDash()">
@@ -92,7 +84,7 @@
                                 15
                             </span>
                         </div>
-                      
+
                     </div>
                     <div class="card">
                         <h3>Percentual de alertas de temperatura e umidade emitidos nas últimas 8 semanas</h3>
