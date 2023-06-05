@@ -52,10 +52,12 @@ function cadastrar(nome, cnpj, tel, email, senha) {
   // Insira exatamente a query do banco aqui, lembrando da nomenclatura exata nos valores
   //  e na ordem de inserção dos dados.
   var instrucao = `
-            insert into empresa (nome, cnpj, tel, email) values ('${nome}', '${cnpj}', '${tel}', '${email}');
+            insert into empresa (nome, cnpj, tel, email) values
+             ('${nome}', '${cnpj}', '${tel}', '${email}');
     `;
   var instrucao2 = `
-    insert into usuario (username, senha, fkEmpUsuario) values ('${email}', '${senha}', (select idEmpresa from empresa where cnpj = '${cnpj}'));
+    insert into usuario (username, senha, fkEmpUsuario) values
+     ('${email}', '${senha}', (select idEmpresa from empresa where cnpj = '${cnpj}'));
     `;
   console.log("Executando a instrução SQL: \n" + instrucao + instrucao2);
   return database.executar(instrucao), database.executar(instrucao2);
@@ -66,7 +68,8 @@ function usuario(email, senha, cnpj) {
     "ACESSEI O EMPRESA MODEL \n \n\t\t >> Se aqui der erro de 'Error: connect ECONNREFUSED',\n \t\t >> verifique suas credenciais de acesso ao banco\n \t\t >> e se o servidor de seu BD está rodando corretamente. \n\n function cadastrar():",
 
     email,
-    senha
+    senha,
+    cnpj
   );
 
   // Insira exatamente a query do banco aqui, lembrando da nomenclatura exata nos valores
@@ -79,6 +82,38 @@ function usuario(email, senha, cnpj) {
   return database.executar(instrucao2);
 }
 
+function armazem(logradouro, bairro, numero, complemento, cep, identificacao, cnpj, fkEmpresa) {
+  console.log(
+    "ACESSEI O EMPRESA MODEL \n \n\t\t >> Se aqui der erro de 'Error: connect ECONNREFUSED',\n \t\t >> verifique suas credenciais de acesso ao banco\n \t\t >> e se o servidor de seu BD está rodando corretamente. \n\n function cadastrar():",
+
+    logradouro,
+    bairro,
+    numero,
+    complemento,
+    cep,
+    identificacao,
+    cnpj,
+    fkEmpresa
+  );
+
+  // Insira exatamente a query do banco aqui, lembrando da nomenclatura exata nos valores
+  //  e na ordem de inserção dos dados.
+
+  var instrucao = `
+            insert into endereco (logradouro, bairro, numero, complemento, cep, cnpj)
+             values ('${logradouro}', '${bairro}', '${numero}',
+              '${complemento}', '${cep}', '${cnpj}');
+    `;
+
+  var instrucao2 = `
+    insert into armazem (identificacao, fkEmpresa)
+     values ('${identificacao}', (select idEmpresa from empresa where fkEmpresa = '${fkEmpresa}'));
+    `;
+
+    console.log("Executando a instrução SQL: \n" + instrucao + instrucao2);
+    return database.executar(instrucao), database.executar(instrucao2);
+}
+
 
 
 module.exports = {
@@ -86,4 +121,5 @@ module.exports = {
   cadastrar,
   listar,
   usuario,
+  armazem
 };

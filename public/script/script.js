@@ -176,7 +176,7 @@ function entrar() {
 
 
           setTimeout(function () {
-            window.location = "./dashboard/geral/dash-geral.html";
+            window.location = "./dashboard/geral/cadastroArmazem.html";
           }, 150); // apenas para exibir o loading
         });
       } else {
