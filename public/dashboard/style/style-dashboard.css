@@ -421,3 +421,6 @@ select option:checked {
     margin-right: 10px;
 }
 
+.msg-chart {
+    height: 26px;
+}

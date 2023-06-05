@@ -146,8 +146,7 @@ function listarLine8(idEmpresa) {
 function listarLineUmid(idEmpresa) {
   var instrucao = `
   SELECT 
-    hour(dataHora) as horaUmid,
-    minute(dataHora) as minutoUmid,
+      DATE_FORMAT(dataHora, '%H:%i') as horario,
     mh.umidade,
     minimoUmid,
     maximoUmid,
@@ -173,8 +172,7 @@ function listarLineUmid(idEmpresa) {
 function listarLineTemp(idEmpresa) {
   var instrucao = `
   SELECT 
-    hour(dataHora) as horaTemp,
-    minute(dataHora) as minutoTemp,
+    DATE_FORMAT(dataHora, '%H:%i') as horario,
     mh.temperatura,
     minimoTemp,
     maximoTemp,

@@ -293,7 +293,7 @@ function puxarArmazemUmid(idEmpresa) {
 
                 resposta = resposta.reverse();
                 resposta.forEach(element => {
-                    horarioUmid = `${element.horaUmid}:${element.minutoUmid}`
+                    horarioUmid = `${element.horario}`
                     dataAlertaUmid.push(horarioUmid);
                     armazensUmid.push(element.umidade);
                     idSensor = element.sensor;
@@ -317,7 +317,7 @@ function puxarArmazemUmid(idEmpresa) {
                 options: {
                     layout: {
                         padding: {
-                            bottom: 20,
+                            bottom: 0,
                         },
                     },
                 },
@@ -351,7 +351,7 @@ function puxarArmazemTemp(idEmpresa) {
 
                 resposta = resposta.reverse();
                 resposta.forEach(element => {
-                    horarioTemp = `${element.horaTemp}:${element.minutoTemp}`
+                    horarioTemp = `${element.horario}`
                     dataAlertaTemp.push(horarioTemp);
                     armazensTemp.push(element.temperatura);
                 });
@@ -375,7 +375,7 @@ function puxarArmazemTemp(idEmpresa) {
                 options: {
                     layout: {
                         padding: {
-                            bottom: 20,
+                            bottom: 0,
                         },
                     },
                 },
@@ -399,9 +399,10 @@ function atualizarLinhaUmid(idEmpresa) {
             response.json().then(function (resposta) {
                 // console.log("Dados recebidos (Linha 8): " + JSON.stringify(resposta));
                 var medidaRecente = resposta[0];
-                var horarioRecente = `${medidaRecente.horaUmid}:${medidaRecente.minutoUmid}`;
+                var horarioRecente = `${medidaRecente.horario}`;
                 if (horarioRecente == dataAlertaUmid[dataAlertaUmid.length - 1]) {
-                    console.log("Umidades mais recentes");
+                    var msgUmid = document.getElementById("umid_msg");
+                    msgUmid.innerHTML = `Os dados mais recentes já foram plotados no gráfico.`;
                 } else {
                     armazensUmid.shift();
                     armazensUmid.push(medidaRecente.umidade);
@@ -426,9 +427,10 @@ function atualizarLinhaTemp(idEmpresa) {
             response.json().then(function (resposta) {
                 // console.log("Dados recebidos (Linha 8): " + JSON.stringify(resposta));
                 var medidaRecente = resposta[0];
-                var horarioRecente = `${medidaRecente.horaTemp}:${medidaRecente.minutoTemp}`;
+                var horarioRecente = `${medidaRecente.horario}`;
                 if (horarioRecente == dataAlertaTemp[dataAlertaTemp.length - 1]) {
-                    console.log("Temperaturas mais recentes");
+                    var msgTemp = document.getElementById("temp_msg");
+                    msgTemp.innerHTML = `Os dados mais recentes já foram plotados no gráfico.`;
                 } else {
                     armazensTemp.shift();
                     armazensTemp.push(medidaRecente.temperatura);
@@ -631,7 +633,7 @@ function listarUltimoAlertaArm(idArmazem) {
             } else {
                 resposta.json().then(function (resposta) {
                     var spanUltimoAlerta = document.getElementById("ultimo_alerta");
-                    spanUltimoAlerta.innerHTML = `${resposta[0].data_alerta} às ${resposta[0].hora}:${resposta[0].minuto}`;
+                    spanUltimoAlerta.innerHTML = `${resposta[0].data_alerta} às ${resposta[0].hora}:${resposta[0].minuto}0`;
                 });
             }
         }
